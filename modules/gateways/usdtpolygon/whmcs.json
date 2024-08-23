@@ -1,0 +1,31 @@
+{
+  "schema": "1.0",
+  "type": "whmcs-gateways",
+  "name": "usdtpolygon",
+  "license": "proprietary",
+  "category": "payments",
+  "description": {
+    "name": "usdtpolygon",
+    "tagline": "USDT polygon Crypto Payment Gateway (No KYC)",
+    "long": "Crypto polygon-usdt Paymnet Gateway with instant payouts to your walllet without KYC ",
+    "features": [
+      "Accept USDT polygon directly on your website",
+      "Unique polygon/usdt receiving address for every order",
+      "Instant payouts settlement to your polygon/usdt wallet",
+      "ZERO KYC for both the merchant and the customer."
+    ]
+  },
+  "logo": {
+    "filename": "usdtpolygon.png"
+  },
+  "support": {
+    "homepage": "https:\/\/www.highriskshop.com\/",
+    "docs_url": "https:\/\/www.highriskshop.com\/"
+  },
+  "authors": [
+    {
+      "name": "HighRiskShop.COM",
+      "homepage": "https:\/\/www.highriskshop.com\/"
+    }
+  ]
+}

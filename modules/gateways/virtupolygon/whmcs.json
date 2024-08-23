@@ -1,0 +1,31 @@
+{
+  "schema": "1.0",
+  "type": "whmcs-gateways",
+  "name": "virtupolygon",
+  "license": "proprietary",
+  "category": "payments",
+  "description": {
+    "name": "virtupolygon",
+    "tagline": "Virtucoin polygon Crypto Payment Gateway (No KYC)",
+    "long": "Crypto polygon-virtu Paymnet Gateway with instant payouts to your walllet without KYC ",
+    "features": [
+      "Accept Virtucoin polygon directly on your website",
+      "Unique polygon/virtu receiving address for every order",
+      "Instant payouts settlement to your polygon/virtu wallet",
+      "ZERO KYC for both the merchant and the customer."
+    ]
+  },
+  "logo": {
+    "filename": "virtupolygon.png"
+  },
+  "support": {
+    "homepage": "https:\/\/www.highriskshop.com\/",
+    "docs_url": "https:\/\/www.highriskshop.com\/"
+  },
+  "authors": [
+    {
+      "name": "HighRiskShop.COM",
+      "homepage": "https:\/\/www.highriskshop.com\/"
+    }
+  ]
+}

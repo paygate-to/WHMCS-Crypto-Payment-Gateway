@@ -1,0 +1,31 @@
+{
+  "schema": "1.0",
+  "type": "whmcs-gateways",
+  "name": "pepeerc20",
+  "license": "proprietary",
+  "category": "payments",
+  "description": {
+    "name": "pepeerc20",
+    "tagline": "PEPE Token erc20 Crypto Payment Gateway (No KYC)",
+    "long": "Crypto erc20-pepe Paymnet Gateway with instant payouts to your walllet without KYC ",
+    "features": [
+      "Accept PEPE Token erc20 directly on your website",
+      "Unique erc20/pepe receiving address for every order",
+      "Instant payouts settlement to your erc20/pepe wallet",
+      "ZERO KYC for both the merchant and the customer."
+    ]
+  },
+  "logo": {
+    "filename": "pepeerc20.png"
+  },
+  "support": {
+    "homepage": "https:\/\/www.highriskshop.com\/",
+    "docs_url": "https:\/\/www.highriskshop.com\/"
+  },
+  "authors": [
+    {
+      "name": "HighRiskShop.COM",
+      "homepage": "https:\/\/www.highriskshop.com\/"
+    }
+  ]
+}

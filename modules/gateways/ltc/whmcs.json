@@ -1,0 +1,31 @@
+{
+  "schema": "1.0",
+  "type": "whmcs-gateways",
+  "name": "ltc",
+  "license": "proprietary",
+  "category": "payments",
+  "description": {
+    "name": "ltc",
+    "tagline": "Litecoin Crypto Payment Gateway (No KYC)",
+    "long": "Crypto ltc Paymnet Gateway with instant payouts to your walllet without KYC ",
+    "features": [
+      "Accept Litecoin directly on your website",
+      "Unique ltc receiving address for every order",
+      "Instant payouts settlement to your ltc wallet",
+      "ZERO KYC for both the merchant and the customer."
+    ]
+  },
+  "logo": {
+    "filename": "ltc.png"
+  },
+  "support": {
+    "homepage": "https:\/\/www.highriskshop.com\/",
+    "docs_url": "https:\/\/www.highriskshop.com\/"
+  },
+  "authors": [
+    {
+      "name": "HighRiskShop.COM",
+      "homepage": "https:\/\/www.highriskshop.com\/"
+    }
+  ]
+}

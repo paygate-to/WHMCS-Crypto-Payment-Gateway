@@ -1,0 +1,31 @@
+{
+  "schema": "1.0",
+  "type": "whmcs-gateways",
+  "name": "arbarbitrum",
+  "license": "proprietary",
+  "category": "payments",
+  "description": {
+    "name": "arbarbitrum",
+    "tagline": "Arbitrum arbitrum Crypto Payment Gateway (No KYC)",
+    "long": "Crypto arbitrum-arb Paymnet Gateway with instant payouts to your walllet without KYC ",
+    "features": [
+      "Accept Arbitrum arbitrum directly on your website",
+      "Unique arbitrum/arb receiving address for every order",
+      "Instant payouts settlement to your arbitrum/arb wallet",
+      "ZERO KYC for both the merchant and the customer."
+    ]
+  },
+  "logo": {
+    "filename": "arbarbitrum.png"
+  },
+  "support": {
+    "homepage": "https:\/\/www.highriskshop.com\/",
+    "docs_url": "https:\/\/www.highriskshop.com\/"
+  },
+  "authors": [
+    {
+      "name": "HighRiskShop.COM",
+      "homepage": "https:\/\/www.highriskshop.com\/"
+    }
+  ]
+}

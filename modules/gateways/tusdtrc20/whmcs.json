@@ -1,0 +1,31 @@
+{
+  "schema": "1.0",
+  "type": "whmcs-gateways",
+  "name": "tusdtrc20",
+  "license": "proprietary",
+  "category": "payments",
+  "description": {
+    "name": "tusdtrc20",
+    "tagline": "TrueUSD trc20 Crypto Payment Gateway (No KYC)",
+    "long": "Crypto trc20-tusd Paymnet Gateway with instant payouts to your walllet without KYC ",
+    "features": [
+      "Accept TrueUSD trc20 directly on your website",
+      "Unique trc20/tusd receiving address for every order",
+      "Instant payouts settlement to your trc20/tusd wallet",
+      "ZERO KYC for both the merchant and the customer."
+    ]
+  },
+  "logo": {
+    "filename": "tusdtrc20.png"
+  },
+  "support": {
+    "homepage": "https:\/\/www.highriskshop.com\/",
+    "docs_url": "https:\/\/www.highriskshop.com\/"
+  },
+  "authors": [
+    {
+      "name": "HighRiskShop.COM",
+      "homepage": "https:\/\/www.highriskshop.com\/"
+    }
+  ]
+}

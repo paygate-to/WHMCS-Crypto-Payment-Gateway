@@ -1,0 +1,31 @@
+{
+  "schema": "1.0",
+  "type": "whmcs-gateways",
+  "name": "opoptimism",
+  "license": "proprietary",
+  "category": "payments",
+  "description": {
+    "name": "opoptimism",
+    "tagline": "Optimism optimism Crypto Payment Gateway (No KYC)",
+    "long": "Crypto optimism-op Paymnet Gateway with instant payouts to your walllet without KYC ",
+    "features": [
+      "Accept Optimism optimism directly on your website",
+      "Unique optimism/op receiving address for every order",
+      "Instant payouts settlement to your optimism/op wallet",
+      "ZERO KYC for both the merchant and the customer."
+    ]
+  },
+  "logo": {
+    "filename": "opoptimism.png"
+  },
+  "support": {
+    "homepage": "https:\/\/www.highriskshop.com\/",
+    "docs_url": "https:\/\/www.highriskshop.com\/"
+  },
+  "authors": [
+    {
+      "name": "HighRiskShop.COM",
+      "homepage": "https:\/\/www.highriskshop.com\/"
+    }
+  ]
+}

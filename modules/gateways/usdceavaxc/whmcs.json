@@ -1,0 +1,31 @@
+{
+  "schema": "1.0",
+  "type": "whmcs-gateways",
+  "name": "usdceavaxc",
+  "license": "proprietary",
+  "category": "payments",
+  "description": {
+    "name": "usdceavaxc",
+    "tagline": "USD Coin (Bridged) avax-c Crypto Payment Gateway (No KYC)",
+    "long": "Crypto avax-c-usdc.e Paymnet Gateway with instant payouts to your walllet without KYC ",
+    "features": [
+      "Accept USD Coin (Bridged) avax-c directly on your website",
+      "Unique avax-c/usdc.e receiving address for every order",
+      "Instant payouts settlement to your avax-c/usdc.e wallet",
+      "ZERO KYC for both the merchant and the customer."
+    ]
+  },
+  "logo": {
+    "filename": "usdceavaxc.png"
+  },
+  "support": {
+    "homepage": "https:\/\/www.highriskshop.com\/",
+    "docs_url": "https:\/\/www.highriskshop.com\/"
+  },
+  "authors": [
+    {
+      "name": "HighRiskShop.COM",
+      "homepage": "https:\/\/www.highriskshop.com\/"
+    }
+  ]
+}

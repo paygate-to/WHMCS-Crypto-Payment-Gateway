@@ -1,0 +1,31 @@
+{
+  "schema": "1.0",
+  "type": "whmcs-gateways",
+  "name": "daioptimism",
+  "license": "proprietary",
+  "category": "payments",
+  "description": {
+    "name": "daioptimism",
+    "tagline": "Dai Token optimism Crypto Payment Gateway (No KYC)",
+    "long": "Crypto optimism-dai Paymnet Gateway with instant payouts to your walllet without KYC ",
+    "features": [
+      "Accept Dai Token optimism directly on your website",
+      "Unique optimism/dai receiving address for every order",
+      "Instant payouts settlement to your optimism/dai wallet",
+      "ZERO KYC for both the merchant and the customer."
+    ]
+  },
+  "logo": {
+    "filename": "daioptimism.png"
+  },
+  "support": {
+    "homepage": "https:\/\/www.highriskshop.com\/",
+    "docs_url": "https:\/\/www.highriskshop.com\/"
+  },
+  "authors": [
+    {
+      "name": "HighRiskShop.COM",
+      "homepage": "https:\/\/www.highriskshop.com\/"
+    }
+  ]
+}

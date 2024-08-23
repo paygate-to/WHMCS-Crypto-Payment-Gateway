@@ -1,0 +1,31 @@
+{
+  "schema": "1.0",
+  "type": "whmcs-gateways",
+  "name": "oneincherc20",
+  "license": "proprietary",
+  "category": "payments",
+  "description": {
+    "name": "oneincherc20",
+    "tagline": "1INCH Token erc20 Crypto Payment Gateway (No KYC)",
+    "long": "Crypto erc20-1inch Paymnet Gateway with instant payouts to your walllet without KYC ",
+    "features": [
+      "Accept 1INCH Token erc20 directly on your website",
+      "Unique erc20/1inch receiving address for every order",
+      "Instant payouts settlement to your erc20/1inch wallet",
+      "ZERO KYC for both the merchant and the customer."
+    ]
+  },
+  "logo": {
+    "filename": "oneincherc20.png"
+  },
+  "support": {
+    "homepage": "https:\/\/www.highriskshop.com\/",
+    "docs_url": "https:\/\/www.highriskshop.com\/"
+  },
+  "authors": [
+    {
+      "name": "HighRiskShop.COM",
+      "homepage": "https:\/\/www.highriskshop.com\/"
+    }
+  ]
+}

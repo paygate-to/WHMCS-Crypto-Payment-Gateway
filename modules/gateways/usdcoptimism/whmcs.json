@@ -1,0 +1,31 @@
+{
+  "schema": "1.0",
+  "type": "whmcs-gateways",
+  "name": "usdcoptimism",
+  "license": "proprietary",
+  "category": "payments",
+  "description": {
+    "name": "usdcoptimism",
+    "tagline": "USD Coin (Native) optimism Crypto Payment Gateway (No KYC)",
+    "long": "Crypto optimism-usdc Paymnet Gateway with instant payouts to your walllet without KYC ",
+    "features": [
+      "Accept USD Coin (Native) optimism directly on your website",
+      "Unique optimism/usdc receiving address for every order",
+      "Instant payouts settlement to your optimism/usdc wallet",
+      "ZERO KYC for both the merchant and the customer."
+    ]
+  },
+  "logo": {
+    "filename": "usdcoptimism.png"
+  },
+  "support": {
+    "homepage": "https:\/\/www.highriskshop.com\/",
+    "docs_url": "https:\/\/www.highriskshop.com\/"
+  },
+  "authors": [
+    {
+      "name": "HighRiskShop.COM",
+      "homepage": "https:\/\/www.highriskshop.com\/"
+    }
+  ]
+}

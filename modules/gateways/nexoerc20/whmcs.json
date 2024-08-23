@@ -1,0 +1,31 @@
+{
+  "schema": "1.0",
+  "type": "whmcs-gateways",
+  "name": "nexoerc20",
+  "license": "proprietary",
+  "category": "payments",
+  "description": {
+    "name": "nexoerc20",
+    "tagline": "NEXO erc20 Crypto Payment Gateway (No KYC)",
+    "long": "Crypto erc20-nexo Paymnet Gateway with instant payouts to your walllet without KYC ",
+    "features": [
+      "Accept NEXO erc20 directly on your website",
+      "Unique erc20/nexo receiving address for every order",
+      "Instant payouts settlement to your erc20/nexo wallet",
+      "ZERO KYC for both the merchant and the customer."
+    ]
+  },
+  "logo": {
+    "filename": "nexoerc20.png"
+  },
+  "support": {
+    "homepage": "https:\/\/www.highriskshop.com\/",
+    "docs_url": "https:\/\/www.highriskshop.com\/"
+  },
+  "authors": [
+    {
+      "name": "HighRiskShop.COM",
+      "homepage": "https:\/\/www.highriskshop.com\/"
+    }
+  ]
+}

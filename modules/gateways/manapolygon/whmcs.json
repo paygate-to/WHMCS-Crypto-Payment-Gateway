@@ -1,0 +1,31 @@
+{
+  "schema": "1.0",
+  "type": "whmcs-gateways",
+  "name": "manapolygon",
+  "license": "proprietary",
+  "category": "payments",
+  "description": {
+    "name": "manapolygon",
+    "tagline": "Decentraland polygon Crypto Payment Gateway (No KYC)",
+    "long": "Crypto polygon-mana Paymnet Gateway with instant payouts to your walllet without KYC ",
+    "features": [
+      "Accept Decentraland polygon directly on your website",
+      "Unique polygon/mana receiving address for every order",
+      "Instant payouts settlement to your polygon/mana wallet",
+      "ZERO KYC for both the merchant and the customer."
+    ]
+  },
+  "logo": {
+    "filename": "manapolygon.png"
+  },
+  "support": {
+    "homepage": "https:\/\/www.highriskshop.com\/",
+    "docs_url": "https:\/\/www.highriskshop.com\/"
+  },
+  "authors": [
+    {
+      "name": "HighRiskShop.COM",
+      "homepage": "https:\/\/www.highriskshop.com\/"
+    }
+  ]
+}

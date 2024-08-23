@@ -1,0 +1,31 @@
+{
+  "schema": "1.0",
+  "type": "whmcs-gateways",
+  "name": "usdcpolygon",
+  "license": "proprietary",
+  "category": "payments",
+  "description": {
+    "name": "usdcpolygon",
+    "tagline": "USD Coin (Native) polygon Crypto Payment Gateway (No KYC)",
+    "long": "Crypto polygon-usdc Paymnet Gateway with instant payouts to your walllet without KYC ",
+    "features": [
+      "Accept USD Coin (Native) polygon directly on your website",
+      "Unique polygon/usdc receiving address for every order",
+      "Instant payouts settlement to your polygon/usdc wallet",
+      "ZERO KYC for both the merchant and the customer."
+    ]
+  },
+  "logo": {
+    "filename": "usdcpolygon.png"
+  },
+  "support": {
+    "homepage": "https:\/\/www.highriskshop.com\/",
+    "docs_url": "https:\/\/www.highriskshop.com\/"
+  },
+  "authors": [
+    {
+      "name": "HighRiskShop.COM",
+      "homepage": "https:\/\/www.highriskshop.com\/"
+    }
+  ]
+}

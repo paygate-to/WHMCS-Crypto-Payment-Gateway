@@ -1,0 +1,31 @@
+{
+  "schema": "1.0",
+  "type": "whmcs-gateways",
+  "name": "shibbep20",
+  "license": "proprietary",
+  "category": "payments",
+  "description": {
+    "name": "shibbep20",
+    "tagline": "SHIBA INU bep20 Crypto Payment Gateway (No KYC)",
+    "long": "Crypto bep20-shib Paymnet Gateway with instant payouts to your walllet without KYC ",
+    "features": [
+      "Accept SHIBA INU bep20 directly on your website",
+      "Unique bep20/shib receiving address for every order",
+      "Instant payouts settlement to your bep20/shib wallet",
+      "ZERO KYC for both the merchant and the customer."
+    ]
+  },
+  "logo": {
+    "filename": "shibbep20.png"
+  },
+  "support": {
+    "homepage": "https:\/\/www.highriskshop.com\/",
+    "docs_url": "https:\/\/www.highriskshop.com\/"
+  },
+  "authors": [
+    {
+      "name": "HighRiskShop.COM",
+      "homepage": "https:\/\/www.highriskshop.com\/"
+    }
+  ]
+}

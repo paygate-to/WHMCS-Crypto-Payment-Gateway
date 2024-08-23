@@ -1,0 +1,31 @@
+{
+  "schema": "1.0",
+  "type": "whmcs-gateways",
+  "name": "shiberc20",
+  "license": "proprietary",
+  "category": "payments",
+  "description": {
+    "name": "shiberc20",
+    "tagline": "SHIBA INU erc20 Crypto Payment Gateway (No KYC)",
+    "long": "Crypto erc20-shib Paymnet Gateway with instant payouts to your walllet without KYC ",
+    "features": [
+      "Accept SHIBA INU erc20 directly on your website",
+      "Unique erc20/shib receiving address for every order",
+      "Instant payouts settlement to your erc20/shib wallet",
+      "ZERO KYC for both the merchant and the customer."
+    ]
+  },
+  "logo": {
+    "filename": "shiberc20.png"
+  },
+  "support": {
+    "homepage": "https:\/\/www.highriskshop.com\/",
+    "docs_url": "https:\/\/www.highriskshop.com\/"
+  },
+  "authors": [
+    {
+      "name": "HighRiskShop.COM",
+      "homepage": "https:\/\/www.highriskshop.com\/"
+    }
+  ]
+}

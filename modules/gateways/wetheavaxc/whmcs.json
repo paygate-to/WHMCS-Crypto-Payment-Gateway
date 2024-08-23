@@ -1,0 +1,31 @@
+{
+  "schema": "1.0",
+  "type": "whmcs-gateways",
+  "name": "wetheavaxc",
+  "license": "proprietary",
+  "category": "payments",
+  "description": {
+    "name": "wetheavaxc",
+    "tagline": "Wrapped Ether avax-c Crypto Payment Gateway (No KYC)",
+    "long": "Crypto avax-c-weth.e Paymnet Gateway with instant payouts to your walllet without KYC ",
+    "features": [
+      "Accept Wrapped Ether avax-c directly on your website",
+      "Unique avax-c/weth.e receiving address for every order",
+      "Instant payouts settlement to your avax-c/weth.e wallet",
+      "ZERO KYC for both the merchant and the customer."
+    ]
+  },
+  "logo": {
+    "filename": "wetheavaxc.png"
+  },
+  "support": {
+    "homepage": "https:\/\/www.highriskshop.com\/",
+    "docs_url": "https:\/\/www.highriskshop.com\/"
+  },
+  "authors": [
+    {
+      "name": "HighRiskShop.COM",
+      "homepage": "https:\/\/www.highriskshop.com\/"
+    }
+  ]
+}

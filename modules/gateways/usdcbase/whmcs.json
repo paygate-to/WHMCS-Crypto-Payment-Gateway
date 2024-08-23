@@ -1,0 +1,31 @@
+{
+  "schema": "1.0",
+  "type": "whmcs-gateways",
+  "name": "usdcbase",
+  "license": "proprietary",
+  "category": "payments",
+  "description": {
+    "name": "usdcbase",
+    "tagline": "USD Coin base Crypto Payment Gateway (No KYC)",
+    "long": "Crypto base-usdc Paymnet Gateway with instant payouts to your walllet without KYC ",
+    "features": [
+      "Accept USD Coin base directly on your website",
+      "Unique base/usdc receiving address for every order",
+      "Instant payouts settlement to your base/usdc wallet",
+      "ZERO KYC for both the merchant and the customer."
+    ]
+  },
+  "logo": {
+    "filename": "usdcbase.png"
+  },
+  "support": {
+    "homepage": "https:\/\/www.highriskshop.com\/",
+    "docs_url": "https:\/\/www.highriskshop.com\/"
+  },
+  "authors": [
+    {
+      "name": "HighRiskShop.COM",
+      "homepage": "https:\/\/www.highriskshop.com\/"
+    }
+  ]
+}

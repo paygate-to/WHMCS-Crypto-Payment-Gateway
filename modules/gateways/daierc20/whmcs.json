@@ -1,0 +1,31 @@
+{
+  "schema": "1.0",
+  "type": "whmcs-gateways",
+  "name": "daierc20",
+  "license": "proprietary",
+  "category": "payments",
+  "description": {
+    "name": "daierc20",
+    "tagline": "Dai Token erc20 Crypto Payment Gateway (No KYC)",
+    "long": "Crypto erc20-dai Paymnet Gateway with instant payouts to your walllet without KYC ",
+    "features": [
+      "Accept Dai Token erc20 directly on your website",
+      "Unique erc20/dai receiving address for every order",
+      "Instant payouts settlement to your erc20/dai wallet",
+      "ZERO KYC for both the merchant and the customer."
+    ]
+  },
+  "logo": {
+    "filename": "daierc20.png"
+  },
+  "support": {
+    "homepage": "https:\/\/www.highriskshop.com\/",
+    "docs_url": "https:\/\/www.highriskshop.com\/"
+  },
+  "authors": [
+    {
+      "name": "HighRiskShop.COM",
+      "homepage": "https:\/\/www.highriskshop.com\/"
+    }
+  ]
+}

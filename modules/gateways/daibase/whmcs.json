@@ -1,0 +1,31 @@
+{
+  "schema": "1.0",
+  "type": "whmcs-gateways",
+  "name": "daibase",
+  "license": "proprietary",
+  "category": "payments",
+  "description": {
+    "name": "daibase",
+    "tagline": "Dai Token base Crypto Payment Gateway (No KYC)",
+    "long": "Crypto base-dai Paymnet Gateway with instant payouts to your walllet without KYC ",
+    "features": [
+      "Accept Dai Token base directly on your website",
+      "Unique base/dai receiving address for every order",
+      "Instant payouts settlement to your base/dai wallet",
+      "ZERO KYC for both the merchant and the customer."
+    ]
+  },
+  "logo": {
+    "filename": "daibase.png"
+  },
+  "support": {
+    "homepage": "https:\/\/www.highriskshop.com\/",
+    "docs_url": "https:\/\/www.highriskshop.com\/"
+  },
+  "authors": [
+    {
+      "name": "HighRiskShop.COM",
+      "homepage": "https:\/\/www.highriskshop.com\/"
+    }
+  ]
+}

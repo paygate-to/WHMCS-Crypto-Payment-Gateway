@@ -1,0 +1,31 @@
+{
+  "schema": "1.0",
+  "type": "whmcs-gateways",
+  "name": "ethbase",
+  "license": "proprietary",
+  "category": "payments",
+  "description": {
+    "name": "ethbase",
+    "tagline": "Ethereum base Crypto Payment Gateway (No KYC)",
+    "long": "Crypto base-eth Paymnet Gateway with instant payouts to your walllet without KYC ",
+    "features": [
+      "Accept Ethereum base directly on your website",
+      "Unique base/eth receiving address for every order",
+      "Instant payouts settlement to your base/eth wallet",
+      "ZERO KYC for both the merchant and the customer."
+    ]
+  },
+  "logo": {
+    "filename": "ethbase.png"
+  },
+  "support": {
+    "homepage": "https:\/\/www.highriskshop.com\/",
+    "docs_url": "https:\/\/www.highriskshop.com\/"
+  },
+  "authors": [
+    {
+      "name": "HighRiskShop.COM",
+      "homepage": "https:\/\/www.highriskshop.com\/"
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "schema": "1.0",
+  "type": "whmcs-gateways",
+  "name": "eurcbase",
+  "license": "proprietary",
+  "category": "payments",
+  "description": {
+    "name": "eurcbase",
+    "tagline": "EURC base Crypto Payment Gateway (No KYC)",
+    "long": "Crypto base-eurc Paymnet Gateway with instant payouts to your walllet without KYC ",
+    "features": [
+      "Accept EURC base directly on your website",
+      "Unique base/eurc receiving address for every order",
+      "Instant payouts settlement to your base/eurc wallet",
+      "ZERO KYC for both the merchant and the customer."
+    ]
+  },
+  "logo": {
+    "filename": "eurcbase.png"
+  },
+  "support": {
+    "homepage": "https:\/\/www.highriskshop.com\/",
+    "docs_url": "https:\/\/www.highriskshop.com\/"
+  },
+  "authors": [
+    {
+      "name": "HighRiskShop.COM",
+      "homepage": "https:\/\/www.highriskshop.com\/"
+    }
+  ]
+}

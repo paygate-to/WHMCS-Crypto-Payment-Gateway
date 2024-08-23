@@ -1,0 +1,31 @@
+{
+  "schema": "1.0",
+  "type": "whmcs-gateways",
+  "name": "pepearbitrum",
+  "license": "proprietary",
+  "category": "payments",
+  "description": {
+    "name": "pepearbitrum",
+    "tagline": "PEPE Token arbitrum Crypto Payment Gateway (No KYC)",
+    "long": "Crypto arbitrum-pepe Paymnet Gateway with instant payouts to your walllet without KYC ",
+    "features": [
+      "Accept PEPE Token arbitrum directly on your website",
+      "Unique arbitrum/pepe receiving address for every order",
+      "Instant payouts settlement to your arbitrum/pepe wallet",
+      "ZERO KYC for both the merchant and the customer."
+    ]
+  },
+  "logo": {
+    "filename": "pepearbitrum.png"
+  },
+  "support": {
+    "homepage": "https:\/\/www.highriskshop.com\/",
+    "docs_url": "https:\/\/www.highriskshop.com\/"
+  },
+  "authors": [
+    {
+      "name": "HighRiskShop.COM",
+      "homepage": "https:\/\/www.highriskshop.com\/"
+    }
+  ]
+}

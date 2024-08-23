@@ -1,0 +1,31 @@
+{
+  "schema": "1.0",
+  "type": "whmcs-gateways",
+  "name": "smtpolygon",
+  "license": "proprietary",
+  "category": "payments",
+  "description": {
+    "name": "smtpolygon",
+    "tagline": "Saffron Mount Token polygon Crypto Payment Gateway (No KYC)",
+    "long": "Crypto polygon-smt Paymnet Gateway with instant payouts to your walllet without KYC ",
+    "features": [
+      "Accept Saffron Mount Token polygon directly on your website",
+      "Unique polygon/smt receiving address for every order",
+      "Instant payouts settlement to your polygon/smt wallet",
+      "ZERO KYC for both the merchant and the customer."
+    ]
+  },
+  "logo": {
+    "filename": "smtpolygon.png"
+  },
+  "support": {
+    "homepage": "https:\/\/www.highriskshop.com\/",
+    "docs_url": "https:\/\/www.highriskshop.com\/"
+  },
+  "authors": [
+    {
+      "name": "HighRiskShop.COM",
+      "homepage": "https:\/\/www.highriskshop.com\/"
+    }
+  ]
+}

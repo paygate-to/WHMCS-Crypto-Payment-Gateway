@@ -1,0 +1,31 @@
+{
+  "schema": "1.0",
+  "type": "whmcs-gateways",
+  "name": "wbtcoptimism",
+  "license": "proprietary",
+  "category": "payments",
+  "description": {
+    "name": "wbtcoptimism",
+    "tagline": "Wrapped BTC optimism Crypto Payment Gateway (No KYC)",
+    "long": "Crypto optimism-wbtc Paymnet Gateway with instant payouts to your walllet without KYC ",
+    "features": [
+      "Accept Wrapped BTC optimism directly on your website",
+      "Unique optimism/wbtc receiving address for every order",
+      "Instant payouts settlement to your optimism/wbtc wallet",
+      "ZERO KYC for both the merchant and the customer."
+    ]
+  },
+  "logo": {
+    "filename": "wbtcoptimism.png"
+  },
+  "support": {
+    "homepage": "https:\/\/www.highriskshop.com\/",
+    "docs_url": "https:\/\/www.highriskshop.com\/"
+  },
+  "authors": [
+    {
+      "name": "HighRiskShop.COM",
+      "homepage": "https:\/\/www.highriskshop.com\/"
+    }
+  ]
+}

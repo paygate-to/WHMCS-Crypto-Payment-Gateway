@@ -1,0 +1,31 @@
+{
+  "schema": "1.0",
+  "type": "whmcs-gateways",
+  "name": "usdtavaxc",
+  "license": "proprietary",
+  "category": "payments",
+  "description": {
+    "name": "usdtavaxc",
+    "tagline": "USDT avax-c Crypto Payment Gateway (No KYC)",
+    "long": "Crypto avax-c-usdt Paymnet Gateway with instant payouts to your walllet without KYC ",
+    "features": [
+      "Accept USDT avax-c directly on your website",
+      "Unique avax-c/usdt receiving address for every order",
+      "Instant payouts settlement to your avax-c/usdt wallet",
+      "ZERO KYC for both the merchant and the customer."
+    ]
+  },
+  "logo": {
+    "filename": "usdtavaxc.png"
+  },
+  "support": {
+    "homepage": "https:\/\/www.highriskshop.com\/",
+    "docs_url": "https:\/\/www.highriskshop.com\/"
+  },
+  "authors": [
+    {
+      "name": "HighRiskShop.COM",
+      "homepage": "https:\/\/www.highriskshop.com\/"
+    }
+  ]
+}

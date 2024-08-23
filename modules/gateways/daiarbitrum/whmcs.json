@@ -1,0 +1,31 @@
+{
+  "schema": "1.0",
+  "type": "whmcs-gateways",
+  "name": "daiarbitrum",
+  "license": "proprietary",
+  "category": "payments",
+  "description": {
+    "name": "daiarbitrum",
+    "tagline": "Dai Token arbitrum Crypto Payment Gateway (No KYC)",
+    "long": "Crypto arbitrum-dai Paymnet Gateway with instant payouts to your walllet without KYC ",
+    "features": [
+      "Accept Dai Token arbitrum directly on your website",
+      "Unique arbitrum/dai receiving address for every order",
+      "Instant payouts settlement to your arbitrum/dai wallet",
+      "ZERO KYC for both the merchant and the customer."
+    ]
+  },
+  "logo": {
+    "filename": "daiarbitrum.png"
+  },
+  "support": {
+    "homepage": "https:\/\/www.highriskshop.com\/",
+    "docs_url": "https:\/\/www.highriskshop.com\/"
+  },
+  "authors": [
+    {
+      "name": "HighRiskShop.COM",
+      "homepage": "https:\/\/www.highriskshop.com\/"
+    }
+  ]
+}

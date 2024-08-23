@@ -1,0 +1,31 @@
+{
+  "schema": "1.0",
+  "type": "whmcs-gateways",
+  "name": "trx",
+  "license": "proprietary",
+  "category": "payments",
+  "description": {
+    "name": "trx",
+    "tagline": "TRX Crypto Payment Gateway (No KYC)",
+    "long": "Crypto trx Paymnet Gateway with instant payouts to your walllet without KYC ",
+    "features": [
+      "Accept TRX directly on your website",
+      "Unique trx receiving address for every order",
+      "Instant payouts settlement to your trx wallet",
+      "ZERO KYC for both the merchant and the customer."
+    ]
+  },
+  "logo": {
+    "filename": "trx.png"
+  },
+  "support": {
+    "homepage": "https:\/\/www.highriskshop.com\/",
+    "docs_url": "https:\/\/www.highriskshop.com\/"
+  },
+  "authors": [
+    {
+      "name": "HighRiskShop.COM",
+      "homepage": "https:\/\/www.highriskshop.com\/"
+    }
+  ]
+}

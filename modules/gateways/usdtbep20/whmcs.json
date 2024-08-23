@@ -1,0 +1,31 @@
+{
+  "schema": "1.0",
+  "type": "whmcs-gateways",
+  "name": "usdtbep20",
+  "license": "proprietary",
+  "category": "payments",
+  "description": {
+    "name": "usdtbep20",
+    "tagline": "USDT bep20 Crypto Payment Gateway (No KYC)",
+    "long": "Crypto bep20-usdt Paymnet Gateway with instant payouts to your walllet without KYC ",
+    "features": [
+      "Accept USDT bep20 directly on your website",
+      "Unique bep20/usdt receiving address for every order",
+      "Instant payouts settlement to your bep20/usdt wallet",
+      "ZERO KYC for both the merchant and the customer."
+    ]
+  },
+  "logo": {
+    "filename": "usdtbep20.png"
+  },
+  "support": {
+    "homepage": "https:\/\/www.highriskshop.com\/",
+    "docs_url": "https:\/\/www.highriskshop.com\/"
+  },
+  "authors": [
+    {
+      "name": "HighRiskShop.COM",
+      "homepage": "https:\/\/www.highriskshop.com\/"
+    }
+  ]
+}

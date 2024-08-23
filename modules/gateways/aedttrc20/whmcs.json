@@ -1,0 +1,31 @@
+{
+  "schema": "1.0",
+  "type": "whmcs-gateways",
+  "name": "aedttrc20",
+  "license": "proprietary",
+  "category": "payments",
+  "description": {
+    "name": "aedttrc20",
+    "tagline": "AEDT trc20 Crypto Payment Gateway (No KYC)",
+    "long": "Crypto trc20-aedt Paymnet Gateway with instant payouts to your walllet without KYC ",
+    "features": [
+      "Accept AEDT trc20 directly on your website",
+      "Unique trc20/aedt receiving address for every order",
+      "Instant payouts settlement to your trc20/aedt wallet",
+      "ZERO KYC for both the merchant and the customer."
+    ]
+  },
+  "logo": {
+    "filename": "aedttrc20.png"
+  },
+  "support": {
+    "homepage": "https:\/\/www.highriskshop.com\/",
+    "docs_url": "https:\/\/www.highriskshop.com\/"
+  },
+  "authors": [
+    {
+      "name": "HighRiskShop.COM",
+      "homepage": "https:\/\/www.highriskshop.com\/"
+    }
+  ]
+}

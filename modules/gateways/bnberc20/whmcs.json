@@ -1,0 +1,31 @@
+{
+  "schema": "1.0",
+  "type": "whmcs-gateways",
+  "name": "bnberc20",
+  "license": "proprietary",
+  "category": "payments",
+  "description": {
+    "name": "bnberc20",
+    "tagline": "Binance Coin erc20 Crypto Payment Gateway (No KYC)",
+    "long": "Crypto erc20-bnb Paymnet Gateway with instant payouts to your walllet without KYC ",
+    "features": [
+      "Accept Binance Coin erc20 directly on your website",
+      "Unique erc20/bnb receiving address for every order",
+      "Instant payouts settlement to your erc20/bnb wallet",
+      "ZERO KYC for both the merchant and the customer."
+    ]
+  },
+  "logo": {
+    "filename": "bnberc20.png"
+  },
+  "support": {
+    "homepage": "https:\/\/www.highriskshop.com\/",
+    "docs_url": "https:\/\/www.highriskshop.com\/"
+  },
+  "authors": [
+    {
+      "name": "HighRiskShop.COM",
+      "homepage": "https:\/\/www.highriskshop.com\/"
+    }
+  ]
+}

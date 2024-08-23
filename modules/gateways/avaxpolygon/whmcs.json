@@ -1,0 +1,31 @@
+{
+  "schema": "1.0",
+  "type": "whmcs-gateways",
+  "name": "avaxpolygon",
+  "license": "proprietary",
+  "category": "payments",
+  "description": {
+    "name": "avaxpolygon",
+    "tagline": "Avalanche Token polygon Crypto Payment Gateway (No KYC)",
+    "long": "Crypto polygon-avax Paymnet Gateway with instant payouts to your walllet without KYC ",
+    "features": [
+      "Accept Avalanche Token polygon directly on your website",
+      "Unique polygon/avax receiving address for every order",
+      "Instant payouts settlement to your polygon/avax wallet",
+      "ZERO KYC for both the merchant and the customer."
+    ]
+  },
+  "logo": {
+    "filename": "avaxpolygon.png"
+  },
+  "support": {
+    "homepage": "https:\/\/www.highriskshop.com\/",
+    "docs_url": "https:\/\/www.highriskshop.com\/"
+  },
+  "authors": [
+    {
+      "name": "HighRiskShop.COM",
+      "homepage": "https:\/\/www.highriskshop.com\/"
+    }
+  ]
+}

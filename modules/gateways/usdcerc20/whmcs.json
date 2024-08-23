@@ -1,0 +1,31 @@
+{
+  "schema": "1.0",
+  "type": "whmcs-gateways",
+  "name": "usdcerc20",
+  "license": "proprietary",
+  "category": "payments",
+  "description": {
+    "name": "usdcerc20",
+    "tagline": "USD Coin erc20 Crypto Payment Gateway (No KYC)",
+    "long": "Crypto erc20-usdc Paymnet Gateway with instant payouts to your walllet without KYC ",
+    "features": [
+      "Accept USD Coin erc20 directly on your website",
+      "Unique erc20/usdc receiving address for every order",
+      "Instant payouts settlement to your erc20/usdc wallet",
+      "ZERO KYC for both the merchant and the customer."
+    ]
+  },
+  "logo": {
+    "filename": "usdcerc20.png"
+  },
+  "support": {
+    "homepage": "https:\/\/www.highriskshop.com\/",
+    "docs_url": "https:\/\/www.highriskshop.com\/"
+  },
+  "authors": [
+    {
+      "name": "HighRiskShop.COM",
+      "homepage": "https:\/\/www.highriskshop.com\/"
+    }
+  ]
+}

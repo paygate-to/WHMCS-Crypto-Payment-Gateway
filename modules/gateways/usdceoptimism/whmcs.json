@@ -1,0 +1,31 @@
+{
+  "schema": "1.0",
+  "type": "whmcs-gateways",
+  "name": "usdceoptimism",
+  "license": "proprietary",
+  "category": "payments",
+  "description": {
+    "name": "usdceoptimism",
+    "tagline": "USD Coin (Bridged) optimism Crypto Payment Gateway (No KYC)",
+    "long": "Crypto optimism-usdc.e Paymnet Gateway with instant payouts to your walllet without KYC ",
+    "features": [
+      "Accept USD Coin (Bridged) optimism directly on your website",
+      "Unique optimism/usdc.e receiving address for every order",
+      "Instant payouts settlement to your optimism/usdc.e wallet",
+      "ZERO KYC for both the merchant and the customer."
+    ]
+  },
+  "logo": {
+    "filename": "usdceoptimism.png"
+  },
+  "support": {
+    "homepage": "https:\/\/www.highriskshop.com\/",
+    "docs_url": "https:\/\/www.highriskshop.com\/"
+  },
+  "authors": [
+    {
+      "name": "HighRiskShop.COM",
+      "homepage": "https:\/\/www.highriskshop.com\/"
+    }
+  ]
+}

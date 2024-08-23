@@ -1,0 +1,31 @@
+{
+  "schema": "1.0",
+  "type": "whmcs-gateways",
+  "name": "ethbep20",
+  "license": "proprietary",
+  "category": "payments",
+  "description": {
+    "name": "ethbep20",
+    "tagline": "ETH bep20 Crypto Payment Gateway (No KYC)",
+    "long": "Crypto bep20-eth Paymnet Gateway with instant payouts to your walllet without KYC ",
+    "features": [
+      "Accept ETH bep20 directly on your website",
+      "Unique bep20/eth receiving address for every order",
+      "Instant payouts settlement to your bep20/eth wallet",
+      "ZERO KYC for both the merchant and the customer."
+    ]
+  },
+  "logo": {
+    "filename": "ethbep20.png"
+  },
+  "support": {
+    "homepage": "https:\/\/www.highriskshop.com\/",
+    "docs_url": "https:\/\/www.highriskshop.com\/"
+  },
+  "authors": [
+    {
+      "name": "HighRiskShop.COM",
+      "homepage": "https:\/\/www.highriskshop.com\/"
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "schema": "1.0",
+  "type": "whmcs-gateways",
+  "name": "daibep20",
+  "license": "proprietary",
+  "category": "payments",
+  "description": {
+    "name": "daibep20",
+    "tagline": "Dai Token bep20 Crypto Payment Gateway (No KYC)",
+    "long": "Crypto bep20-dai Paymnet Gateway with instant payouts to your walllet without KYC ",
+    "features": [
+      "Accept Dai Token bep20 directly on your website",
+      "Unique bep20/dai receiving address for every order",
+      "Instant payouts settlement to your bep20/dai wallet",
+      "ZERO KYC for both the merchant and the customer."
+    ]
+  },
+  "logo": {
+    "filename": "daibep20.png"
+  },
+  "support": {
+    "homepage": "https:\/\/www.highriskshop.com\/",
+    "docs_url": "https:\/\/www.highriskshop.com\/"
+  },
+  "authors": [
+    {
+      "name": "HighRiskShop.COM",
+      "homepage": "https:\/\/www.highriskshop.com\/"
+    }
+  ]
+}

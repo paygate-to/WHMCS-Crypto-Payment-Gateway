@@ -1,0 +1,31 @@
+{
+  "schema": "1.0",
+  "type": "whmcs-gateways",
+  "name": "usdcearbitrum",
+  "license": "proprietary",
+  "category": "payments",
+  "description": {
+    "name": "usdcearbitrum",
+    "tagline": "USD Coin (Bridged) arbitrum Crypto Payment Gateway (No KYC)",
+    "long": "Crypto arbitrum-usdc.e Paymnet Gateway with instant payouts to your walllet without KYC ",
+    "features": [
+      "Accept USD Coin (Bridged) arbitrum directly on your website",
+      "Unique arbitrum/usdc.e receiving address for every order",
+      "Instant payouts settlement to your arbitrum/usdc.e wallet",
+      "ZERO KYC for both the merchant and the customer."
+    ]
+  },
+  "logo": {
+    "filename": "usdcearbitrum.png"
+  },
+  "support": {
+    "homepage": "https:\/\/www.highriskshop.com\/",
+    "docs_url": "https:\/\/www.highriskshop.com\/"
+  },
+  "authors": [
+    {
+      "name": "HighRiskShop.COM",
+      "homepage": "https:\/\/www.highriskshop.com\/"
+    }
+  ]
+}

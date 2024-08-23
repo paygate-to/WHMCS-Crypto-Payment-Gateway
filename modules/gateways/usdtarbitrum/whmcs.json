@@ -1,0 +1,31 @@
+{
+  "schema": "1.0",
+  "type": "whmcs-gateways",
+  "name": "usdtarbitrum",
+  "license": "proprietary",
+  "category": "payments",
+  "description": {
+    "name": "usdtarbitrum",
+    "tagline": "USDT arbitrum Crypto Payment Gateway (No KYC)",
+    "long": "Crypto arbitrum-usdt Paymnet Gateway with instant payouts to your walllet without KYC ",
+    "features": [
+      "Accept USDT arbitrum directly on your website",
+      "Unique arbitrum/usdt receiving address for every order",
+      "Instant payouts settlement to your arbitrum/usdt wallet",
+      "ZERO KYC for both the merchant and the customer."
+    ]
+  },
+  "logo": {
+    "filename": "usdtarbitrum.png"
+  },
+  "support": {
+    "homepage": "https:\/\/www.highriskshop.com\/",
+    "docs_url": "https:\/\/www.highriskshop.com\/"
+  },
+  "authors": [
+    {
+      "name": "HighRiskShop.COM",
+      "homepage": "https:\/\/www.highriskshop.com\/"
+    }
+  ]
+}

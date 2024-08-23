@@ -1,0 +1,31 @@
+{
+  "schema": "1.0",
+  "type": "whmcs-gateways",
+  "name": "eurterc20",
+  "license": "proprietary",
+  "category": "payments",
+  "description": {
+    "name": "eurterc20",
+    "tagline": "EURt erc20 Crypto Payment Gateway (No KYC)",
+    "long": "Crypto erc20-eurt Paymnet Gateway with instant payouts to your walllet without KYC ",
+    "features": [
+      "Accept EURt erc20 directly on your website",
+      "Unique erc20/eurt receiving address for every order",
+      "Instant payouts settlement to your erc20/eurt wallet",
+      "ZERO KYC for both the merchant and the customer."
+    ]
+  },
+  "logo": {
+    "filename": "eurterc20.png"
+  },
+  "support": {
+    "homepage": "https:\/\/www.highriskshop.com\/",
+    "docs_url": "https:\/\/www.highriskshop.com\/"
+  },
+  "authors": [
+    {
+      "name": "HighRiskShop.COM",
+      "homepage": "https:\/\/www.highriskshop.com\/"
+    }
+  ]
+}

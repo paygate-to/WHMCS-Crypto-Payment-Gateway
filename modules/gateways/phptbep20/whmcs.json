@@ -1,0 +1,31 @@
+{
+  "schema": "1.0",
+  "type": "whmcs-gateways",
+  "name": "phptbep20",
+  "license": "proprietary",
+  "category": "payments",
+  "description": {
+    "name": "phptbep20",
+    "tagline": "PHPt bep20 Crypto Payment Gateway (No KYC)",
+    "long": "Crypto bep20-phpt Paymnet Gateway with instant payouts to your walllet without KYC ",
+    "features": [
+      "Accept PHPt bep20 directly on your website",
+      "Unique bep20/phpt receiving address for every order",
+      "Instant payouts settlement to your bep20/phpt wallet",
+      "ZERO KYC for both the merchant and the customer."
+    ]
+  },
+  "logo": {
+    "filename": "phptbep20.png"
+  },
+  "support": {
+    "homepage": "https:\/\/www.highriskshop.com\/",
+    "docs_url": "https:\/\/www.highriskshop.com\/"
+  },
+  "authors": [
+    {
+      "name": "HighRiskShop.COM",
+      "homepage": "https:\/\/www.highriskshop.com\/"
+    }
+  ]
+}

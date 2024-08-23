@@ -1,0 +1,31 @@
+{
+  "schema": "1.0",
+  "type": "whmcs-gateways",
+  "name": "verseerc20",
+  "license": "proprietary",
+  "category": "payments",
+  "description": {
+    "name": "verseerc20",
+    "tagline": "Verse erc20 Crypto Payment Gateway (No KYC)",
+    "long": "Crypto erc20-verse Paymnet Gateway with instant payouts to your walllet without KYC ",
+    "features": [
+      "Accept Verse erc20 directly on your website",
+      "Unique erc20/verse receiving address for every order",
+      "Instant payouts settlement to your erc20/verse wallet",
+      "ZERO KYC for both the merchant and the customer."
+    ]
+  },
+  "logo": {
+    "filename": "verseerc20.png"
+  },
+  "support": {
+    "homepage": "https:\/\/www.highriskshop.com\/",
+    "docs_url": "https:\/\/www.highriskshop.com\/"
+  },
+  "authors": [
+    {
+      "name": "HighRiskShop.COM",
+      "homepage": "https:\/\/www.highriskshop.com\/"
+    }
+  ]
+}

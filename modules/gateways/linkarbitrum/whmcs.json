@@ -1,0 +1,31 @@
+{
+  "schema": "1.0",
+  "type": "whmcs-gateways",
+  "name": "linkarbitrum",
+  "license": "proprietary",
+  "category": "payments",
+  "description": {
+    "name": "linkarbitrum",
+    "tagline": "ChainLink Token arbitrum Crypto Payment Gateway (No KYC)",
+    "long": "Crypto arbitrum-link Paymnet Gateway with instant payouts to your walllet without KYC ",
+    "features": [
+      "Accept ChainLink Token arbitrum directly on your website",
+      "Unique arbitrum/link receiving address for every order",
+      "Instant payouts settlement to your arbitrum/link wallet",
+      "ZERO KYC for both the merchant and the customer."
+    ]
+  },
+  "logo": {
+    "filename": "linkarbitrum.png"
+  },
+  "support": {
+    "homepage": "https:\/\/www.highriskshop.com\/",
+    "docs_url": "https:\/\/www.highriskshop.com\/"
+  },
+  "authors": [
+    {
+      "name": "HighRiskShop.COM",
+      "homepage": "https:\/\/www.highriskshop.com\/"
+    }
+  ]
+}

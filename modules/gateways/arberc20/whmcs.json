@@ -1,0 +1,31 @@
+{
+  "schema": "1.0",
+  "type": "whmcs-gateways",
+  "name": "arberc20",
+  "license": "proprietary",
+  "category": "payments",
+  "description": {
+    "name": "arberc20",
+    "tagline": "Arbitrum erc20 Crypto Payment Gateway (No KYC)",
+    "long": "Crypto erc20-arb Paymnet Gateway with instant payouts to your walllet without KYC ",
+    "features": [
+      "Accept Arbitrum erc20 directly on your website",
+      "Unique erc20/arb receiving address for every order",
+      "Instant payouts settlement to your erc20/arb wallet",
+      "ZERO KYC for both the merchant and the customer."
+    ]
+  },
+  "logo": {
+    "filename": "arberc20.png"
+  },
+  "support": {
+    "homepage": "https:\/\/www.highriskshop.com\/",
+    "docs_url": "https:\/\/www.highriskshop.com\/"
+  },
+  "authors": [
+    {
+      "name": "HighRiskShop.COM",
+      "homepage": "https:\/\/www.highriskshop.com\/"
+    }
+  ]
+}
