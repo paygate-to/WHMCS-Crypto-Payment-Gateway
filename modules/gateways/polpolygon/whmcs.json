@@ -1,22 +1,22 @@
 {
   "schema": "1.0",
   "type": "whmcs-gateways",
-  "name": "maticpolygon",
+  "name": "polpolygon",
   "license": "proprietary",
   "category": "payments",
   "description": {
-    "name": "maticpolygon",
-    "tagline": "Matic polygon Crypto Payment Gateway (No KYC)",
-    "long": "Crypto polygon-matic Paymnet Gateway with instant payouts to your walllet without KYC ",
+    "name": "polpolygon",
+    "tagline": "POL Polygon Crypto Payment Gateway (No KYC)",
+    "long": "Crypto polygon-pol Paymnet Gateway with instant payouts to your walllet without KYC ",
     "features": [
-      "Accept Matic polygon directly on your website",
-      "Unique polygon/matic receiving address for every order",
-      "Instant payouts settlement to your polygon/matic wallet",
+      "Accept POL Polygon directly on your website",
+      "Unique polygon/pol receiving address for every order",
+      "Instant payouts settlement to your polygon/pol wallet",
       "ZERO KYC for both the merchant and the customer."
     ]
   },
   "logo": {
-    "filename": "maticpolygon.png"
+    "filename": "polpolygon.png"
   },
   "support": {
     "homepage": "https:\/\/www.highriskshop.com\/",

@@ -50,7 +50,7 @@ die ("Error: Payment could not be processed, invoice has no reference notes data
     // Mark the invoice as paid
     $paymentSuccess = [
         'invoiceid' => $invoiceId,
-        'transid' => 'bep20_matic_TXID_' . $txid_in, // Replace with the actual transaction ID if available
+        'transid' => 'polygon_pol_TXID_' . $txid_in, // Replace with the actual transaction ID if available
         'date' => date('Y-m-d H:i:s'),
     ];
 
