@@ -48,42 +48,42 @@ function arbarbitrum_link($params)
     $systemUrl = rtrim($params['systemurl'], '/');
     $redirectUrl = $systemUrl . '/modules/gateways/callback/arbarbitrum.php';
 	$invoiceLink = $systemUrl . '/viewinvoice.php?id=' . $invoiceId;
-	$hrs_arbarbitrum_currency = $params['currency'];
+	$paygatedotto_arbarbitrum_currency = $params['currency'];
 	$callback_URL = $redirectUrl . '?invoice_id=' . $invoiceId;
 
 		
-$hrs_arbarbitrum_response = file_get_contents('https://api.highriskshop.com/crypto/arbitrum/arb/convert.php?value=' . $amount . '&from=' . strtolower($hrs_arbarbitrum_currency));
+$paygatedotto_arbarbitrum_response = file_get_contents('https://api.paygate.to/crypto/arbitrum/arb/convert.php?value=' . $amount . '&from=' . strtolower($paygatedotto_arbarbitrum_currency));
 
 
-$hrs_arbarbitrum_conversion_resp = json_decode($hrs_arbarbitrum_response, true);
+$paygatedotto_arbarbitrum_conversion_resp = json_decode($paygatedotto_arbarbitrum_response, true);
 
-if ($hrs_arbarbitrum_conversion_resp && isset($hrs_arbarbitrum_conversion_resp['value_coin'])) {
+if ($paygatedotto_arbarbitrum_conversion_resp && isset($paygatedotto_arbarbitrum_conversion_resp['value_coin'])) {
     // Escape output
-    $hrs_arbarbitrum_final_total = $hrs_arbarbitrum_conversion_resp['value_coin'];      
+    $paygatedotto_arbarbitrum_final_total = $paygatedotto_arbarbitrum_conversion_resp['value_coin'];      
 } else {
 	return "Error: Payment could not be processed, please try again (unsupported store currency)";
 }	
 		
 		if ($params['blockchain_fees'] === 'on') {
 			
-	$hrs_arbarbitrum_blockchain_response = file_get_contents('https://api.highriskshop.com/crypto/arbitrum/arb/fees.php');
+	$paygatedotto_arbarbitrum_blockchain_response = file_get_contents('https://api.paygate.to/crypto/arbitrum/arb/fees.php');
 
 
-$hrs_arbarbitrum_blockchain_conversion_resp = json_decode($hrs_arbarbitrum_blockchain_response, true);
+$paygatedotto_arbarbitrum_blockchain_conversion_resp = json_decode($paygatedotto_arbarbitrum_blockchain_response, true);
 
-if ($hrs_arbarbitrum_blockchain_conversion_resp && isset($hrs_arbarbitrum_blockchain_conversion_resp['estimated_cost_currency']['USD'])) {
+if ($paygatedotto_arbarbitrum_blockchain_conversion_resp && isset($paygatedotto_arbarbitrum_blockchain_conversion_resp['estimated_cost_currency']['USD'])) {
     
 	// revert blockchain fees back to ticker price
-$hrs_feerevert_arbarbitrum_response = file_get_contents('https://api.highriskshop.com/crypto/arbitrum/arb/convert.php?value=' . $hrs_arbarbitrum_blockchain_conversion_resp['estimated_cost_currency']['USD'] . '&from=usd');
+$paygatedotto_feerevert_arbarbitrum_response = file_get_contents('https://api.paygate.to/crypto/arbitrum/arb/convert.php?value=' . $paygatedotto_arbarbitrum_blockchain_conversion_resp['estimated_cost_currency']['USD'] . '&from=usd');
 
 
-$hrs_feerevert_arbarbitrum_conversion_resp = json_decode($hrs_feerevert_arbarbitrum_response, true);
+$paygatedotto_feerevert_arbarbitrum_conversion_resp = json_decode($paygatedotto_feerevert_arbarbitrum_response, true);
 
-if ($hrs_feerevert_arbarbitrum_conversion_resp && isset($hrs_feerevert_arbarbitrum_conversion_resp['value_coin'])) {
+if ($paygatedotto_feerevert_arbarbitrum_conversion_resp && isset($paygatedotto_feerevert_arbarbitrum_conversion_resp['value_coin'])) {
     // Escape output
-    $hrs_feerevert_arbarbitrum_final_total = $hrs_feerevert_arbarbitrum_conversion_resp['value_coin']; 
+    $paygatedotto_feerevert_arbarbitrum_final_total = $paygatedotto_feerevert_arbarbitrum_conversion_resp['value_coin']; 
 // output
-    $hrs_arbarbitrum_blockchain_final_total = $hrs_feerevert_arbarbitrum_final_total; 	
+    $paygatedotto_arbarbitrum_blockchain_final_total = $paygatedotto_feerevert_arbarbitrum_final_total; 	
 } else {
 	return "Error: Payment could not be processed, please try again (unable to get estimated cost)";
 }
@@ -92,34 +92,34 @@ if ($hrs_feerevert_arbarbitrum_conversion_resp && isset($hrs_feerevert_arbarbitr
 	return "Error: Payment could not be processed, estimated blockchain cost unavailable";
 }	
 
-    $hrs_arbarbitrum_amount_to_send = $hrs_arbarbitrum_final_total + $hrs_arbarbitrum_blockchain_final_total;		
+    $paygatedotto_arbarbitrum_amount_to_send = $paygatedotto_arbarbitrum_final_total + $paygatedotto_arbarbitrum_blockchain_final_total;		
 	
 		} else {
-	$hrs_arbarbitrum_amount_to_send = $hrs_arbarbitrum_final_total;		
+	$paygatedotto_arbarbitrum_amount_to_send = $paygatedotto_arbarbitrum_final_total;		
 		}
 		
 		
 		
-$hrs_arbarbitrum_gen_wallet = file_get_contents('https://api.highriskshop.com/crypto/arbitrum/arb/wallet.php?address=' . $walletAddress .'&callback=' . urlencode($callback_URL));
+$paygatedotto_arbarbitrum_gen_wallet = file_get_contents('https://api.paygate.to/crypto/arbitrum/arb/wallet.php?address=' . $walletAddress .'&callback=' . urlencode($callback_URL));
 
 
-	$hrs_arbarbitrum_wallet_decbody = json_decode($hrs_arbarbitrum_gen_wallet, true);
+	$paygatedotto_arbarbitrum_wallet_decbody = json_decode($paygatedotto_arbarbitrum_gen_wallet, true);
 
  // Check if decoding was successful
-    if ($hrs_arbarbitrum_wallet_decbody && isset($hrs_arbarbitrum_wallet_decbody['address_in'])) {
+    if ($paygatedotto_arbarbitrum_wallet_decbody && isset($paygatedotto_arbarbitrum_wallet_decbody['address_in'])) {
         // Store the address_in as a variable
-        $hrs_arbarbitrum_gen_addressIn = $hrs_arbarbitrum_wallet_decbody['address_in'];
-		$hrs_arbarbitrum_gen_callback = $hrs_arbarbitrum_wallet_decbody['callback_url'];
+        $paygatedotto_arbarbitrum_gen_addressIn = $paygatedotto_arbarbitrum_wallet_decbody['address_in'];
+		$paygatedotto_arbarbitrum_gen_callback = $paygatedotto_arbarbitrum_wallet_decbody['callback_url'];
 		
-		$hrs_jsonObject = json_encode(array(
-'pay_to_address' => $hrs_arbarbitrum_gen_addressIn,
-'crypto_amount_to_send' => $hrs_arbarbitrum_amount_to_send,
+		$paygatedotto_jsonObject = json_encode(array(
+'pay_to_address' => $paygatedotto_arbarbitrum_gen_addressIn,
+'crypto_amount_to_send' => $paygatedotto_arbarbitrum_amount_to_send,
 'coin_to_send' => 'arbitrum_arb'
 ));
 
 		
 		 // Update the invoice description to include address_in
-            $invoiceDescription = $hrs_jsonObject;
+            $invoiceDescription = $paygatedotto_jsonObject;
 
             // Update the invoice with the new description
             $invoice = localAPI("GetInvoice", array('invoiceid' => $invoiceId), null);
@@ -133,21 +133,21 @@ return "Error: Payment could not be processed, please try again (wallet address 
     }
 	
 	
-        $hrs_arbarbitrum_gen_qrcode = file_get_contents('https://api.highriskshop.com/crypto/arbitrum/arb/qrcode.php?address=' . $hrs_arbarbitrum_gen_addressIn);
+        $paygatedotto_arbarbitrum_gen_qrcode = file_get_contents('https://api.paygate.to/crypto/arbitrum/arb/qrcode.php?address=' . $paygatedotto_arbarbitrum_gen_addressIn);
 
 
-	$hrs_arbarbitrum_qrcode_decbody = json_decode($hrs_arbarbitrum_gen_qrcode, true);
+	$paygatedotto_arbarbitrum_qrcode_decbody = json_decode($paygatedotto_arbarbitrum_gen_qrcode, true);
 
  // Check if decoding was successful
-    if ($hrs_arbarbitrum_qrcode_decbody && isset($hrs_arbarbitrum_qrcode_decbody['qr_code'])) {
+    if ($paygatedotto_arbarbitrum_qrcode_decbody && isset($paygatedotto_arbarbitrum_qrcode_decbody['qr_code'])) {
         // Store the qr_code as a variable
-        $hrs_arbarbitrum_gen_qrcode = $hrs_arbarbitrum_qrcode_decbody['qr_code'];		
+        $paygatedotto_arbarbitrum_gen_qrcode = $paygatedotto_arbarbitrum_qrcode_decbody['qr_code'];		
     } else {
 return "Error: QR code could not be processed, please try again (wallet address error)";
     }
 
         // Properly encode attributes for HTML output
-        return '<div><img src="data:image/png;base64,' . $hrs_arbarbitrum_gen_qrcode . '" alt="' . $hrs_arbarbitrum_gen_addressIn . '"></div><div>Please send <b>' . $hrs_arbarbitrum_amount_to_send . '</b> arbitrum/arb to the address: <br><b>' . $hrs_arbarbitrum_gen_addressIn . '</b></div>';
+        return '<div><img src="data:image/png;base64,' . $paygatedotto_arbarbitrum_gen_qrcode . '" alt="' . $paygatedotto_arbarbitrum_gen_addressIn . '"></div><div>Please send <b>' . $paygatedotto_arbarbitrum_amount_to_send . '</b> arbitrum/arb to the address: <br><b>' . $paygatedotto_arbarbitrum_gen_addressIn . '</b></div>';
 }
 
 function arbarbitrum_activate()

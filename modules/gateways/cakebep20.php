@@ -48,42 +48,42 @@ function cakebep20_link($params)
     $systemUrl = rtrim($params['systemurl'], '/');
     $redirectUrl = $systemUrl . '/modules/gateways/callback/cakebep20.php';
 	$invoiceLink = $systemUrl . '/viewinvoice.php?id=' . $invoiceId;
-	$hrs_cakebep20_currency = $params['currency'];
+	$paygatedotto_cakebep20_currency = $params['currency'];
 	$callback_URL = $redirectUrl . '?invoice_id=' . $invoiceId;
 
 		
-$hrs_cakebep20_response = file_get_contents('https://api.highriskshop.com/crypto/bep20/cake/convert.php?value=' . $amount . '&from=' . strtolower($hrs_cakebep20_currency));
+$paygatedotto_cakebep20_response = file_get_contents('https://api.paygate.to/crypto/bep20/cake/convert.php?value=' . $amount . '&from=' . strtolower($paygatedotto_cakebep20_currency));
 
 
-$hrs_cakebep20_conversion_resp = json_decode($hrs_cakebep20_response, true);
+$paygatedotto_cakebep20_conversion_resp = json_decode($paygatedotto_cakebep20_response, true);
 
-if ($hrs_cakebep20_conversion_resp && isset($hrs_cakebep20_conversion_resp['value_coin'])) {
+if ($paygatedotto_cakebep20_conversion_resp && isset($paygatedotto_cakebep20_conversion_resp['value_coin'])) {
     // Escape output
-    $hrs_cakebep20_final_total = $hrs_cakebep20_conversion_resp['value_coin'];      
+    $paygatedotto_cakebep20_final_total = $paygatedotto_cakebep20_conversion_resp['value_coin'];      
 } else {
 	return "Error: Payment could not be processed, please try again (unsupported store currency)";
 }	
 		
 		if ($params['blockchain_fees'] === 'on') {
 			
-	$hrs_cakebep20_blockchain_response = file_get_contents('https://api.highriskshop.com/crypto/bep20/cake/fees.php');
+	$paygatedotto_cakebep20_blockchain_response = file_get_contents('https://api.paygate.to/crypto/bep20/cake/fees.php');
 
 
-$hrs_cakebep20_blockchain_conversion_resp = json_decode($hrs_cakebep20_blockchain_response, true);
+$paygatedotto_cakebep20_blockchain_conversion_resp = json_decode($paygatedotto_cakebep20_blockchain_response, true);
 
-if ($hrs_cakebep20_blockchain_conversion_resp && isset($hrs_cakebep20_blockchain_conversion_resp['estimated_cost_currency']['USD'])) {
+if ($paygatedotto_cakebep20_blockchain_conversion_resp && isset($paygatedotto_cakebep20_blockchain_conversion_resp['estimated_cost_currency']['USD'])) {
     
 	// revert blockchain fees back to ticker price
-$hrs_feerevert_cakebep20_response = file_get_contents('https://api.highriskshop.com/crypto/bep20/cake/convert.php?value=' . $hrs_cakebep20_blockchain_conversion_resp['estimated_cost_currency']['USD'] . '&from=usd');
+$paygatedotto_feerevert_cakebep20_response = file_get_contents('https://api.paygate.to/crypto/bep20/cake/convert.php?value=' . $paygatedotto_cakebep20_blockchain_conversion_resp['estimated_cost_currency']['USD'] . '&from=usd');
 
 
-$hrs_feerevert_cakebep20_conversion_resp = json_decode($hrs_feerevert_cakebep20_response, true);
+$paygatedotto_feerevert_cakebep20_conversion_resp = json_decode($paygatedotto_feerevert_cakebep20_response, true);
 
-if ($hrs_feerevert_cakebep20_conversion_resp && isset($hrs_feerevert_cakebep20_conversion_resp['value_coin'])) {
+if ($paygatedotto_feerevert_cakebep20_conversion_resp && isset($paygatedotto_feerevert_cakebep20_conversion_resp['value_coin'])) {
     // Escape output
-    $hrs_feerevert_cakebep20_final_total = $hrs_feerevert_cakebep20_conversion_resp['value_coin']; 
+    $paygatedotto_feerevert_cakebep20_final_total = $paygatedotto_feerevert_cakebep20_conversion_resp['value_coin']; 
 // output
-    $hrs_cakebep20_blockchain_final_total = $hrs_feerevert_cakebep20_final_total; 	
+    $paygatedotto_cakebep20_blockchain_final_total = $paygatedotto_feerevert_cakebep20_final_total; 	
 } else {
 	return "Error: Payment could not be processed, please try again (unable to get estimated cost)";
 }
@@ -92,34 +92,34 @@ if ($hrs_feerevert_cakebep20_conversion_resp && isset($hrs_feerevert_cakebep20_c
 	return "Error: Payment could not be processed, estimated blockchain cost unavailable";
 }	
 
-    $hrs_cakebep20_amount_to_send = $hrs_cakebep20_final_total + $hrs_cakebep20_blockchain_final_total;		
+    $paygatedotto_cakebep20_amount_to_send = $paygatedotto_cakebep20_final_total + $paygatedotto_cakebep20_blockchain_final_total;		
 	
 		} else {
-	$hrs_cakebep20_amount_to_send = $hrs_cakebep20_final_total;		
+	$paygatedotto_cakebep20_amount_to_send = $paygatedotto_cakebep20_final_total;		
 		}
 		
 		
 		
-$hrs_cakebep20_gen_wallet = file_get_contents('https://api.highriskshop.com/crypto/bep20/cake/wallet.php?address=' . $walletAddress .'&callback=' . urlencode($callback_URL));
+$paygatedotto_cakebep20_gen_wallet = file_get_contents('https://api.paygate.to/crypto/bep20/cake/wallet.php?address=' . $walletAddress .'&callback=' . urlencode($callback_URL));
 
 
-	$hrs_cakebep20_wallet_decbody = json_decode($hrs_cakebep20_gen_wallet, true);
+	$paygatedotto_cakebep20_wallet_decbody = json_decode($paygatedotto_cakebep20_gen_wallet, true);
 
  // Check if decoding was successful
-    if ($hrs_cakebep20_wallet_decbody && isset($hrs_cakebep20_wallet_decbody['address_in'])) {
+    if ($paygatedotto_cakebep20_wallet_decbody && isset($paygatedotto_cakebep20_wallet_decbody['address_in'])) {
         // Store the address_in as a variable
-        $hrs_cakebep20_gen_addressIn = $hrs_cakebep20_wallet_decbody['address_in'];
-		$hrs_cakebep20_gen_callback = $hrs_cakebep20_wallet_decbody['callback_url'];
+        $paygatedotto_cakebep20_gen_addressIn = $paygatedotto_cakebep20_wallet_decbody['address_in'];
+		$paygatedotto_cakebep20_gen_callback = $paygatedotto_cakebep20_wallet_decbody['callback_url'];
 		
-		$hrs_jsonObject = json_encode(array(
-'pay_to_address' => $hrs_cakebep20_gen_addressIn,
-'crypto_amount_to_send' => $hrs_cakebep20_amount_to_send,
+		$paygatedotto_jsonObject = json_encode(array(
+'pay_to_address' => $paygatedotto_cakebep20_gen_addressIn,
+'crypto_amount_to_send' => $paygatedotto_cakebep20_amount_to_send,
 'coin_to_send' => 'bep20_cake'
 ));
 
 		
 		 // Update the invoice description to include address_in
-            $invoiceDescription = $hrs_jsonObject;
+            $invoiceDescription = $paygatedotto_jsonObject;
 
             // Update the invoice with the new description
             $invoice = localAPI("GetInvoice", array('invoiceid' => $invoiceId), null);
@@ -133,21 +133,21 @@ return "Error: Payment could not be processed, please try again (wallet address 
     }
 	
 	
-        $hrs_cakebep20_gen_qrcode = file_get_contents('https://api.highriskshop.com/crypto/bep20/cake/qrcode.php?address=' . $hrs_cakebep20_gen_addressIn);
+        $paygatedotto_cakebep20_gen_qrcode = file_get_contents('https://api.paygate.to/crypto/bep20/cake/qrcode.php?address=' . $paygatedotto_cakebep20_gen_addressIn);
 
 
-	$hrs_cakebep20_qrcode_decbody = json_decode($hrs_cakebep20_gen_qrcode, true);
+	$paygatedotto_cakebep20_qrcode_decbody = json_decode($paygatedotto_cakebep20_gen_qrcode, true);
 
  // Check if decoding was successful
-    if ($hrs_cakebep20_qrcode_decbody && isset($hrs_cakebep20_qrcode_decbody['qr_code'])) {
+    if ($paygatedotto_cakebep20_qrcode_decbody && isset($paygatedotto_cakebep20_qrcode_decbody['qr_code'])) {
         // Store the qr_code as a variable
-        $hrs_cakebep20_gen_qrcode = $hrs_cakebep20_qrcode_decbody['qr_code'];		
+        $paygatedotto_cakebep20_gen_qrcode = $paygatedotto_cakebep20_qrcode_decbody['qr_code'];		
     } else {
 return "Error: QR code could not be processed, please try again (wallet address error)";
     }
 
         // Properly encode attributes for HTML output
-        return '<div><img src="data:image/png;base64,' . $hrs_cakebep20_gen_qrcode . '" alt="' . $hrs_cakebep20_gen_addressIn . '"></div><div>Please send <b>' . $hrs_cakebep20_amount_to_send . '</b> bep20/cake to the address: <br><b>' . $hrs_cakebep20_gen_addressIn . '</b></div>';
+        return '<div><img src="data:image/png;base64,' . $paygatedotto_cakebep20_gen_qrcode . '" alt="' . $paygatedotto_cakebep20_gen_addressIn . '"></div><div>Please send <b>' . $paygatedotto_cakebep20_amount_to_send . '</b> bep20/cake to the address: <br><b>' . $paygatedotto_cakebep20_gen_addressIn . '</b></div>';
 }
 
 function cakebep20_activate()

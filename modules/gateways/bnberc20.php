@@ -48,42 +48,42 @@ function bnberc20_link($params)
     $systemUrl = rtrim($params['systemurl'], '/');
     $redirectUrl = $systemUrl . '/modules/gateways/callback/bnberc20.php';
 	$invoiceLink = $systemUrl . '/viewinvoice.php?id=' . $invoiceId;
-	$hrs_bnberc20_currency = $params['currency'];
+	$paygatedotto_bnberc20_currency = $params['currency'];
 	$callback_URL = $redirectUrl . '?invoice_id=' . $invoiceId;
 
 		
-$hrs_bnberc20_response = file_get_contents('https://api.highriskshop.com/crypto/erc20/bnb/convert.php?value=' . $amount . '&from=' . strtolower($hrs_bnberc20_currency));
+$paygatedotto_bnberc20_response = file_get_contents('https://api.paygate.to/crypto/erc20/bnb/convert.php?value=' . $amount . '&from=' . strtolower($paygatedotto_bnberc20_currency));
 
 
-$hrs_bnberc20_conversion_resp = json_decode($hrs_bnberc20_response, true);
+$paygatedotto_bnberc20_conversion_resp = json_decode($paygatedotto_bnberc20_response, true);
 
-if ($hrs_bnberc20_conversion_resp && isset($hrs_bnberc20_conversion_resp['value_coin'])) {
+if ($paygatedotto_bnberc20_conversion_resp && isset($paygatedotto_bnberc20_conversion_resp['value_coin'])) {
     // Escape output
-    $hrs_bnberc20_final_total = $hrs_bnberc20_conversion_resp['value_coin'];      
+    $paygatedotto_bnberc20_final_total = $paygatedotto_bnberc20_conversion_resp['value_coin'];      
 } else {
 	return "Error: Payment could not be processed, please try again (unsupported store currency)";
 }	
 		
 		if ($params['blockchain_fees'] === 'on') {
 			
-	$hrs_bnberc20_blockchain_response = file_get_contents('https://api.highriskshop.com/crypto/erc20/bnb/fees.php');
+	$paygatedotto_bnberc20_blockchain_response = file_get_contents('https://api.paygate.to/crypto/erc20/bnb/fees.php');
 
 
-$hrs_bnberc20_blockchain_conversion_resp = json_decode($hrs_bnberc20_blockchain_response, true);
+$paygatedotto_bnberc20_blockchain_conversion_resp = json_decode($paygatedotto_bnberc20_blockchain_response, true);
 
-if ($hrs_bnberc20_blockchain_conversion_resp && isset($hrs_bnberc20_blockchain_conversion_resp['estimated_cost_currency']['USD'])) {
+if ($paygatedotto_bnberc20_blockchain_conversion_resp && isset($paygatedotto_bnberc20_blockchain_conversion_resp['estimated_cost_currency']['USD'])) {
     
 	// revert blockchain fees back to ticker price
-$hrs_feerevert_bnberc20_response = file_get_contents('https://api.highriskshop.com/crypto/erc20/bnb/convert.php?value=' . $hrs_bnberc20_blockchain_conversion_resp['estimated_cost_currency']['USD'] . '&from=usd');
+$paygatedotto_feerevert_bnberc20_response = file_get_contents('https://api.paygate.to/crypto/erc20/bnb/convert.php?value=' . $paygatedotto_bnberc20_blockchain_conversion_resp['estimated_cost_currency']['USD'] . '&from=usd');
 
 
-$hrs_feerevert_bnberc20_conversion_resp = json_decode($hrs_feerevert_bnberc20_response, true);
+$paygatedotto_feerevert_bnberc20_conversion_resp = json_decode($paygatedotto_feerevert_bnberc20_response, true);
 
-if ($hrs_feerevert_bnberc20_conversion_resp && isset($hrs_feerevert_bnberc20_conversion_resp['value_coin'])) {
+if ($paygatedotto_feerevert_bnberc20_conversion_resp && isset($paygatedotto_feerevert_bnberc20_conversion_resp['value_coin'])) {
     // Escape output
-    $hrs_feerevert_bnberc20_final_total = $hrs_feerevert_bnberc20_conversion_resp['value_coin']; 
+    $paygatedotto_feerevert_bnberc20_final_total = $paygatedotto_feerevert_bnberc20_conversion_resp['value_coin']; 
 // output
-    $hrs_bnberc20_blockchain_final_total = $hrs_feerevert_bnberc20_final_total; 	
+    $paygatedotto_bnberc20_blockchain_final_total = $paygatedotto_feerevert_bnberc20_final_total; 	
 } else {
 	return "Error: Payment could not be processed, please try again (unable to get estimated cost)";
 }
@@ -92,34 +92,34 @@ if ($hrs_feerevert_bnberc20_conversion_resp && isset($hrs_feerevert_bnberc20_con
 	return "Error: Payment could not be processed, estimated blockchain cost unavailable";
 }	
 
-    $hrs_bnberc20_amount_to_send = $hrs_bnberc20_final_total + $hrs_bnberc20_blockchain_final_total;		
+    $paygatedotto_bnberc20_amount_to_send = $paygatedotto_bnberc20_final_total + $paygatedotto_bnberc20_blockchain_final_total;		
 	
 		} else {
-	$hrs_bnberc20_amount_to_send = $hrs_bnberc20_final_total;		
+	$paygatedotto_bnberc20_amount_to_send = $paygatedotto_bnberc20_final_total;		
 		}
 		
 		
 		
-$hrs_bnberc20_gen_wallet = file_get_contents('https://api.highriskshop.com/crypto/erc20/bnb/wallet.php?address=' . $walletAddress .'&callback=' . urlencode($callback_URL));
+$paygatedotto_bnberc20_gen_wallet = file_get_contents('https://api.paygate.to/crypto/erc20/bnb/wallet.php?address=' . $walletAddress .'&callback=' . urlencode($callback_URL));
 
 
-	$hrs_bnberc20_wallet_decbody = json_decode($hrs_bnberc20_gen_wallet, true);
+	$paygatedotto_bnberc20_wallet_decbody = json_decode($paygatedotto_bnberc20_gen_wallet, true);
 
  // Check if decoding was successful
-    if ($hrs_bnberc20_wallet_decbody && isset($hrs_bnberc20_wallet_decbody['address_in'])) {
+    if ($paygatedotto_bnberc20_wallet_decbody && isset($paygatedotto_bnberc20_wallet_decbody['address_in'])) {
         // Store the address_in as a variable
-        $hrs_bnberc20_gen_addressIn = $hrs_bnberc20_wallet_decbody['address_in'];
-		$hrs_bnberc20_gen_callback = $hrs_bnberc20_wallet_decbody['callback_url'];
+        $paygatedotto_bnberc20_gen_addressIn = $paygatedotto_bnberc20_wallet_decbody['address_in'];
+		$paygatedotto_bnberc20_gen_callback = $paygatedotto_bnberc20_wallet_decbody['callback_url'];
 		
-		$hrs_jsonObject = json_encode(array(
-'pay_to_address' => $hrs_bnberc20_gen_addressIn,
-'crypto_amount_to_send' => $hrs_bnberc20_amount_to_send,
+		$paygatedotto_jsonObject = json_encode(array(
+'pay_to_address' => $paygatedotto_bnberc20_gen_addressIn,
+'crypto_amount_to_send' => $paygatedotto_bnberc20_amount_to_send,
 'coin_to_send' => 'erc20_bnb'
 ));
 
 		
 		 // Update the invoice description to include address_in
-            $invoiceDescription = $hrs_jsonObject;
+            $invoiceDescription = $paygatedotto_jsonObject;
 
             // Update the invoice with the new description
             $invoice = localAPI("GetInvoice", array('invoiceid' => $invoiceId), null);
@@ -133,21 +133,21 @@ return "Error: Payment could not be processed, please try again (wallet address 
     }
 	
 	
-        $hrs_bnberc20_gen_qrcode = file_get_contents('https://api.highriskshop.com/crypto/erc20/bnb/qrcode.php?address=' . $hrs_bnberc20_gen_addressIn);
+        $paygatedotto_bnberc20_gen_qrcode = file_get_contents('https://api.paygate.to/crypto/erc20/bnb/qrcode.php?address=' . $paygatedotto_bnberc20_gen_addressIn);
 
 
-	$hrs_bnberc20_qrcode_decbody = json_decode($hrs_bnberc20_gen_qrcode, true);
+	$paygatedotto_bnberc20_qrcode_decbody = json_decode($paygatedotto_bnberc20_gen_qrcode, true);
 
  // Check if decoding was successful
-    if ($hrs_bnberc20_qrcode_decbody && isset($hrs_bnberc20_qrcode_decbody['qr_code'])) {
+    if ($paygatedotto_bnberc20_qrcode_decbody && isset($paygatedotto_bnberc20_qrcode_decbody['qr_code'])) {
         // Store the qr_code as a variable
-        $hrs_bnberc20_gen_qrcode = $hrs_bnberc20_qrcode_decbody['qr_code'];		
+        $paygatedotto_bnberc20_gen_qrcode = $paygatedotto_bnberc20_qrcode_decbody['qr_code'];		
     } else {
 return "Error: QR code could not be processed, please try again (wallet address error)";
     }
 
         // Properly encode attributes for HTML output
-        return '<div><img src="data:image/png;base64,' . $hrs_bnberc20_gen_qrcode . '" alt="' . $hrs_bnberc20_gen_addressIn . '"></div><div>Please send <b>' . $hrs_bnberc20_amount_to_send . '</b> erc20/bnb to the address: <br><b>' . $hrs_bnberc20_gen_addressIn . '</b></div>';
+        return '<div><img src="data:image/png;base64,' . $paygatedotto_bnberc20_gen_qrcode . '" alt="' . $paygatedotto_bnberc20_gen_addressIn . '"></div><div>Please send <b>' . $paygatedotto_bnberc20_amount_to_send . '</b> erc20/bnb to the address: <br><b>' . $paygatedotto_bnberc20_gen_addressIn . '</b></div>';
 }
 
 function bnberc20_activate()

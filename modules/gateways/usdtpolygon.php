@@ -48,42 +48,42 @@ function usdtpolygon_link($params)
     $systemUrl = rtrim($params['systemurl'], '/');
     $redirectUrl = $systemUrl . '/modules/gateways/callback/usdtpolygon.php';
 	$invoiceLink = $systemUrl . '/viewinvoice.php?id=' . $invoiceId;
-	$hrs_usdtpolygon_currency = $params['currency'];
+	$paygatedotto_usdtpolygon_currency = $params['currency'];
 	$callback_URL = $redirectUrl . '?invoice_id=' . $invoiceId;
 
 		
-$hrs_usdtpolygon_response = file_get_contents('https://api.highriskshop.com/crypto/polygon/usdt/convert.php?value=' . $amount . '&from=' . strtolower($hrs_usdtpolygon_currency));
+$paygatedotto_usdtpolygon_response = file_get_contents('https://api.paygate.to/crypto/polygon/usdt/convert.php?value=' . $amount . '&from=' . strtolower($paygatedotto_usdtpolygon_currency));
 
 
-$hrs_usdtpolygon_conversion_resp = json_decode($hrs_usdtpolygon_response, true);
+$paygatedotto_usdtpolygon_conversion_resp = json_decode($paygatedotto_usdtpolygon_response, true);
 
-if ($hrs_usdtpolygon_conversion_resp && isset($hrs_usdtpolygon_conversion_resp['value_coin'])) {
+if ($paygatedotto_usdtpolygon_conversion_resp && isset($paygatedotto_usdtpolygon_conversion_resp['value_coin'])) {
     // Escape output
-    $hrs_usdtpolygon_final_total = $hrs_usdtpolygon_conversion_resp['value_coin'];      
+    $paygatedotto_usdtpolygon_final_total = $paygatedotto_usdtpolygon_conversion_resp['value_coin'];      
 } else {
 	return "Error: Payment could not be processed, please try again (unsupported store currency)";
 }	
 		
 		if ($params['blockchain_fees'] === 'on') {
 			
-	$hrs_usdtpolygon_blockchain_response = file_get_contents('https://api.highriskshop.com/crypto/polygon/usdt/fees.php');
+	$paygatedotto_usdtpolygon_blockchain_response = file_get_contents('https://api.paygate.to/crypto/polygon/usdt/fees.php');
 
 
-$hrs_usdtpolygon_blockchain_conversion_resp = json_decode($hrs_usdtpolygon_blockchain_response, true);
+$paygatedotto_usdtpolygon_blockchain_conversion_resp = json_decode($paygatedotto_usdtpolygon_blockchain_response, true);
 
-if ($hrs_usdtpolygon_blockchain_conversion_resp && isset($hrs_usdtpolygon_blockchain_conversion_resp['estimated_cost_currency']['USD'])) {
+if ($paygatedotto_usdtpolygon_blockchain_conversion_resp && isset($paygatedotto_usdtpolygon_blockchain_conversion_resp['estimated_cost_currency']['USD'])) {
     
 	// revert blockchain fees back to ticker price
-$hrs_feerevert_usdtpolygon_response = file_get_contents('https://api.highriskshop.com/crypto/polygon/usdt/convert.php?value=' . $hrs_usdtpolygon_blockchain_conversion_resp['estimated_cost_currency']['USD'] . '&from=usd');
+$paygatedotto_feerevert_usdtpolygon_response = file_get_contents('https://api.paygate.to/crypto/polygon/usdt/convert.php?value=' . $paygatedotto_usdtpolygon_blockchain_conversion_resp['estimated_cost_currency']['USD'] . '&from=usd');
 
 
-$hrs_feerevert_usdtpolygon_conversion_resp = json_decode($hrs_feerevert_usdtpolygon_response, true);
+$paygatedotto_feerevert_usdtpolygon_conversion_resp = json_decode($paygatedotto_feerevert_usdtpolygon_response, true);
 
-if ($hrs_feerevert_usdtpolygon_conversion_resp && isset($hrs_feerevert_usdtpolygon_conversion_resp['value_coin'])) {
+if ($paygatedotto_feerevert_usdtpolygon_conversion_resp && isset($paygatedotto_feerevert_usdtpolygon_conversion_resp['value_coin'])) {
     // Escape output
-    $hrs_feerevert_usdtpolygon_final_total = $hrs_feerevert_usdtpolygon_conversion_resp['value_coin']; 
+    $paygatedotto_feerevert_usdtpolygon_final_total = $paygatedotto_feerevert_usdtpolygon_conversion_resp['value_coin']; 
 // output
-    $hrs_usdtpolygon_blockchain_final_total = $hrs_feerevert_usdtpolygon_final_total; 	
+    $paygatedotto_usdtpolygon_blockchain_final_total = $paygatedotto_feerevert_usdtpolygon_final_total; 	
 } else {
 	return "Error: Payment could not be processed, please try again (unable to get estimated cost)";
 }
@@ -92,34 +92,34 @@ if ($hrs_feerevert_usdtpolygon_conversion_resp && isset($hrs_feerevert_usdtpolyg
 	return "Error: Payment could not be processed, estimated blockchain cost unavailable";
 }	
 
-    $hrs_usdtpolygon_amount_to_send = $hrs_usdtpolygon_final_total + $hrs_usdtpolygon_blockchain_final_total;		
+    $paygatedotto_usdtpolygon_amount_to_send = $paygatedotto_usdtpolygon_final_total + $paygatedotto_usdtpolygon_blockchain_final_total;		
 	
 		} else {
-	$hrs_usdtpolygon_amount_to_send = $hrs_usdtpolygon_final_total;		
+	$paygatedotto_usdtpolygon_amount_to_send = $paygatedotto_usdtpolygon_final_total;		
 		}
 		
 		
 		
-$hrs_usdtpolygon_gen_wallet = file_get_contents('https://api.highriskshop.com/crypto/polygon/usdt/wallet.php?address=' . $walletAddress .'&callback=' . urlencode($callback_URL));
+$paygatedotto_usdtpolygon_gen_wallet = file_get_contents('https://api.paygate.to/crypto/polygon/usdt/wallet.php?address=' . $walletAddress .'&callback=' . urlencode($callback_URL));
 
 
-	$hrs_usdtpolygon_wallet_decbody = json_decode($hrs_usdtpolygon_gen_wallet, true);
+	$paygatedotto_usdtpolygon_wallet_decbody = json_decode($paygatedotto_usdtpolygon_gen_wallet, true);
 
  // Check if decoding was successful
-    if ($hrs_usdtpolygon_wallet_decbody && isset($hrs_usdtpolygon_wallet_decbody['address_in'])) {
+    if ($paygatedotto_usdtpolygon_wallet_decbody && isset($paygatedotto_usdtpolygon_wallet_decbody['address_in'])) {
         // Store the address_in as a variable
-        $hrs_usdtpolygon_gen_addressIn = $hrs_usdtpolygon_wallet_decbody['address_in'];
-		$hrs_usdtpolygon_gen_callback = $hrs_usdtpolygon_wallet_decbody['callback_url'];
+        $paygatedotto_usdtpolygon_gen_addressIn = $paygatedotto_usdtpolygon_wallet_decbody['address_in'];
+		$paygatedotto_usdtpolygon_gen_callback = $paygatedotto_usdtpolygon_wallet_decbody['callback_url'];
 		
-		$hrs_jsonObject = json_encode(array(
-'pay_to_address' => $hrs_usdtpolygon_gen_addressIn,
-'crypto_amount_to_send' => $hrs_usdtpolygon_amount_to_send,
+		$paygatedotto_jsonObject = json_encode(array(
+'pay_to_address' => $paygatedotto_usdtpolygon_gen_addressIn,
+'crypto_amount_to_send' => $paygatedotto_usdtpolygon_amount_to_send,
 'coin_to_send' => 'polygon_usdt'
 ));
 
 		
 		 // Update the invoice description to include address_in
-            $invoiceDescription = $hrs_jsonObject;
+            $invoiceDescription = $paygatedotto_jsonObject;
 
             // Update the invoice with the new description
             $invoice = localAPI("GetInvoice", array('invoiceid' => $invoiceId), null);
@@ -133,21 +133,21 @@ return "Error: Payment could not be processed, please try again (wallet address 
     }
 	
 	
-        $hrs_usdtpolygon_gen_qrcode = file_get_contents('https://api.highriskshop.com/crypto/polygon/usdt/qrcode.php?address=' . $hrs_usdtpolygon_gen_addressIn);
+        $paygatedotto_usdtpolygon_gen_qrcode = file_get_contents('https://api.paygate.to/crypto/polygon/usdt/qrcode.php?address=' . $paygatedotto_usdtpolygon_gen_addressIn);
 
 
-	$hrs_usdtpolygon_qrcode_decbody = json_decode($hrs_usdtpolygon_gen_qrcode, true);
+	$paygatedotto_usdtpolygon_qrcode_decbody = json_decode($paygatedotto_usdtpolygon_gen_qrcode, true);
 
  // Check if decoding was successful
-    if ($hrs_usdtpolygon_qrcode_decbody && isset($hrs_usdtpolygon_qrcode_decbody['qr_code'])) {
+    if ($paygatedotto_usdtpolygon_qrcode_decbody && isset($paygatedotto_usdtpolygon_qrcode_decbody['qr_code'])) {
         // Store the qr_code as a variable
-        $hrs_usdtpolygon_gen_qrcode = $hrs_usdtpolygon_qrcode_decbody['qr_code'];		
+        $paygatedotto_usdtpolygon_gen_qrcode = $paygatedotto_usdtpolygon_qrcode_decbody['qr_code'];		
     } else {
 return "Error: QR code could not be processed, please try again (wallet address error)";
     }
 
         // Properly encode attributes for HTML output
-        return '<div><img src="data:image/png;base64,' . $hrs_usdtpolygon_gen_qrcode . '" alt="' . $hrs_usdtpolygon_gen_addressIn . '"></div><div>Please send <b>' . $hrs_usdtpolygon_amount_to_send . '</b> polygon/usdt to the address: <br><b>' . $hrs_usdtpolygon_gen_addressIn . '</b></div>';
+        return '<div><img src="data:image/png;base64,' . $paygatedotto_usdtpolygon_gen_qrcode . '" alt="' . $paygatedotto_usdtpolygon_gen_addressIn . '"></div><div>Please send <b>' . $paygatedotto_usdtpolygon_amount_to_send . '</b> polygon/usdt to the address: <br><b>' . $paygatedotto_usdtpolygon_gen_addressIn . '</b></div>';
 }
 
 function usdtpolygon_activate()

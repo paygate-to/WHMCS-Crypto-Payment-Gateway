@@ -48,42 +48,42 @@ function polpolygon_link($params)
     $systemUrl = rtrim($params['systemurl'], '/');
     $redirectUrl = $systemUrl . '/modules/gateways/callback/polpolygon.php';
 	$invoiceLink = $systemUrl . '/viewinvoice.php?id=' . $invoiceId;
-	$hrs_polpolygon_currency = $params['currency'];
+	$paygatedotto_polpolygon_currency = $params['currency'];
 	$callback_URL = $redirectUrl . '?invoice_id=' . $invoiceId;
 
 		
-$hrs_polpolygon_response = file_get_contents('https://api.highriskshop.com/crypto/polygon/pol/convert.php?value=' . $amount . '&from=' . strtolower($hrs_polpolygon_currency));
+$paygatedotto_polpolygon_response = file_get_contents('https://api.paygate.to/crypto/polygon/pol/convert.php?value=' . $amount . '&from=' . strtolower($paygatedotto_polpolygon_currency));
 
 
-$hrs_polpolygon_conversion_resp = json_decode($hrs_polpolygon_response, true);
+$paygatedotto_polpolygon_conversion_resp = json_decode($paygatedotto_polpolygon_response, true);
 
-if ($hrs_polpolygon_conversion_resp && isset($hrs_polpolygon_conversion_resp['value_coin'])) {
+if ($paygatedotto_polpolygon_conversion_resp && isset($paygatedotto_polpolygon_conversion_resp['value_coin'])) {
     // Escape output
-    $hrs_polpolygon_final_total = $hrs_polpolygon_conversion_resp['value_coin'];      
+    $paygatedotto_polpolygon_final_total = $paygatedotto_polpolygon_conversion_resp['value_coin'];      
 } else {
 	return "Error: Payment could not be processed, please try again (unsupported store currency)";
 }	
 		
 		if ($params['blockchain_fees'] === 'on') {
 			
-	$hrs_polpolygon_blockchain_response = file_get_contents('https://api.highriskshop.com/crypto/polygon/pol/fees.php');
+	$paygatedotto_polpolygon_blockchain_response = file_get_contents('https://api.paygate.to/crypto/polygon/pol/fees.php');
 
 
-$hrs_polpolygon_blockchain_conversion_resp = json_decode($hrs_polpolygon_blockchain_response, true);
+$paygatedotto_polpolygon_blockchain_conversion_resp = json_decode($paygatedotto_polpolygon_blockchain_response, true);
 
-if ($hrs_polpolygon_blockchain_conversion_resp && isset($hrs_polpolygon_blockchain_conversion_resp['estimated_cost_currency']['USD'])) {
+if ($paygatedotto_polpolygon_blockchain_conversion_resp && isset($paygatedotto_polpolygon_blockchain_conversion_resp['estimated_cost_currency']['USD'])) {
     
 	// revert blockchain fees back to ticker price
-$hrs_feerevert_polpolygon_response = file_get_contents('https://api.highriskshop.com/crypto/polygon/pol/convert.php?value=' . $hrs_polpolygon_blockchain_conversion_resp['estimated_cost_currency']['USD'] . '&from=usd');
+$paygatedotto_feerevert_polpolygon_response = file_get_contents('https://api.paygate.to/crypto/polygon/pol/convert.php?value=' . $paygatedotto_polpolygon_blockchain_conversion_resp['estimated_cost_currency']['USD'] . '&from=usd');
 
 
-$hrs_feerevert_polpolygon_conversion_resp = json_decode($hrs_feerevert_polpolygon_response, true);
+$paygatedotto_feerevert_polpolygon_conversion_resp = json_decode($paygatedotto_feerevert_polpolygon_response, true);
 
-if ($hrs_feerevert_polpolygon_conversion_resp && isset($hrs_feerevert_polpolygon_conversion_resp['value_coin'])) {
+if ($paygatedotto_feerevert_polpolygon_conversion_resp && isset($paygatedotto_feerevert_polpolygon_conversion_resp['value_coin'])) {
     // Escape output
-    $hrs_feerevert_polpolygon_final_total = $hrs_feerevert_polpolygon_conversion_resp['value_coin']; 
+    $paygatedotto_feerevert_polpolygon_final_total = $paygatedotto_feerevert_polpolygon_conversion_resp['value_coin']; 
 // output
-    $hrs_polpolygon_blockchain_final_total = $hrs_feerevert_polpolygon_final_total; 	
+    $paygatedotto_polpolygon_blockchain_final_total = $paygatedotto_feerevert_polpolygon_final_total; 	
 } else {
 	return "Error: Payment could not be processed, please try again (unable to get estimated cost)";
 }
@@ -92,34 +92,34 @@ if ($hrs_feerevert_polpolygon_conversion_resp && isset($hrs_feerevert_polpolygon
 	return "Error: Payment could not be processed, estimated blockchain cost unavailable";
 }	
 
-    $hrs_polpolygon_amount_to_send = $hrs_polpolygon_final_total + $hrs_polpolygon_blockchain_final_total;		
+    $paygatedotto_polpolygon_amount_to_send = $paygatedotto_polpolygon_final_total + $paygatedotto_polpolygon_blockchain_final_total;		
 	
 		} else {
-	$hrs_polpolygon_amount_to_send = $hrs_polpolygon_final_total;		
+	$paygatedotto_polpolygon_amount_to_send = $paygatedotto_polpolygon_final_total;		
 		}
 		
 		
 		
-$hrs_polpolygon_gen_wallet = file_get_contents('https://api.highriskshop.com/crypto/polygon/pol/wallet.php?address=' . $walletAddress .'&callback=' . urlencode($callback_URL));
+$paygatedotto_polpolygon_gen_wallet = file_get_contents('https://api.paygate.to/crypto/polygon/pol/wallet.php?address=' . $walletAddress .'&callback=' . urlencode($callback_URL));
 
 
-	$hrs_polpolygon_wallet_decbody = json_decode($hrs_polpolygon_gen_wallet, true);
+	$paygatedotto_polpolygon_wallet_decbody = json_decode($paygatedotto_polpolygon_gen_wallet, true);
 
  // Check if decoding was successful
-    if ($hrs_polpolygon_wallet_decbody && isset($hrs_polpolygon_wallet_decbody['address_in'])) {
+    if ($paygatedotto_polpolygon_wallet_decbody && isset($paygatedotto_polpolygon_wallet_decbody['address_in'])) {
         // Store the address_in as a variable
-        $hrs_polpolygon_gen_addressIn = $hrs_polpolygon_wallet_decbody['address_in'];
-		$hrs_polpolygon_gen_callback = $hrs_polpolygon_wallet_decbody['callback_url'];
+        $paygatedotto_polpolygon_gen_addressIn = $paygatedotto_polpolygon_wallet_decbody['address_in'];
+		$paygatedotto_polpolygon_gen_callback = $paygatedotto_polpolygon_wallet_decbody['callback_url'];
 		
-		$hrs_jsonObject = json_encode(array(
-'pay_to_address' => $hrs_polpolygon_gen_addressIn,
-'crypto_amount_to_send' => $hrs_polpolygon_amount_to_send,
+		$paygatedotto_jsonObject = json_encode(array(
+'pay_to_address' => $paygatedotto_polpolygon_gen_addressIn,
+'crypto_amount_to_send' => $paygatedotto_polpolygon_amount_to_send,
 'coin_to_send' => 'polygon_pol'
 ));
 
 		
 		 // Update the invoice description to include address_in
-            $invoiceDescription = $hrs_jsonObject;
+            $invoiceDescription = $paygatedotto_jsonObject;
 
             // Update the invoice with the new description
             $invoice = localAPI("GetInvoice", array('invoiceid' => $invoiceId), null);
@@ -133,21 +133,21 @@ return "Error: Payment could not be processed, please try again (wallet address 
     }
 	
 	
-        $hrs_polpolygon_gen_qrcode = file_get_contents('https://api.highriskshop.com/crypto/polygon/pol/qrcode.php?address=' . $hrs_polpolygon_gen_addressIn);
+        $paygatedotto_polpolygon_gen_qrcode = file_get_contents('https://api.paygate.to/crypto/polygon/pol/qrcode.php?address=' . $paygatedotto_polpolygon_gen_addressIn);
 
 
-	$hrs_polpolygon_qrcode_decbody = json_decode($hrs_polpolygon_gen_qrcode, true);
+	$paygatedotto_polpolygon_qrcode_decbody = json_decode($paygatedotto_polpolygon_gen_qrcode, true);
 
  // Check if decoding was successful
-    if ($hrs_polpolygon_qrcode_decbody && isset($hrs_polpolygon_qrcode_decbody['qr_code'])) {
+    if ($paygatedotto_polpolygon_qrcode_decbody && isset($paygatedotto_polpolygon_qrcode_decbody['qr_code'])) {
         // Store the qr_code as a variable
-        $hrs_polpolygon_gen_qrcode = $hrs_polpolygon_qrcode_decbody['qr_code'];		
+        $paygatedotto_polpolygon_gen_qrcode = $paygatedotto_polpolygon_qrcode_decbody['qr_code'];		
     } else {
 return "Error: QR code could not be processed, please try again (wallet address error)";
     }
 
         // Properly encode attributes for HTML output
-        return '<div><img src="data:image/png;base64,' . $hrs_polpolygon_gen_qrcode . '" alt="' . $hrs_polpolygon_gen_addressIn . '"></div><div>Please send <b>' . $hrs_polpolygon_amount_to_send . '</b> polygon/pol to the address: <br><b>' . $hrs_polpolygon_gen_addressIn . '</b></div>';
+        return '<div><img src="data:image/png;base64,' . $paygatedotto_polpolygon_gen_qrcode . '" alt="' . $paygatedotto_polpolygon_gen_addressIn . '"></div><div>Please send <b>' . $paygatedotto_polpolygon_amount_to_send . '</b> polygon/pol to the address: <br><b>' . $paygatedotto_polpolygon_gen_addressIn . '</b></div>';
 }
 
 function polpolygon_activate()

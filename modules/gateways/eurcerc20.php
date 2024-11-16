@@ -48,42 +48,42 @@ function eurcerc20_link($params)
     $systemUrl = rtrim($params['systemurl'], '/');
     $redirectUrl = $systemUrl . '/modules/gateways/callback/eurcerc20.php';
 	$invoiceLink = $systemUrl . '/viewinvoice.php?id=' . $invoiceId;
-	$hrs_eurcerc20_currency = $params['currency'];
+	$paygatedotto_eurcerc20_currency = $params['currency'];
 	$callback_URL = $redirectUrl . '?invoice_id=' . $invoiceId;
 
 		
-$hrs_eurcerc20_response = file_get_contents('https://api.highriskshop.com/crypto/erc20/eurc/convert.php?value=' . $amount . '&from=' . strtolower($hrs_eurcerc20_currency));
+$paygatedotto_eurcerc20_response = file_get_contents('https://api.paygate.to/crypto/erc20/eurc/convert.php?value=' . $amount . '&from=' . strtolower($paygatedotto_eurcerc20_currency));
 
 
-$hrs_eurcerc20_conversion_resp = json_decode($hrs_eurcerc20_response, true);
+$paygatedotto_eurcerc20_conversion_resp = json_decode($paygatedotto_eurcerc20_response, true);
 
-if ($hrs_eurcerc20_conversion_resp && isset($hrs_eurcerc20_conversion_resp['value_coin'])) {
+if ($paygatedotto_eurcerc20_conversion_resp && isset($paygatedotto_eurcerc20_conversion_resp['value_coin'])) {
     // Escape output
-    $hrs_eurcerc20_final_total = $hrs_eurcerc20_conversion_resp['value_coin'];      
+    $paygatedotto_eurcerc20_final_total = $paygatedotto_eurcerc20_conversion_resp['value_coin'];      
 } else {
 	return "Error: Payment could not be processed, please try again (unsupported store currency)";
 }	
 		
 		if ($params['blockchain_fees'] === 'on') {
 			
-	$hrs_eurcerc20_blockchain_response = file_get_contents('https://api.highriskshop.com/crypto/erc20/eurc/fees.php');
+	$paygatedotto_eurcerc20_blockchain_response = file_get_contents('https://api.paygate.to/crypto/erc20/eurc/fees.php');
 
 
-$hrs_eurcerc20_blockchain_conversion_resp = json_decode($hrs_eurcerc20_blockchain_response, true);
+$paygatedotto_eurcerc20_blockchain_conversion_resp = json_decode($paygatedotto_eurcerc20_blockchain_response, true);
 
-if ($hrs_eurcerc20_blockchain_conversion_resp && isset($hrs_eurcerc20_blockchain_conversion_resp['estimated_cost_currency']['USD'])) {
+if ($paygatedotto_eurcerc20_blockchain_conversion_resp && isset($paygatedotto_eurcerc20_blockchain_conversion_resp['estimated_cost_currency']['USD'])) {
     
 	// revert blockchain fees back to ticker price
-$hrs_feerevert_eurcerc20_response = file_get_contents('https://api.highriskshop.com/crypto/erc20/eurc/convert.php?value=' . $hrs_eurcerc20_blockchain_conversion_resp['estimated_cost_currency']['USD'] . '&from=usd');
+$paygatedotto_feerevert_eurcerc20_response = file_get_contents('https://api.paygate.to/crypto/erc20/eurc/convert.php?value=' . $paygatedotto_eurcerc20_blockchain_conversion_resp['estimated_cost_currency']['USD'] . '&from=usd');
 
 
-$hrs_feerevert_eurcerc20_conversion_resp = json_decode($hrs_feerevert_eurcerc20_response, true);
+$paygatedotto_feerevert_eurcerc20_conversion_resp = json_decode($paygatedotto_feerevert_eurcerc20_response, true);
 
-if ($hrs_feerevert_eurcerc20_conversion_resp && isset($hrs_feerevert_eurcerc20_conversion_resp['value_coin'])) {
+if ($paygatedotto_feerevert_eurcerc20_conversion_resp && isset($paygatedotto_feerevert_eurcerc20_conversion_resp['value_coin'])) {
     // Escape output
-    $hrs_feerevert_eurcerc20_final_total = $hrs_feerevert_eurcerc20_conversion_resp['value_coin']; 
+    $paygatedotto_feerevert_eurcerc20_final_total = $paygatedotto_feerevert_eurcerc20_conversion_resp['value_coin']; 
 // output
-    $hrs_eurcerc20_blockchain_final_total = $hrs_feerevert_eurcerc20_final_total; 	
+    $paygatedotto_eurcerc20_blockchain_final_total = $paygatedotto_feerevert_eurcerc20_final_total; 	
 } else {
 	return "Error: Payment could not be processed, please try again (unable to get estimated cost)";
 }
@@ -92,34 +92,34 @@ if ($hrs_feerevert_eurcerc20_conversion_resp && isset($hrs_feerevert_eurcerc20_c
 	return "Error: Payment could not be processed, estimated blockchain cost unavailable";
 }	
 
-    $hrs_eurcerc20_amount_to_send = $hrs_eurcerc20_final_total + $hrs_eurcerc20_blockchain_final_total;		
+    $paygatedotto_eurcerc20_amount_to_send = $paygatedotto_eurcerc20_final_total + $paygatedotto_eurcerc20_blockchain_final_total;		
 	
 		} else {
-	$hrs_eurcerc20_amount_to_send = $hrs_eurcerc20_final_total;		
+	$paygatedotto_eurcerc20_amount_to_send = $paygatedotto_eurcerc20_final_total;		
 		}
 		
 		
 		
-$hrs_eurcerc20_gen_wallet = file_get_contents('https://api.highriskshop.com/crypto/erc20/eurc/wallet.php?address=' . $walletAddress .'&callback=' . urlencode($callback_URL));
+$paygatedotto_eurcerc20_gen_wallet = file_get_contents('https://api.paygate.to/crypto/erc20/eurc/wallet.php?address=' . $walletAddress .'&callback=' . urlencode($callback_URL));
 
 
-	$hrs_eurcerc20_wallet_decbody = json_decode($hrs_eurcerc20_gen_wallet, true);
+	$paygatedotto_eurcerc20_wallet_decbody = json_decode($paygatedotto_eurcerc20_gen_wallet, true);
 
  // Check if decoding was successful
-    if ($hrs_eurcerc20_wallet_decbody && isset($hrs_eurcerc20_wallet_decbody['address_in'])) {
+    if ($paygatedotto_eurcerc20_wallet_decbody && isset($paygatedotto_eurcerc20_wallet_decbody['address_in'])) {
         // Store the address_in as a variable
-        $hrs_eurcerc20_gen_addressIn = $hrs_eurcerc20_wallet_decbody['address_in'];
-		$hrs_eurcerc20_gen_callback = $hrs_eurcerc20_wallet_decbody['callback_url'];
+        $paygatedotto_eurcerc20_gen_addressIn = $paygatedotto_eurcerc20_wallet_decbody['address_in'];
+		$paygatedotto_eurcerc20_gen_callback = $paygatedotto_eurcerc20_wallet_decbody['callback_url'];
 		
-		$hrs_jsonObject = json_encode(array(
-'pay_to_address' => $hrs_eurcerc20_gen_addressIn,
-'crypto_amount_to_send' => $hrs_eurcerc20_amount_to_send,
+		$paygatedotto_jsonObject = json_encode(array(
+'pay_to_address' => $paygatedotto_eurcerc20_gen_addressIn,
+'crypto_amount_to_send' => $paygatedotto_eurcerc20_amount_to_send,
 'coin_to_send' => 'erc20_eurc'
 ));
 
 		
 		 // Update the invoice description to include address_in
-            $invoiceDescription = $hrs_jsonObject;
+            $invoiceDescription = $paygatedotto_jsonObject;
 
             // Update the invoice with the new description
             $invoice = localAPI("GetInvoice", array('invoiceid' => $invoiceId), null);
@@ -133,21 +133,21 @@ return "Error: Payment could not be processed, please try again (wallet address 
     }
 	
 	
-        $hrs_eurcerc20_gen_qrcode = file_get_contents('https://api.highriskshop.com/crypto/erc20/eurc/qrcode.php?address=' . $hrs_eurcerc20_gen_addressIn);
+        $paygatedotto_eurcerc20_gen_qrcode = file_get_contents('https://api.paygate.to/crypto/erc20/eurc/qrcode.php?address=' . $paygatedotto_eurcerc20_gen_addressIn);
 
 
-	$hrs_eurcerc20_qrcode_decbody = json_decode($hrs_eurcerc20_gen_qrcode, true);
+	$paygatedotto_eurcerc20_qrcode_decbody = json_decode($paygatedotto_eurcerc20_gen_qrcode, true);
 
  // Check if decoding was successful
-    if ($hrs_eurcerc20_qrcode_decbody && isset($hrs_eurcerc20_qrcode_decbody['qr_code'])) {
+    if ($paygatedotto_eurcerc20_qrcode_decbody && isset($paygatedotto_eurcerc20_qrcode_decbody['qr_code'])) {
         // Store the qr_code as a variable
-        $hrs_eurcerc20_gen_qrcode = $hrs_eurcerc20_qrcode_decbody['qr_code'];		
+        $paygatedotto_eurcerc20_gen_qrcode = $paygatedotto_eurcerc20_qrcode_decbody['qr_code'];		
     } else {
 return "Error: QR code could not be processed, please try again (wallet address error)";
     }
 
         // Properly encode attributes for HTML output
-        return '<div><img src="data:image/png;base64,' . $hrs_eurcerc20_gen_qrcode . '" alt="' . $hrs_eurcerc20_gen_addressIn . '"></div><div>Please send <b>' . $hrs_eurcerc20_amount_to_send . '</b> erc20/eurc to the address: <br><b>' . $hrs_eurcerc20_gen_addressIn . '</b></div>';
+        return '<div><img src="data:image/png;base64,' . $paygatedotto_eurcerc20_gen_qrcode . '" alt="' . $paygatedotto_eurcerc20_gen_addressIn . '"></div><div>Please send <b>' . $paygatedotto_eurcerc20_amount_to_send . '</b> erc20/eurc to the address: <br><b>' . $paygatedotto_eurcerc20_gen_addressIn . '</b></div>';
 }
 
 function eurcerc20_activate()

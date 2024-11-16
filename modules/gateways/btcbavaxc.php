@@ -48,42 +48,42 @@ function btcbavaxc_link($params)
     $systemUrl = rtrim($params['systemurl'], '/');
     $redirectUrl = $systemUrl . '/modules/gateways/callback/btcbavaxc.php';
 	$invoiceLink = $systemUrl . '/viewinvoice.php?id=' . $invoiceId;
-	$hrs_btcbavaxc_currency = $params['currency'];
+	$paygatedotto_btcbavaxc_currency = $params['currency'];
 	$callback_URL = $redirectUrl . '?invoice_id=' . $invoiceId;
 
 		
-$hrs_btcbavaxc_response = file_get_contents('https://api.highriskshop.com/crypto/avax-c/btc.b/convert.php?value=' . $amount . '&from=' . strtolower($hrs_btcbavaxc_currency));
+$paygatedotto_btcbavaxc_response = file_get_contents('https://api.paygate.to/crypto/avax-c/btc.b/convert.php?value=' . $amount . '&from=' . strtolower($paygatedotto_btcbavaxc_currency));
 
 
-$hrs_btcbavaxc_conversion_resp = json_decode($hrs_btcbavaxc_response, true);
+$paygatedotto_btcbavaxc_conversion_resp = json_decode($paygatedotto_btcbavaxc_response, true);
 
-if ($hrs_btcbavaxc_conversion_resp && isset($hrs_btcbavaxc_conversion_resp['value_coin'])) {
+if ($paygatedotto_btcbavaxc_conversion_resp && isset($paygatedotto_btcbavaxc_conversion_resp['value_coin'])) {
     // Escape output
-    $hrs_btcbavaxc_final_total = $hrs_btcbavaxc_conversion_resp['value_coin'];      
+    $paygatedotto_btcbavaxc_final_total = $paygatedotto_btcbavaxc_conversion_resp['value_coin'];      
 } else {
 	return "Error: Payment could not be processed, please try again (unsupported store currency)";
 }	
 		
 		if ($params['blockchain_fees'] === 'on') {
 			
-	$hrs_btcbavaxc_blockchain_response = file_get_contents('https://api.highriskshop.com/crypto/avax-c/btc.b/fees.php');
+	$paygatedotto_btcbavaxc_blockchain_response = file_get_contents('https://api.paygate.to/crypto/avax-c/btc.b/fees.php');
 
 
-$hrs_btcbavaxc_blockchain_conversion_resp = json_decode($hrs_btcbavaxc_blockchain_response, true);
+$paygatedotto_btcbavaxc_blockchain_conversion_resp = json_decode($paygatedotto_btcbavaxc_blockchain_response, true);
 
-if ($hrs_btcbavaxc_blockchain_conversion_resp && isset($hrs_btcbavaxc_blockchain_conversion_resp['estimated_cost_currency']['USD'])) {
+if ($paygatedotto_btcbavaxc_blockchain_conversion_resp && isset($paygatedotto_btcbavaxc_blockchain_conversion_resp['estimated_cost_currency']['USD'])) {
     
 	// revert blockchain fees back to ticker price
-$hrs_feerevert_btcbavaxc_response = file_get_contents('https://api.highriskshop.com/crypto/avax-c/btc.b/convert.php?value=' . $hrs_btcbavaxc_blockchain_conversion_resp['estimated_cost_currency']['USD'] . '&from=usd');
+$paygatedotto_feerevert_btcbavaxc_response = file_get_contents('https://api.paygate.to/crypto/avax-c/btc.b/convert.php?value=' . $paygatedotto_btcbavaxc_blockchain_conversion_resp['estimated_cost_currency']['USD'] . '&from=usd');
 
 
-$hrs_feerevert_btcbavaxc_conversion_resp = json_decode($hrs_feerevert_btcbavaxc_response, true);
+$paygatedotto_feerevert_btcbavaxc_conversion_resp = json_decode($paygatedotto_feerevert_btcbavaxc_response, true);
 
-if ($hrs_feerevert_btcbavaxc_conversion_resp && isset($hrs_feerevert_btcbavaxc_conversion_resp['value_coin'])) {
+if ($paygatedotto_feerevert_btcbavaxc_conversion_resp && isset($paygatedotto_feerevert_btcbavaxc_conversion_resp['value_coin'])) {
     // Escape output
-    $hrs_feerevert_btcbavaxc_final_total = $hrs_feerevert_btcbavaxc_conversion_resp['value_coin']; 
+    $paygatedotto_feerevert_btcbavaxc_final_total = $paygatedotto_feerevert_btcbavaxc_conversion_resp['value_coin']; 
 // output
-    $hrs_btcbavaxc_blockchain_final_total = $hrs_feerevert_btcbavaxc_final_total; 	
+    $paygatedotto_btcbavaxc_blockchain_final_total = $paygatedotto_feerevert_btcbavaxc_final_total; 	
 } else {
 	return "Error: Payment could not be processed, please try again (unable to get estimated cost)";
 }
@@ -92,34 +92,34 @@ if ($hrs_feerevert_btcbavaxc_conversion_resp && isset($hrs_feerevert_btcbavaxc_c
 	return "Error: Payment could not be processed, estimated blockchain cost unavailable";
 }	
 
-    $hrs_btcbavaxc_amount_to_send = $hrs_btcbavaxc_final_total + $hrs_btcbavaxc_blockchain_final_total;		
+    $paygatedotto_btcbavaxc_amount_to_send = $paygatedotto_btcbavaxc_final_total + $paygatedotto_btcbavaxc_blockchain_final_total;		
 	
 		} else {
-	$hrs_btcbavaxc_amount_to_send = $hrs_btcbavaxc_final_total;		
+	$paygatedotto_btcbavaxc_amount_to_send = $paygatedotto_btcbavaxc_final_total;		
 		}
 		
 		
 		
-$hrs_btcbavaxc_gen_wallet = file_get_contents('https://api.highriskshop.com/crypto/avax-c/btc.b/wallet.php?address=' . $walletAddress .'&callback=' . urlencode($callback_URL));
+$paygatedotto_btcbavaxc_gen_wallet = file_get_contents('https://api.paygate.to/crypto/avax-c/btc.b/wallet.php?address=' . $walletAddress .'&callback=' . urlencode($callback_URL));
 
 
-	$hrs_btcbavaxc_wallet_decbody = json_decode($hrs_btcbavaxc_gen_wallet, true);
+	$paygatedotto_btcbavaxc_wallet_decbody = json_decode($paygatedotto_btcbavaxc_gen_wallet, true);
 
  // Check if decoding was successful
-    if ($hrs_btcbavaxc_wallet_decbody && isset($hrs_btcbavaxc_wallet_decbody['address_in'])) {
+    if ($paygatedotto_btcbavaxc_wallet_decbody && isset($paygatedotto_btcbavaxc_wallet_decbody['address_in'])) {
         // Store the address_in as a variable
-        $hrs_btcbavaxc_gen_addressIn = $hrs_btcbavaxc_wallet_decbody['address_in'];
-		$hrs_btcbavaxc_gen_callback = $hrs_btcbavaxc_wallet_decbody['callback_url'];
+        $paygatedotto_btcbavaxc_gen_addressIn = $paygatedotto_btcbavaxc_wallet_decbody['address_in'];
+		$paygatedotto_btcbavaxc_gen_callback = $paygatedotto_btcbavaxc_wallet_decbody['callback_url'];
 		
-		$hrs_jsonObject = json_encode(array(
-'pay_to_address' => $hrs_btcbavaxc_gen_addressIn,
-'crypto_amount_to_send' => $hrs_btcbavaxc_amount_to_send,
+		$paygatedotto_jsonObject = json_encode(array(
+'pay_to_address' => $paygatedotto_btcbavaxc_gen_addressIn,
+'crypto_amount_to_send' => $paygatedotto_btcbavaxc_amount_to_send,
 'coin_to_send' => 'avax-c_btc.b'
 ));
 
 		
 		 // Update the invoice description to include address_in
-            $invoiceDescription = $hrs_jsonObject;
+            $invoiceDescription = $paygatedotto_jsonObject;
 
             // Update the invoice with the new description
             $invoice = localAPI("GetInvoice", array('invoiceid' => $invoiceId), null);
@@ -133,21 +133,21 @@ return "Error: Payment could not be processed, please try again (wallet address 
     }
 	
 	
-        $hrs_btcbavaxc_gen_qrcode = file_get_contents('https://api.highriskshop.com/crypto/avax-c/btc.b/qrcode.php?address=' . $hrs_btcbavaxc_gen_addressIn);
+        $paygatedotto_btcbavaxc_gen_qrcode = file_get_contents('https://api.paygate.to/crypto/avax-c/btc.b/qrcode.php?address=' . $paygatedotto_btcbavaxc_gen_addressIn);
 
 
-	$hrs_btcbavaxc_qrcode_decbody = json_decode($hrs_btcbavaxc_gen_qrcode, true);
+	$paygatedotto_btcbavaxc_qrcode_decbody = json_decode($paygatedotto_btcbavaxc_gen_qrcode, true);
 
  // Check if decoding was successful
-    if ($hrs_btcbavaxc_qrcode_decbody && isset($hrs_btcbavaxc_qrcode_decbody['qr_code'])) {
+    if ($paygatedotto_btcbavaxc_qrcode_decbody && isset($paygatedotto_btcbavaxc_qrcode_decbody['qr_code'])) {
         // Store the qr_code as a variable
-        $hrs_btcbavaxc_gen_qrcode = $hrs_btcbavaxc_qrcode_decbody['qr_code'];		
+        $paygatedotto_btcbavaxc_gen_qrcode = $paygatedotto_btcbavaxc_qrcode_decbody['qr_code'];		
     } else {
 return "Error: QR code could not be processed, please try again (wallet address error)";
     }
 
         // Properly encode attributes for HTML output
-        return '<div><img src="data:image/png;base64,' . $hrs_btcbavaxc_gen_qrcode . '" alt="' . $hrs_btcbavaxc_gen_addressIn . '"></div><div>Please send <b>' . $hrs_btcbavaxc_amount_to_send . '</b> avax-c/btc.b to the address: <br><b>' . $hrs_btcbavaxc_gen_addressIn . '</b></div>';
+        return '<div><img src="data:image/png;base64,' . $paygatedotto_btcbavaxc_gen_qrcode . '" alt="' . $paygatedotto_btcbavaxc_gen_addressIn . '"></div><div>Please send <b>' . $paygatedotto_btcbavaxc_amount_to_send . '</b> avax-c/btc.b to the address: <br><b>' . $paygatedotto_btcbavaxc_gen_addressIn . '</b></div>';
 }
 
 function btcbavaxc_activate()

@@ -48,42 +48,42 @@ function eurcbase_link($params)
     $systemUrl = rtrim($params['systemurl'], '/');
     $redirectUrl = $systemUrl . '/modules/gateways/callback/eurcbase.php';
 	$invoiceLink = $systemUrl . '/viewinvoice.php?id=' . $invoiceId;
-	$hrs_eurcbase_currency = $params['currency'];
+	$paygatedotto_eurcbase_currency = $params['currency'];
 	$callback_URL = $redirectUrl . '?invoice_id=' . $invoiceId;
 
 		
-$hrs_eurcbase_response = file_get_contents('https://api.highriskshop.com/crypto/base/eurc/convert.php?value=' . $amount . '&from=' . strtolower($hrs_eurcbase_currency));
+$paygatedotto_eurcbase_response = file_get_contents('https://api.paygate.to/crypto/base/eurc/convert.php?value=' . $amount . '&from=' . strtolower($paygatedotto_eurcbase_currency));
 
 
-$hrs_eurcbase_conversion_resp = json_decode($hrs_eurcbase_response, true);
+$paygatedotto_eurcbase_conversion_resp = json_decode($paygatedotto_eurcbase_response, true);
 
-if ($hrs_eurcbase_conversion_resp && isset($hrs_eurcbase_conversion_resp['value_coin'])) {
+if ($paygatedotto_eurcbase_conversion_resp && isset($paygatedotto_eurcbase_conversion_resp['value_coin'])) {
     // Escape output
-    $hrs_eurcbase_final_total = $hrs_eurcbase_conversion_resp['value_coin'];      
+    $paygatedotto_eurcbase_final_total = $paygatedotto_eurcbase_conversion_resp['value_coin'];      
 } else {
 	return "Error: Payment could not be processed, please try again (unsupported store currency)";
 }	
 		
 		if ($params['blockchain_fees'] === 'on') {
 			
-	$hrs_eurcbase_blockchain_response = file_get_contents('https://api.highriskshop.com/crypto/base/eurc/fees.php');
+	$paygatedotto_eurcbase_blockchain_response = file_get_contents('https://api.paygate.to/crypto/base/eurc/fees.php');
 
 
-$hrs_eurcbase_blockchain_conversion_resp = json_decode($hrs_eurcbase_blockchain_response, true);
+$paygatedotto_eurcbase_blockchain_conversion_resp = json_decode($paygatedotto_eurcbase_blockchain_response, true);
 
-if ($hrs_eurcbase_blockchain_conversion_resp && isset($hrs_eurcbase_blockchain_conversion_resp['estimated_cost_currency']['USD'])) {
+if ($paygatedotto_eurcbase_blockchain_conversion_resp && isset($paygatedotto_eurcbase_blockchain_conversion_resp['estimated_cost_currency']['USD'])) {
     
 	// revert blockchain fees back to ticker price
-$hrs_feerevert_eurcbase_response = file_get_contents('https://api.highriskshop.com/crypto/base/eurc/convert.php?value=' . $hrs_eurcbase_blockchain_conversion_resp['estimated_cost_currency']['USD'] . '&from=usd');
+$paygatedotto_feerevert_eurcbase_response = file_get_contents('https://api.paygate.to/crypto/base/eurc/convert.php?value=' . $paygatedotto_eurcbase_blockchain_conversion_resp['estimated_cost_currency']['USD'] . '&from=usd');
 
 
-$hrs_feerevert_eurcbase_conversion_resp = json_decode($hrs_feerevert_eurcbase_response, true);
+$paygatedotto_feerevert_eurcbase_conversion_resp = json_decode($paygatedotto_feerevert_eurcbase_response, true);
 
-if ($hrs_feerevert_eurcbase_conversion_resp && isset($hrs_feerevert_eurcbase_conversion_resp['value_coin'])) {
+if ($paygatedotto_feerevert_eurcbase_conversion_resp && isset($paygatedotto_feerevert_eurcbase_conversion_resp['value_coin'])) {
     // Escape output
-    $hrs_feerevert_eurcbase_final_total = $hrs_feerevert_eurcbase_conversion_resp['value_coin']; 
+    $paygatedotto_feerevert_eurcbase_final_total = $paygatedotto_feerevert_eurcbase_conversion_resp['value_coin']; 
 // output
-    $hrs_eurcbase_blockchain_final_total = $hrs_feerevert_eurcbase_final_total; 	
+    $paygatedotto_eurcbase_blockchain_final_total = $paygatedotto_feerevert_eurcbase_final_total; 	
 } else {
 	return "Error: Payment could not be processed, please try again (unable to get estimated cost)";
 }
@@ -92,34 +92,34 @@ if ($hrs_feerevert_eurcbase_conversion_resp && isset($hrs_feerevert_eurcbase_con
 	return "Error: Payment could not be processed, estimated blockchain cost unavailable";
 }	
 
-    $hrs_eurcbase_amount_to_send = $hrs_eurcbase_final_total + $hrs_eurcbase_blockchain_final_total;		
+    $paygatedotto_eurcbase_amount_to_send = $paygatedotto_eurcbase_final_total + $paygatedotto_eurcbase_blockchain_final_total;		
 	
 		} else {
-	$hrs_eurcbase_amount_to_send = $hrs_eurcbase_final_total;		
+	$paygatedotto_eurcbase_amount_to_send = $paygatedotto_eurcbase_final_total;		
 		}
 		
 		
 		
-$hrs_eurcbase_gen_wallet = file_get_contents('https://api.highriskshop.com/crypto/base/eurc/wallet.php?address=' . $walletAddress .'&callback=' . urlencode($callback_URL));
+$paygatedotto_eurcbase_gen_wallet = file_get_contents('https://api.paygate.to/crypto/base/eurc/wallet.php?address=' . $walletAddress .'&callback=' . urlencode($callback_URL));
 
 
-	$hrs_eurcbase_wallet_decbody = json_decode($hrs_eurcbase_gen_wallet, true);
+	$paygatedotto_eurcbase_wallet_decbody = json_decode($paygatedotto_eurcbase_gen_wallet, true);
 
  // Check if decoding was successful
-    if ($hrs_eurcbase_wallet_decbody && isset($hrs_eurcbase_wallet_decbody['address_in'])) {
+    if ($paygatedotto_eurcbase_wallet_decbody && isset($paygatedotto_eurcbase_wallet_decbody['address_in'])) {
         // Store the address_in as a variable
-        $hrs_eurcbase_gen_addressIn = $hrs_eurcbase_wallet_decbody['address_in'];
-		$hrs_eurcbase_gen_callback = $hrs_eurcbase_wallet_decbody['callback_url'];
+        $paygatedotto_eurcbase_gen_addressIn = $paygatedotto_eurcbase_wallet_decbody['address_in'];
+		$paygatedotto_eurcbase_gen_callback = $paygatedotto_eurcbase_wallet_decbody['callback_url'];
 		
-		$hrs_jsonObject = json_encode(array(
-'pay_to_address' => $hrs_eurcbase_gen_addressIn,
-'crypto_amount_to_send' => $hrs_eurcbase_amount_to_send,
+		$paygatedotto_jsonObject = json_encode(array(
+'pay_to_address' => $paygatedotto_eurcbase_gen_addressIn,
+'crypto_amount_to_send' => $paygatedotto_eurcbase_amount_to_send,
 'coin_to_send' => 'base_eurc'
 ));
 
 		
 		 // Update the invoice description to include address_in
-            $invoiceDescription = $hrs_jsonObject;
+            $invoiceDescription = $paygatedotto_jsonObject;
 
             // Update the invoice with the new description
             $invoice = localAPI("GetInvoice", array('invoiceid' => $invoiceId), null);
@@ -133,21 +133,21 @@ return "Error: Payment could not be processed, please try again (wallet address 
     }
 	
 	
-        $hrs_eurcbase_gen_qrcode = file_get_contents('https://api.highriskshop.com/crypto/base/eurc/qrcode.php?address=' . $hrs_eurcbase_gen_addressIn);
+        $paygatedotto_eurcbase_gen_qrcode = file_get_contents('https://api.paygate.to/crypto/base/eurc/qrcode.php?address=' . $paygatedotto_eurcbase_gen_addressIn);
 
 
-	$hrs_eurcbase_qrcode_decbody = json_decode($hrs_eurcbase_gen_qrcode, true);
+	$paygatedotto_eurcbase_qrcode_decbody = json_decode($paygatedotto_eurcbase_gen_qrcode, true);
 
  // Check if decoding was successful
-    if ($hrs_eurcbase_qrcode_decbody && isset($hrs_eurcbase_qrcode_decbody['qr_code'])) {
+    if ($paygatedotto_eurcbase_qrcode_decbody && isset($paygatedotto_eurcbase_qrcode_decbody['qr_code'])) {
         // Store the qr_code as a variable
-        $hrs_eurcbase_gen_qrcode = $hrs_eurcbase_qrcode_decbody['qr_code'];		
+        $paygatedotto_eurcbase_gen_qrcode = $paygatedotto_eurcbase_qrcode_decbody['qr_code'];		
     } else {
 return "Error: QR code could not be processed, please try again (wallet address error)";
     }
 
         // Properly encode attributes for HTML output
-        return '<div><img src="data:image/png;base64,' . $hrs_eurcbase_gen_qrcode . '" alt="' . $hrs_eurcbase_gen_addressIn . '"></div><div>Please send <b>' . $hrs_eurcbase_amount_to_send . '</b> base/eurc to the address: <br><b>' . $hrs_eurcbase_gen_addressIn . '</b></div>';
+        return '<div><img src="data:image/png;base64,' . $paygatedotto_eurcbase_gen_qrcode . '" alt="' . $paygatedotto_eurcbase_gen_addressIn . '"></div><div>Please send <b>' . $paygatedotto_eurcbase_amount_to_send . '</b> base/eurc to the address: <br><b>' . $paygatedotto_eurcbase_gen_addressIn . '</b></div>';
 }
 
 function eurcbase_activate()

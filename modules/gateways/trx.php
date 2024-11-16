@@ -48,42 +48,42 @@ function trx_link($params)
     $systemUrl = rtrim($params['systemurl'], '/');
     $redirectUrl = $systemUrl . '/modules/gateways/callback/trx.php';
 	$invoiceLink = $systemUrl . '/viewinvoice.php?id=' . $invoiceId;
-	$hrs_trx_currency = $params['currency'];
+	$paygatedotto_trx_currency = $params['currency'];
 	$callback_URL = $redirectUrl . '?invoice_id=' . $invoiceId;
 
 		
-$hrs_trx_response = file_get_contents('https://api.highriskshop.com/crypto/trx/convert.php?value=' . $amount . '&from=' . strtolower($hrs_trx_currency));
+$paygatedotto_trx_response = file_get_contents('https://api.paygate.to/crypto/trx/convert.php?value=' . $amount . '&from=' . strtolower($paygatedotto_trx_currency));
 
 
-$hrs_trx_conversion_resp = json_decode($hrs_trx_response, true);
+$paygatedotto_trx_conversion_resp = json_decode($paygatedotto_trx_response, true);
 
-if ($hrs_trx_conversion_resp && isset($hrs_trx_conversion_resp['value_coin'])) {
+if ($paygatedotto_trx_conversion_resp && isset($paygatedotto_trx_conversion_resp['value_coin'])) {
     // Escape output
-    $hrs_trx_final_total = $hrs_trx_conversion_resp['value_coin'];      
+    $paygatedotto_trx_final_total = $paygatedotto_trx_conversion_resp['value_coin'];      
 } else {
 	return "Error: Payment could not be processed, please try again (unsupported store currency)";
 }	
 		
 		if ($params['blockchain_fees'] === 'on') {
 			
-	$hrs_trx_blockchain_response = file_get_contents('https://api.highriskshop.com/crypto/trx/fees.php');
+	$paygatedotto_trx_blockchain_response = file_get_contents('https://api.paygate.to/crypto/trx/fees.php');
 
 
-$hrs_trx_blockchain_conversion_resp = json_decode($hrs_trx_blockchain_response, true);
+$paygatedotto_trx_blockchain_conversion_resp = json_decode($paygatedotto_trx_blockchain_response, true);
 
-if ($hrs_trx_blockchain_conversion_resp && isset($hrs_trx_blockchain_conversion_resp['estimated_cost_currency']['USD'])) {
+if ($paygatedotto_trx_blockchain_conversion_resp && isset($paygatedotto_trx_blockchain_conversion_resp['estimated_cost_currency']['USD'])) {
     
 	// revert blockchain fees back to ticker price
-$hrs_feerevert_trx_response = file_get_contents('https://api.highriskshop.com/crypto/trx/convert.php?value=' . $hrs_trx_blockchain_conversion_resp['estimated_cost_currency']['USD'] . '&from=usd');
+$paygatedotto_feerevert_trx_response = file_get_contents('https://api.paygate.to/crypto/trx/convert.php?value=' . $paygatedotto_trx_blockchain_conversion_resp['estimated_cost_currency']['USD'] . '&from=usd');
 
 
-$hrs_feerevert_trx_conversion_resp = json_decode($hrs_feerevert_trx_response, true);
+$paygatedotto_feerevert_trx_conversion_resp = json_decode($paygatedotto_feerevert_trx_response, true);
 
-if ($hrs_feerevert_trx_conversion_resp && isset($hrs_feerevert_trx_conversion_resp['value_coin'])) {
+if ($paygatedotto_feerevert_trx_conversion_resp && isset($paygatedotto_feerevert_trx_conversion_resp['value_coin'])) {
     // Escape output
-    $hrs_feerevert_trx_final_total = $hrs_feerevert_trx_conversion_resp['value_coin']; 
+    $paygatedotto_feerevert_trx_final_total = $paygatedotto_feerevert_trx_conversion_resp['value_coin']; 
 // output
-    $hrs_trx_blockchain_final_total = $hrs_feerevert_trx_final_total; 	
+    $paygatedotto_trx_blockchain_final_total = $paygatedotto_feerevert_trx_final_total; 	
 } else {
 	return "Error: Payment could not be processed, please try again (unable to get estimated cost)";
 }
@@ -92,34 +92,34 @@ if ($hrs_feerevert_trx_conversion_resp && isset($hrs_feerevert_trx_conversion_re
 	return "Error: Payment could not be processed, estimated blockchain cost unavailable";
 }	
 
-    $hrs_trx_amount_to_send = $hrs_trx_final_total + $hrs_trx_blockchain_final_total;		
+    $paygatedotto_trx_amount_to_send = $paygatedotto_trx_final_total + $paygatedotto_trx_blockchain_final_total;		
 	
 		} else {
-	$hrs_trx_amount_to_send = $hrs_trx_final_total;		
+	$paygatedotto_trx_amount_to_send = $paygatedotto_trx_final_total;		
 		}
 		
 		
 		
-$hrs_trx_gen_wallet = file_get_contents('https://api.highriskshop.com/crypto/trx/wallet.php?address=' . $walletAddress .'&callback=' . urlencode($callback_URL));
+$paygatedotto_trx_gen_wallet = file_get_contents('https://api.paygate.to/crypto/trx/wallet.php?address=' . $walletAddress .'&callback=' . urlencode($callback_URL));
 
 
-	$hrs_trx_wallet_decbody = json_decode($hrs_trx_gen_wallet, true);
+	$paygatedotto_trx_wallet_decbody = json_decode($paygatedotto_trx_gen_wallet, true);
 
  // Check if decoding was successful
-    if ($hrs_trx_wallet_decbody && isset($hrs_trx_wallet_decbody['address_in'])) {
+    if ($paygatedotto_trx_wallet_decbody && isset($paygatedotto_trx_wallet_decbody['address_in'])) {
         // Store the address_in as a variable
-        $hrs_trx_gen_addressIn = $hrs_trx_wallet_decbody['address_in'];
-		$hrs_trx_gen_callback = $hrs_trx_wallet_decbody['callback_url'];
+        $paygatedotto_trx_gen_addressIn = $paygatedotto_trx_wallet_decbody['address_in'];
+		$paygatedotto_trx_gen_callback = $paygatedotto_trx_wallet_decbody['callback_url'];
 		
-		$hrs_jsonObject = json_encode(array(
-'pay_to_address' => $hrs_trx_gen_addressIn,
-'crypto_amount_to_send' => $hrs_trx_amount_to_send,
+		$paygatedotto_jsonObject = json_encode(array(
+'pay_to_address' => $paygatedotto_trx_gen_addressIn,
+'crypto_amount_to_send' => $paygatedotto_trx_amount_to_send,
 'coin_to_send' => 'trx'
 ));
 
 		
 		 // Update the invoice description to include address_in
-            $invoiceDescription = $hrs_jsonObject;
+            $invoiceDescription = $paygatedotto_jsonObject;
 
             // Update the invoice with the new description
             $invoice = localAPI("GetInvoice", array('invoiceid' => $invoiceId), null);
@@ -133,21 +133,21 @@ return "Error: Payment could not be processed, please try again (wallet address 
     }
 	
 	
-        $hrs_trx_gen_qrcode = file_get_contents('https://api.highriskshop.com/crypto/trx/qrcode.php?address=' . $hrs_trx_gen_addressIn);
+        $paygatedotto_trx_gen_qrcode = file_get_contents('https://api.paygate.to/crypto/trx/qrcode.php?address=' . $paygatedotto_trx_gen_addressIn);
 
 
-	$hrs_trx_qrcode_decbody = json_decode($hrs_trx_gen_qrcode, true);
+	$paygatedotto_trx_qrcode_decbody = json_decode($paygatedotto_trx_gen_qrcode, true);
 
  // Check if decoding was successful
-    if ($hrs_trx_qrcode_decbody && isset($hrs_trx_qrcode_decbody['qr_code'])) {
+    if ($paygatedotto_trx_qrcode_decbody && isset($paygatedotto_trx_qrcode_decbody['qr_code'])) {
         // Store the qr_code as a variable
-        $hrs_trx_gen_qrcode = $hrs_trx_qrcode_decbody['qr_code'];		
+        $paygatedotto_trx_gen_qrcode = $paygatedotto_trx_qrcode_decbody['qr_code'];		
     } else {
 return "Error: QR code could not be processed, please try again (wallet address error)";
     }
 
         // Properly encode attributes for HTML output
-        return '<div><img src="data:image/png;base64,' . $hrs_trx_gen_qrcode . '" alt="' . $hrs_trx_gen_addressIn . '"></div><div>Please send <b>' . $hrs_trx_amount_to_send . '</b> trx to the address: <br><b>' . $hrs_trx_gen_addressIn . '</b></div>';
+        return '<div><img src="data:image/png;base64,' . $paygatedotto_trx_gen_qrcode . '" alt="' . $paygatedotto_trx_gen_addressIn . '"></div><div>Please send <b>' . $paygatedotto_trx_amount_to_send . '</b> trx to the address: <br><b>' . $paygatedotto_trx_gen_addressIn . '</b></div>';
 }
 
 function trx_activate()

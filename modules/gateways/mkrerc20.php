@@ -48,42 +48,42 @@ function mkrerc20_link($params)
     $systemUrl = rtrim($params['systemurl'], '/');
     $redirectUrl = $systemUrl . '/modules/gateways/callback/mkrerc20.php';
 	$invoiceLink = $systemUrl . '/viewinvoice.php?id=' . $invoiceId;
-	$hrs_mkrerc20_currency = $params['currency'];
+	$paygatedotto_mkrerc20_currency = $params['currency'];
 	$callback_URL = $redirectUrl . '?invoice_id=' . $invoiceId;
 
 		
-$hrs_mkrerc20_response = file_get_contents('https://api.highriskshop.com/crypto/erc20/mkr/convert.php?value=' . $amount . '&from=' . strtolower($hrs_mkrerc20_currency));
+$paygatedotto_mkrerc20_response = file_get_contents('https://api.paygate.to/crypto/erc20/mkr/convert.php?value=' . $amount . '&from=' . strtolower($paygatedotto_mkrerc20_currency));
 
 
-$hrs_mkrerc20_conversion_resp = json_decode($hrs_mkrerc20_response, true);
+$paygatedotto_mkrerc20_conversion_resp = json_decode($paygatedotto_mkrerc20_response, true);
 
-if ($hrs_mkrerc20_conversion_resp && isset($hrs_mkrerc20_conversion_resp['value_coin'])) {
+if ($paygatedotto_mkrerc20_conversion_resp && isset($paygatedotto_mkrerc20_conversion_resp['value_coin'])) {
     // Escape output
-    $hrs_mkrerc20_final_total = $hrs_mkrerc20_conversion_resp['value_coin'];      
+    $paygatedotto_mkrerc20_final_total = $paygatedotto_mkrerc20_conversion_resp['value_coin'];      
 } else {
 	return "Error: Payment could not be processed, please try again (unsupported store currency)";
 }	
 		
 		if ($params['blockchain_fees'] === 'on') {
 			
-	$hrs_mkrerc20_blockchain_response = file_get_contents('https://api.highriskshop.com/crypto/erc20/mkr/fees.php');
+	$paygatedotto_mkrerc20_blockchain_response = file_get_contents('https://api.paygate.to/crypto/erc20/mkr/fees.php');
 
 
-$hrs_mkrerc20_blockchain_conversion_resp = json_decode($hrs_mkrerc20_blockchain_response, true);
+$paygatedotto_mkrerc20_blockchain_conversion_resp = json_decode($paygatedotto_mkrerc20_blockchain_response, true);
 
-if ($hrs_mkrerc20_blockchain_conversion_resp && isset($hrs_mkrerc20_blockchain_conversion_resp['estimated_cost_currency']['USD'])) {
+if ($paygatedotto_mkrerc20_blockchain_conversion_resp && isset($paygatedotto_mkrerc20_blockchain_conversion_resp['estimated_cost_currency']['USD'])) {
     
 	// revert blockchain fees back to ticker price
-$hrs_feerevert_mkrerc20_response = file_get_contents('https://api.highriskshop.com/crypto/erc20/mkr/convert.php?value=' . $hrs_mkrerc20_blockchain_conversion_resp['estimated_cost_currency']['USD'] . '&from=usd');
+$paygatedotto_feerevert_mkrerc20_response = file_get_contents('https://api.paygate.to/crypto/erc20/mkr/convert.php?value=' . $paygatedotto_mkrerc20_blockchain_conversion_resp['estimated_cost_currency']['USD'] . '&from=usd');
 
 
-$hrs_feerevert_mkrerc20_conversion_resp = json_decode($hrs_feerevert_mkrerc20_response, true);
+$paygatedotto_feerevert_mkrerc20_conversion_resp = json_decode($paygatedotto_feerevert_mkrerc20_response, true);
 
-if ($hrs_feerevert_mkrerc20_conversion_resp && isset($hrs_feerevert_mkrerc20_conversion_resp['value_coin'])) {
+if ($paygatedotto_feerevert_mkrerc20_conversion_resp && isset($paygatedotto_feerevert_mkrerc20_conversion_resp['value_coin'])) {
     // Escape output
-    $hrs_feerevert_mkrerc20_final_total = $hrs_feerevert_mkrerc20_conversion_resp['value_coin']; 
+    $paygatedotto_feerevert_mkrerc20_final_total = $paygatedotto_feerevert_mkrerc20_conversion_resp['value_coin']; 
 // output
-    $hrs_mkrerc20_blockchain_final_total = $hrs_feerevert_mkrerc20_final_total; 	
+    $paygatedotto_mkrerc20_blockchain_final_total = $paygatedotto_feerevert_mkrerc20_final_total; 	
 } else {
 	return "Error: Payment could not be processed, please try again (unable to get estimated cost)";
 }
@@ -92,34 +92,34 @@ if ($hrs_feerevert_mkrerc20_conversion_resp && isset($hrs_feerevert_mkrerc20_con
 	return "Error: Payment could not be processed, estimated blockchain cost unavailable";
 }	
 
-    $hrs_mkrerc20_amount_to_send = $hrs_mkrerc20_final_total + $hrs_mkrerc20_blockchain_final_total;		
+    $paygatedotto_mkrerc20_amount_to_send = $paygatedotto_mkrerc20_final_total + $paygatedotto_mkrerc20_blockchain_final_total;		
 	
 		} else {
-	$hrs_mkrerc20_amount_to_send = $hrs_mkrerc20_final_total;		
+	$paygatedotto_mkrerc20_amount_to_send = $paygatedotto_mkrerc20_final_total;		
 		}
 		
 		
 		
-$hrs_mkrerc20_gen_wallet = file_get_contents('https://api.highriskshop.com/crypto/erc20/mkr/wallet.php?address=' . $walletAddress .'&callback=' . urlencode($callback_URL));
+$paygatedotto_mkrerc20_gen_wallet = file_get_contents('https://api.paygate.to/crypto/erc20/mkr/wallet.php?address=' . $walletAddress .'&callback=' . urlencode($callback_URL));
 
 
-	$hrs_mkrerc20_wallet_decbody = json_decode($hrs_mkrerc20_gen_wallet, true);
+	$paygatedotto_mkrerc20_wallet_decbody = json_decode($paygatedotto_mkrerc20_gen_wallet, true);
 
  // Check if decoding was successful
-    if ($hrs_mkrerc20_wallet_decbody && isset($hrs_mkrerc20_wallet_decbody['address_in'])) {
+    if ($paygatedotto_mkrerc20_wallet_decbody && isset($paygatedotto_mkrerc20_wallet_decbody['address_in'])) {
         // Store the address_in as a variable
-        $hrs_mkrerc20_gen_addressIn = $hrs_mkrerc20_wallet_decbody['address_in'];
-		$hrs_mkrerc20_gen_callback = $hrs_mkrerc20_wallet_decbody['callback_url'];
+        $paygatedotto_mkrerc20_gen_addressIn = $paygatedotto_mkrerc20_wallet_decbody['address_in'];
+		$paygatedotto_mkrerc20_gen_callback = $paygatedotto_mkrerc20_wallet_decbody['callback_url'];
 		
-		$hrs_jsonObject = json_encode(array(
-'pay_to_address' => $hrs_mkrerc20_gen_addressIn,
-'crypto_amount_to_send' => $hrs_mkrerc20_amount_to_send,
+		$paygatedotto_jsonObject = json_encode(array(
+'pay_to_address' => $paygatedotto_mkrerc20_gen_addressIn,
+'crypto_amount_to_send' => $paygatedotto_mkrerc20_amount_to_send,
 'coin_to_send' => 'erc20_mkr'
 ));
 
 		
 		 // Update the invoice description to include address_in
-            $invoiceDescription = $hrs_jsonObject;
+            $invoiceDescription = $paygatedotto_jsonObject;
 
             // Update the invoice with the new description
             $invoice = localAPI("GetInvoice", array('invoiceid' => $invoiceId), null);
@@ -133,21 +133,21 @@ return "Error: Payment could not be processed, please try again (wallet address 
     }
 	
 	
-        $hrs_mkrerc20_gen_qrcode = file_get_contents('https://api.highriskshop.com/crypto/erc20/mkr/qrcode.php?address=' . $hrs_mkrerc20_gen_addressIn);
+        $paygatedotto_mkrerc20_gen_qrcode = file_get_contents('https://api.paygate.to/crypto/erc20/mkr/qrcode.php?address=' . $paygatedotto_mkrerc20_gen_addressIn);
 
 
-	$hrs_mkrerc20_qrcode_decbody = json_decode($hrs_mkrerc20_gen_qrcode, true);
+	$paygatedotto_mkrerc20_qrcode_decbody = json_decode($paygatedotto_mkrerc20_gen_qrcode, true);
 
  // Check if decoding was successful
-    if ($hrs_mkrerc20_qrcode_decbody && isset($hrs_mkrerc20_qrcode_decbody['qr_code'])) {
+    if ($paygatedotto_mkrerc20_qrcode_decbody && isset($paygatedotto_mkrerc20_qrcode_decbody['qr_code'])) {
         // Store the qr_code as a variable
-        $hrs_mkrerc20_gen_qrcode = $hrs_mkrerc20_qrcode_decbody['qr_code'];		
+        $paygatedotto_mkrerc20_gen_qrcode = $paygatedotto_mkrerc20_qrcode_decbody['qr_code'];		
     } else {
 return "Error: QR code could not be processed, please try again (wallet address error)";
     }
 
         // Properly encode attributes for HTML output
-        return '<div><img src="data:image/png;base64,' . $hrs_mkrerc20_gen_qrcode . '" alt="' . $hrs_mkrerc20_gen_addressIn . '"></div><div>Please send <b>' . $hrs_mkrerc20_amount_to_send . '</b> erc20/mkr to the address: <br><b>' . $hrs_mkrerc20_gen_addressIn . '</b></div>';
+        return '<div><img src="data:image/png;base64,' . $paygatedotto_mkrerc20_gen_qrcode . '" alt="' . $paygatedotto_mkrerc20_gen_addressIn . '"></div><div>Please send <b>' . $paygatedotto_mkrerc20_amount_to_send . '</b> erc20/mkr to the address: <br><b>' . $paygatedotto_mkrerc20_gen_addressIn . '</b></div>';
 }
 
 function mkrerc20_activate()

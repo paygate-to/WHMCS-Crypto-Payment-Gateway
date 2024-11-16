@@ -48,42 +48,42 @@ function aedttrc20_link($params)
     $systemUrl = rtrim($params['systemurl'], '/');
     $redirectUrl = $systemUrl . '/modules/gateways/callback/aedttrc20.php';
 	$invoiceLink = $systemUrl . '/viewinvoice.php?id=' . $invoiceId;
-	$hrs_aedttrc20_currency = $params['currency'];
+	$paygatedotto_aedttrc20_currency = $params['currency'];
 	$callback_URL = $redirectUrl . '?invoice_id=' . $invoiceId;
 
 		
-$hrs_aedttrc20_response = file_get_contents('https://api.highriskshop.com/crypto/trc20/aedt/convert.php?value=' . $amount . '&from=' . strtolower($hrs_aedttrc20_currency));
+$paygatedotto_aedttrc20_response = file_get_contents('https://api.paygate.to/crypto/trc20/aedt/convert.php?value=' . $amount . '&from=' . strtolower($paygatedotto_aedttrc20_currency));
 
 
-$hrs_aedttrc20_conversion_resp = json_decode($hrs_aedttrc20_response, true);
+$paygatedotto_aedttrc20_conversion_resp = json_decode($paygatedotto_aedttrc20_response, true);
 
-if ($hrs_aedttrc20_conversion_resp && isset($hrs_aedttrc20_conversion_resp['value_coin'])) {
+if ($paygatedotto_aedttrc20_conversion_resp && isset($paygatedotto_aedttrc20_conversion_resp['value_coin'])) {
     // Escape output
-    $hrs_aedttrc20_final_total = $hrs_aedttrc20_conversion_resp['value_coin'];      
+    $paygatedotto_aedttrc20_final_total = $paygatedotto_aedttrc20_conversion_resp['value_coin'];      
 } else {
 	return "Error: Payment could not be processed, please try again (unsupported store currency)";
 }	
 		
 		if ($params['blockchain_fees'] === 'on') {
 			
-	$hrs_aedttrc20_blockchain_response = file_get_contents('https://api.highriskshop.com/crypto/trc20/aedt/fees.php');
+	$paygatedotto_aedttrc20_blockchain_response = file_get_contents('https://api.paygate.to/crypto/trc20/aedt/fees.php');
 
 
-$hrs_aedttrc20_blockchain_conversion_resp = json_decode($hrs_aedttrc20_blockchain_response, true);
+$paygatedotto_aedttrc20_blockchain_conversion_resp = json_decode($paygatedotto_aedttrc20_blockchain_response, true);
 
-if ($hrs_aedttrc20_blockchain_conversion_resp && isset($hrs_aedttrc20_blockchain_conversion_resp['estimated_cost_currency']['USD'])) {
+if ($paygatedotto_aedttrc20_blockchain_conversion_resp && isset($paygatedotto_aedttrc20_blockchain_conversion_resp['estimated_cost_currency']['USD'])) {
     
 	// revert blockchain fees back to ticker price
-$hrs_feerevert_aedttrc20_response = file_get_contents('https://api.highriskshop.com/crypto/trc20/aedt/convert.php?value=' . $hrs_aedttrc20_blockchain_conversion_resp['estimated_cost_currency']['USD'] . '&from=usd');
+$paygatedotto_feerevert_aedttrc20_response = file_get_contents('https://api.paygate.to/crypto/trc20/aedt/convert.php?value=' . $paygatedotto_aedttrc20_blockchain_conversion_resp['estimated_cost_currency']['USD'] . '&from=usd');
 
 
-$hrs_feerevert_aedttrc20_conversion_resp = json_decode($hrs_feerevert_aedttrc20_response, true);
+$paygatedotto_feerevert_aedttrc20_conversion_resp = json_decode($paygatedotto_feerevert_aedttrc20_response, true);
 
-if ($hrs_feerevert_aedttrc20_conversion_resp && isset($hrs_feerevert_aedttrc20_conversion_resp['value_coin'])) {
+if ($paygatedotto_feerevert_aedttrc20_conversion_resp && isset($paygatedotto_feerevert_aedttrc20_conversion_resp['value_coin'])) {
     // Escape output
-    $hrs_feerevert_aedttrc20_final_total = $hrs_feerevert_aedttrc20_conversion_resp['value_coin']; 
+    $paygatedotto_feerevert_aedttrc20_final_total = $paygatedotto_feerevert_aedttrc20_conversion_resp['value_coin']; 
 // output
-    $hrs_aedttrc20_blockchain_final_total = $hrs_feerevert_aedttrc20_final_total; 	
+    $paygatedotto_aedttrc20_blockchain_final_total = $paygatedotto_feerevert_aedttrc20_final_total; 	
 } else {
 	return "Error: Payment could not be processed, please try again (unable to get estimated cost)";
 }
@@ -92,34 +92,34 @@ if ($hrs_feerevert_aedttrc20_conversion_resp && isset($hrs_feerevert_aedttrc20_c
 	return "Error: Payment could not be processed, estimated blockchain cost unavailable";
 }	
 
-    $hrs_aedttrc20_amount_to_send = $hrs_aedttrc20_final_total + $hrs_aedttrc20_blockchain_final_total;		
+    $paygatedotto_aedttrc20_amount_to_send = $paygatedotto_aedttrc20_final_total + $paygatedotto_aedttrc20_blockchain_final_total;		
 	
 		} else {
-	$hrs_aedttrc20_amount_to_send = $hrs_aedttrc20_final_total;		
+	$paygatedotto_aedttrc20_amount_to_send = $paygatedotto_aedttrc20_final_total;		
 		}
 		
 		
 		
-$hrs_aedttrc20_gen_wallet = file_get_contents('https://api.highriskshop.com/crypto/trc20/aedt/wallet.php?address=' . $walletAddress .'&callback=' . urlencode($callback_URL));
+$paygatedotto_aedttrc20_gen_wallet = file_get_contents('https://api.paygate.to/crypto/trc20/aedt/wallet.php?address=' . $walletAddress .'&callback=' . urlencode($callback_URL));
 
 
-	$hrs_aedttrc20_wallet_decbody = json_decode($hrs_aedttrc20_gen_wallet, true);
+	$paygatedotto_aedttrc20_wallet_decbody = json_decode($paygatedotto_aedttrc20_gen_wallet, true);
 
  // Check if decoding was successful
-    if ($hrs_aedttrc20_wallet_decbody && isset($hrs_aedttrc20_wallet_decbody['address_in'])) {
+    if ($paygatedotto_aedttrc20_wallet_decbody && isset($paygatedotto_aedttrc20_wallet_decbody['address_in'])) {
         // Store the address_in as a variable
-        $hrs_aedttrc20_gen_addressIn = $hrs_aedttrc20_wallet_decbody['address_in'];
-		$hrs_aedttrc20_gen_callback = $hrs_aedttrc20_wallet_decbody['callback_url'];
+        $paygatedotto_aedttrc20_gen_addressIn = $paygatedotto_aedttrc20_wallet_decbody['address_in'];
+		$paygatedotto_aedttrc20_gen_callback = $paygatedotto_aedttrc20_wallet_decbody['callback_url'];
 		
-		$hrs_jsonObject = json_encode(array(
-'pay_to_address' => $hrs_aedttrc20_gen_addressIn,
-'crypto_amount_to_send' => $hrs_aedttrc20_amount_to_send,
+		$paygatedotto_jsonObject = json_encode(array(
+'pay_to_address' => $paygatedotto_aedttrc20_gen_addressIn,
+'crypto_amount_to_send' => $paygatedotto_aedttrc20_amount_to_send,
 'coin_to_send' => 'trc20_aedt'
 ));
 
 		
 		 // Update the invoice description to include address_in
-            $invoiceDescription = $hrs_jsonObject;
+            $invoiceDescription = $paygatedotto_jsonObject;
 
             // Update the invoice with the new description
             $invoice = localAPI("GetInvoice", array('invoiceid' => $invoiceId), null);
@@ -133,21 +133,21 @@ return "Error: Payment could not be processed, please try again (wallet address 
     }
 	
 	
-        $hrs_aedttrc20_gen_qrcode = file_get_contents('https://api.highriskshop.com/crypto/trc20/aedt/qrcode.php?address=' . $hrs_aedttrc20_gen_addressIn);
+        $paygatedotto_aedttrc20_gen_qrcode = file_get_contents('https://api.paygate.to/crypto/trc20/aedt/qrcode.php?address=' . $paygatedotto_aedttrc20_gen_addressIn);
 
 
-	$hrs_aedttrc20_qrcode_decbody = json_decode($hrs_aedttrc20_gen_qrcode, true);
+	$paygatedotto_aedttrc20_qrcode_decbody = json_decode($paygatedotto_aedttrc20_gen_qrcode, true);
 
  // Check if decoding was successful
-    if ($hrs_aedttrc20_qrcode_decbody && isset($hrs_aedttrc20_qrcode_decbody['qr_code'])) {
+    if ($paygatedotto_aedttrc20_qrcode_decbody && isset($paygatedotto_aedttrc20_qrcode_decbody['qr_code'])) {
         // Store the qr_code as a variable
-        $hrs_aedttrc20_gen_qrcode = $hrs_aedttrc20_qrcode_decbody['qr_code'];		
+        $paygatedotto_aedttrc20_gen_qrcode = $paygatedotto_aedttrc20_qrcode_decbody['qr_code'];		
     } else {
 return "Error: QR code could not be processed, please try again (wallet address error)";
     }
 
         // Properly encode attributes for HTML output
-        return '<div><img src="data:image/png;base64,' . $hrs_aedttrc20_gen_qrcode . '" alt="' . $hrs_aedttrc20_gen_addressIn . '"></div><div>Please send <b>' . $hrs_aedttrc20_amount_to_send . '</b> trc20/aedt to the address: <br><b>' . $hrs_aedttrc20_gen_addressIn . '</b></div>';
+        return '<div><img src="data:image/png;base64,' . $paygatedotto_aedttrc20_gen_qrcode . '" alt="' . $paygatedotto_aedttrc20_gen_addressIn . '"></div><div>Please send <b>' . $paygatedotto_aedttrc20_amount_to_send . '</b> trc20/aedt to the address: <br><b>' . $paygatedotto_aedttrc20_gen_addressIn . '</b></div>';
 }
 
 function aedttrc20_activate()

@@ -48,42 +48,42 @@ function wetheavaxc_link($params)
     $systemUrl = rtrim($params['systemurl'], '/');
     $redirectUrl = $systemUrl . '/modules/gateways/callback/wetheavaxc.php';
 	$invoiceLink = $systemUrl . '/viewinvoice.php?id=' . $invoiceId;
-	$hrs_wetheavaxc_currency = $params['currency'];
+	$paygatedotto_wetheavaxc_currency = $params['currency'];
 	$callback_URL = $redirectUrl . '?invoice_id=' . $invoiceId;
 
 		
-$hrs_wetheavaxc_response = file_get_contents('https://api.highriskshop.com/crypto/avax-c/weth.e/convert.php?value=' . $amount . '&from=' . strtolower($hrs_wetheavaxc_currency));
+$paygatedotto_wetheavaxc_response = file_get_contents('https://api.paygate.to/crypto/avax-c/weth.e/convert.php?value=' . $amount . '&from=' . strtolower($paygatedotto_wetheavaxc_currency));
 
 
-$hrs_wetheavaxc_conversion_resp = json_decode($hrs_wetheavaxc_response, true);
+$paygatedotto_wetheavaxc_conversion_resp = json_decode($paygatedotto_wetheavaxc_response, true);
 
-if ($hrs_wetheavaxc_conversion_resp && isset($hrs_wetheavaxc_conversion_resp['value_coin'])) {
+if ($paygatedotto_wetheavaxc_conversion_resp && isset($paygatedotto_wetheavaxc_conversion_resp['value_coin'])) {
     // Escape output
-    $hrs_wetheavaxc_final_total = $hrs_wetheavaxc_conversion_resp['value_coin'];      
+    $paygatedotto_wetheavaxc_final_total = $paygatedotto_wetheavaxc_conversion_resp['value_coin'];      
 } else {
 	return "Error: Payment could not be processed, please try again (unsupported store currency)";
 }	
 		
 		if ($params['blockchain_fees'] === 'on') {
 			
-	$hrs_wetheavaxc_blockchain_response = file_get_contents('https://api.highriskshop.com/crypto/avax-c/weth.e/fees.php');
+	$paygatedotto_wetheavaxc_blockchain_response = file_get_contents('https://api.paygate.to/crypto/avax-c/weth.e/fees.php');
 
 
-$hrs_wetheavaxc_blockchain_conversion_resp = json_decode($hrs_wetheavaxc_blockchain_response, true);
+$paygatedotto_wetheavaxc_blockchain_conversion_resp = json_decode($paygatedotto_wetheavaxc_blockchain_response, true);
 
-if ($hrs_wetheavaxc_blockchain_conversion_resp && isset($hrs_wetheavaxc_blockchain_conversion_resp['estimated_cost_currency']['USD'])) {
+if ($paygatedotto_wetheavaxc_blockchain_conversion_resp && isset($paygatedotto_wetheavaxc_blockchain_conversion_resp['estimated_cost_currency']['USD'])) {
     
 	// revert blockchain fees back to ticker price
-$hrs_feerevert_wetheavaxc_response = file_get_contents('https://api.highriskshop.com/crypto/avax-c/weth.e/convert.php?value=' . $hrs_wetheavaxc_blockchain_conversion_resp['estimated_cost_currency']['USD'] . '&from=usd');
+$paygatedotto_feerevert_wetheavaxc_response = file_get_contents('https://api.paygate.to/crypto/avax-c/weth.e/convert.php?value=' . $paygatedotto_wetheavaxc_blockchain_conversion_resp['estimated_cost_currency']['USD'] . '&from=usd');
 
 
-$hrs_feerevert_wetheavaxc_conversion_resp = json_decode($hrs_feerevert_wetheavaxc_response, true);
+$paygatedotto_feerevert_wetheavaxc_conversion_resp = json_decode($paygatedotto_feerevert_wetheavaxc_response, true);
 
-if ($hrs_feerevert_wetheavaxc_conversion_resp && isset($hrs_feerevert_wetheavaxc_conversion_resp['value_coin'])) {
+if ($paygatedotto_feerevert_wetheavaxc_conversion_resp && isset($paygatedotto_feerevert_wetheavaxc_conversion_resp['value_coin'])) {
     // Escape output
-    $hrs_feerevert_wetheavaxc_final_total = $hrs_feerevert_wetheavaxc_conversion_resp['value_coin']; 
+    $paygatedotto_feerevert_wetheavaxc_final_total = $paygatedotto_feerevert_wetheavaxc_conversion_resp['value_coin']; 
 // output
-    $hrs_wetheavaxc_blockchain_final_total = $hrs_feerevert_wetheavaxc_final_total; 	
+    $paygatedotto_wetheavaxc_blockchain_final_total = $paygatedotto_feerevert_wetheavaxc_final_total; 	
 } else {
 	return "Error: Payment could not be processed, please try again (unable to get estimated cost)";
 }
@@ -92,34 +92,34 @@ if ($hrs_feerevert_wetheavaxc_conversion_resp && isset($hrs_feerevert_wetheavaxc
 	return "Error: Payment could not be processed, estimated blockchain cost unavailable";
 }	
 
-    $hrs_wetheavaxc_amount_to_send = $hrs_wetheavaxc_final_total + $hrs_wetheavaxc_blockchain_final_total;		
+    $paygatedotto_wetheavaxc_amount_to_send = $paygatedotto_wetheavaxc_final_total + $paygatedotto_wetheavaxc_blockchain_final_total;		
 	
 		} else {
-	$hrs_wetheavaxc_amount_to_send = $hrs_wetheavaxc_final_total;		
+	$paygatedotto_wetheavaxc_amount_to_send = $paygatedotto_wetheavaxc_final_total;		
 		}
 		
 		
 		
-$hrs_wetheavaxc_gen_wallet = file_get_contents('https://api.highriskshop.com/crypto/avax-c/weth.e/wallet.php?address=' . $walletAddress .'&callback=' . urlencode($callback_URL));
+$paygatedotto_wetheavaxc_gen_wallet = file_get_contents('https://api.paygate.to/crypto/avax-c/weth.e/wallet.php?address=' . $walletAddress .'&callback=' . urlencode($callback_URL));
 
 
-	$hrs_wetheavaxc_wallet_decbody = json_decode($hrs_wetheavaxc_gen_wallet, true);
+	$paygatedotto_wetheavaxc_wallet_decbody = json_decode($paygatedotto_wetheavaxc_gen_wallet, true);
 
  // Check if decoding was successful
-    if ($hrs_wetheavaxc_wallet_decbody && isset($hrs_wetheavaxc_wallet_decbody['address_in'])) {
+    if ($paygatedotto_wetheavaxc_wallet_decbody && isset($paygatedotto_wetheavaxc_wallet_decbody['address_in'])) {
         // Store the address_in as a variable
-        $hrs_wetheavaxc_gen_addressIn = $hrs_wetheavaxc_wallet_decbody['address_in'];
-		$hrs_wetheavaxc_gen_callback = $hrs_wetheavaxc_wallet_decbody['callback_url'];
+        $paygatedotto_wetheavaxc_gen_addressIn = $paygatedotto_wetheavaxc_wallet_decbody['address_in'];
+		$paygatedotto_wetheavaxc_gen_callback = $paygatedotto_wetheavaxc_wallet_decbody['callback_url'];
 		
-		$hrs_jsonObject = json_encode(array(
-'pay_to_address' => $hrs_wetheavaxc_gen_addressIn,
-'crypto_amount_to_send' => $hrs_wetheavaxc_amount_to_send,
+		$paygatedotto_jsonObject = json_encode(array(
+'pay_to_address' => $paygatedotto_wetheavaxc_gen_addressIn,
+'crypto_amount_to_send' => $paygatedotto_wetheavaxc_amount_to_send,
 'coin_to_send' => 'avax-c_weth.e'
 ));
 
 		
 		 // Update the invoice description to include address_in
-            $invoiceDescription = $hrs_jsonObject;
+            $invoiceDescription = $paygatedotto_jsonObject;
 
             // Update the invoice with the new description
             $invoice = localAPI("GetInvoice", array('invoiceid' => $invoiceId), null);
@@ -133,21 +133,21 @@ return "Error: Payment could not be processed, please try again (wallet address 
     }
 	
 	
-        $hrs_wetheavaxc_gen_qrcode = file_get_contents('https://api.highriskshop.com/crypto/avax-c/weth.e/qrcode.php?address=' . $hrs_wetheavaxc_gen_addressIn);
+        $paygatedotto_wetheavaxc_gen_qrcode = file_get_contents('https://api.paygate.to/crypto/avax-c/weth.e/qrcode.php?address=' . $paygatedotto_wetheavaxc_gen_addressIn);
 
 
-	$hrs_wetheavaxc_qrcode_decbody = json_decode($hrs_wetheavaxc_gen_qrcode, true);
+	$paygatedotto_wetheavaxc_qrcode_decbody = json_decode($paygatedotto_wetheavaxc_gen_qrcode, true);
 
  // Check if decoding was successful
-    if ($hrs_wetheavaxc_qrcode_decbody && isset($hrs_wetheavaxc_qrcode_decbody['qr_code'])) {
+    if ($paygatedotto_wetheavaxc_qrcode_decbody && isset($paygatedotto_wetheavaxc_qrcode_decbody['qr_code'])) {
         // Store the qr_code as a variable
-        $hrs_wetheavaxc_gen_qrcode = $hrs_wetheavaxc_qrcode_decbody['qr_code'];		
+        $paygatedotto_wetheavaxc_gen_qrcode = $paygatedotto_wetheavaxc_qrcode_decbody['qr_code'];		
     } else {
 return "Error: QR code could not be processed, please try again (wallet address error)";
     }
 
         // Properly encode attributes for HTML output
-        return '<div><img src="data:image/png;base64,' . $hrs_wetheavaxc_gen_qrcode . '" alt="' . $hrs_wetheavaxc_gen_addressIn . '"></div><div>Please send <b>' . $hrs_wetheavaxc_amount_to_send . '</b> avax-c/weth.e to the address: <br><b>' . $hrs_wetheavaxc_gen_addressIn . '</b></div>';
+        return '<div><img src="data:image/png;base64,' . $paygatedotto_wetheavaxc_gen_qrcode . '" alt="' . $paygatedotto_wetheavaxc_gen_addressIn . '"></div><div>Please send <b>' . $paygatedotto_wetheavaxc_amount_to_send . '</b> avax-c/weth.e to the address: <br><b>' . $paygatedotto_wetheavaxc_gen_addressIn . '</b></div>';
 }
 
 function wetheavaxc_activate()
