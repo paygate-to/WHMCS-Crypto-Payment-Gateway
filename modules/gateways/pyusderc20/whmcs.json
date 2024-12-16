@@ -1,0 +1,31 @@
+{
+  "schema": "1.0",
+  "type": "whmcs-gateways",
+  "name": "pyusderc20",
+  "license": "proprietary",
+  "category": "payments",
+  "description": {
+    "name": "pyusderc20",
+    "tagline": "PYUSD erc20 Crypto Payment Gateway (No KYC)",
+    "long": "Crypto erc20-pyusd Paymnet Gateway with instant payouts to your walllet without KYC ",
+    "features": [
+      "Accept PYUSD erc20 directly on your website",
+      "Unique erc20/pyusd receiving address for every order",
+      "Instant payouts settlement to your erc20/pyusd wallet",
+      "ZERO KYC for both the merchant and the customer."
+    ]
+  },
+  "logo": {
+    "filename": "pyusderc20.png"
+  },
+  "support": {
+    "homepage": "https:\/\/paygate.to\/",
+    "docs_url": "https:\/\/paygate.to\/"
+  },
+  "authors": [
+    {
+      "name": "PayGate.to",
+      "homepage": "https:\/\/paygate.to\/"
+    }
+  ]
+}

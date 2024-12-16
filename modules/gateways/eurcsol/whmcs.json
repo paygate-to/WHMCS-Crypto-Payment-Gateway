@@ -1,0 +1,31 @@
+{
+  "schema": "1.0",
+  "type": "whmcs-gateways",
+  "name": "eurcsol",
+  "license": "proprietary",
+  "category": "payments",
+  "description": {
+    "name": "eurcsol",
+    "tagline": "EURC Solana Crypto Payment Gateway (No KYC)",
+    "long": "Crypto sol-eurc Paymnet Gateway with instant payouts to your walllet without KYC ",
+    "features": [
+      "Accept EURC Solana directly on your website",
+      "Unique sol/eurc receiving address for every order",
+      "Instant payouts settlement to your sol/eurc wallet",
+      "ZERO KYC for both the merchant and the customer."
+    ]
+  },
+  "logo": {
+    "filename": "eurcsol.png"
+  },
+  "support": {
+    "homepage": "https:\/\/paygate.to\/",
+    "docs_url": "https:\/\/paygate.to\/"
+  },
+  "authors": [
+    {
+      "name": "PayGate.to",
+      "homepage": "https:\/\/paygate.to\/"
+    }
+  ]
+}

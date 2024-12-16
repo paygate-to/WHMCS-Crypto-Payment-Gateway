@@ -1,0 +1,31 @@
+{
+  "schema": "1.0",
+  "type": "whmcs-gateways",
+  "name": "wbtcsol",
+  "license": "proprietary",
+  "category": "payments",
+  "description": {
+    "name": "wbtcsol",
+    "tagline": "Wrapped BTC Solana Crypto Payment Gateway (No KYC)",
+    "long": "Crypto sol-wbtc Paymnet Gateway with instant payouts to your walllet without KYC ",
+    "features": [
+      "Accept Wrapped BTC Solana directly on your website",
+      "Unique sol/wbtc receiving address for every order",
+      "Instant payouts settlement to your sol/wbtc wallet",
+      "ZERO KYC for both the merchant and the customer."
+    ]
+  },
+  "logo": {
+    "filename": "wbtcsol.png"
+  },
+  "support": {
+    "homepage": "https:\/\/paygate.to\/",
+    "docs_url": "https:\/\/paygate.to\/"
+  },
+  "authors": [
+    {
+      "name": "PayGate.to",
+      "homepage": "https:\/\/paygate.to\/"
+    }
+  ]
+}

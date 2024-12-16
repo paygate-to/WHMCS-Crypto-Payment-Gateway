@@ -1,0 +1,31 @@
+{
+  "schema": "1.0",
+  "type": "whmcs-gateways",
+  "name": "usdtsol",
+  "license": "proprietary",
+  "category": "payments",
+  "description": {
+    "name": "usdtsol",
+    "tagline": "USDT Solana Crypto Payment Gateway (No KYC)",
+    "long": "Crypto sol-usdt Paymnet Gateway with instant payouts to your walllet without KYC ",
+    "features": [
+      "Accept USDT Solana directly on your website",
+      "Unique sol/usdt receiving address for every order",
+      "Instant payouts settlement to your sol/usdt wallet",
+      "ZERO KYC for both the merchant and the customer."
+    ]
+  },
+  "logo": {
+    "filename": "usdtsol.png"
+  },
+  "support": {
+    "homepage": "https:\/\/paygate.to\/",
+    "docs_url": "https:\/\/paygate.to\/"
+  },
+  "authors": [
+    {
+      "name": "PayGate.to",
+      "homepage": "https:\/\/paygate.to\/"
+    }
+  ]
+}
