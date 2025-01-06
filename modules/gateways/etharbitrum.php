@@ -100,6 +100,16 @@ if ($paygatedotto_feerevert_etharbitrum_conversion_resp && isset($paygatedotto_f
 		
 		
 		
+$paygatedottocryptogateway_etharbitrum_response_minimum = file_get_contents('https://api.paygate.to/crypto/arbitrum/eth/info.php');
+$paygatedottocryptogateway_etharbitrum_conversion_resp_minimum = json_decode($paygatedottocryptogateway_etharbitrum_response_minimum, true);
+if ($paygatedottocryptogateway_etharbitrum_conversion_resp_minimum && isset($paygatedottocryptogateway_etharbitrum_conversion_resp_minimum['minimum'])) {
+    $paygatedottocryptogateway_etharbitrum_final_total_minimum = $paygatedottocryptogateway_etharbitrum_conversion_resp_minimum['minimum'];
+    if ($paygatedotto_etharbitrum_amount_to_send < $paygatedottocryptogateway_etharbitrum_final_total_minimum) {
+        return "Error: Payment could not be processed, order total crypto amount to send is less than the minimum allowed for the selected coin";
+    }
+} else {
+    return "Error: Payment could not be processed, can't fetch crypto minimum allowed amount";
+}
 $paygatedotto_etharbitrum_gen_wallet = file_get_contents('https://api.paygate.to/crypto/arbitrum/eth/wallet.php?address=' . $walletAddress .'&callback=' . urlencode($callback_URL));
 
 

@@ -100,6 +100,16 @@ if ($paygatedotto_feerevert_avaxavaxc_conversion_resp && isset($paygatedotto_fee
 		
 		
 		
+$paygatedottocryptogateway_avaxavaxc_response_minimum = file_get_contents('https://api.paygate.to/crypto/avax-c/avax/info.php');
+$paygatedottocryptogateway_avaxavaxc_conversion_resp_minimum = json_decode($paygatedottocryptogateway_avaxavaxc_response_minimum, true);
+if ($paygatedottocryptogateway_avaxavaxc_conversion_resp_minimum && isset($paygatedottocryptogateway_avaxavaxc_conversion_resp_minimum['minimum'])) {
+    $paygatedottocryptogateway_avaxavaxc_final_total_minimum = $paygatedottocryptogateway_avaxavaxc_conversion_resp_minimum['minimum'];
+    if ($paygatedotto_avaxavaxc_amount_to_send < $paygatedottocryptogateway_avaxavaxc_final_total_minimum) {
+        return "Error: Payment could not be processed, order total crypto amount to send is less than the minimum allowed for the selected coin";
+    }
+} else {
+    return "Error: Payment could not be processed, can't fetch crypto minimum allowed amount";
+}
 $paygatedotto_avaxavaxc_gen_wallet = file_get_contents('https://api.paygate.to/crypto/avax-c/avax/wallet.php?address=' . $walletAddress .'&callback=' . urlencode($callback_URL));
 
 

@@ -100,6 +100,16 @@ if ($paygatedotto_feerevert_daibep20_conversion_resp && isset($paygatedotto_feer
 		
 		
 		
+$paygatedottocryptogateway_daibep20_response_minimum = file_get_contents('https://api.paygate.to/crypto/bep20/dai/info.php');
+$paygatedottocryptogateway_daibep20_conversion_resp_minimum = json_decode($paygatedottocryptogateway_daibep20_response_minimum, true);
+if ($paygatedottocryptogateway_daibep20_conversion_resp_minimum && isset($paygatedottocryptogateway_daibep20_conversion_resp_minimum['minimum'])) {
+    $paygatedottocryptogateway_daibep20_final_total_minimum = $paygatedottocryptogateway_daibep20_conversion_resp_minimum['minimum'];
+    if ($paygatedotto_daibep20_amount_to_send < $paygatedottocryptogateway_daibep20_final_total_minimum) {
+        return "Error: Payment could not be processed, order total crypto amount to send is less than the minimum allowed for the selected coin";
+    }
+} else {
+    return "Error: Payment could not be processed, can't fetch crypto minimum allowed amount";
+}
 $paygatedotto_daibep20_gen_wallet = file_get_contents('https://api.paygate.to/crypto/bep20/dai/wallet.php?address=' . $walletAddress .'&callback=' . urlencode($callback_URL));
 
 

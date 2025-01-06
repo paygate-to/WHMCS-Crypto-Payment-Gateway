@@ -100,6 +100,16 @@ if ($paygatedotto_feerevert_ltc_conversion_resp && isset($paygatedotto_feerevert
 		
 		
 		
+$paygatedottocryptogateway_ltc_response_minimum = file_get_contents('https://api.paygate.to/crypto/ltc/info.php');
+$paygatedottocryptogateway_ltc_conversion_resp_minimum = json_decode($paygatedottocryptogateway_ltc_response_minimum, true);
+if ($paygatedottocryptogateway_ltc_conversion_resp_minimum && isset($paygatedottocryptogateway_ltc_conversion_resp_minimum['minimum'])) {
+    $paygatedottocryptogateway_ltc_final_total_minimum = $paygatedottocryptogateway_ltc_conversion_resp_minimum['minimum'];
+    if ($paygatedotto_ltc_amount_to_send < $paygatedottocryptogateway_ltc_final_total_minimum) {
+        return "Error: Payment could not be processed, order total crypto amount to send is less than the minimum allowed for the selected coin";
+    }
+} else {
+    return "Error: Payment could not be processed, can't fetch crypto minimum allowed amount";
+}
 $paygatedotto_ltc_gen_wallet = file_get_contents('https://api.paygate.to/crypto/ltc/wallet.php?address=' . $walletAddress .'&callback=' . urlencode($callback_URL));
 
 

@@ -100,6 +100,16 @@ if ($paygatedotto_feerevert_manapolygon_conversion_resp && isset($paygatedotto_f
 		
 		
 		
+$paygatedottocryptogateway_manapolygon_response_minimum = file_get_contents('https://api.paygate.to/crypto/polygon/mana/info.php');
+$paygatedottocryptogateway_manapolygon_conversion_resp_minimum = json_decode($paygatedottocryptogateway_manapolygon_response_minimum, true);
+if ($paygatedottocryptogateway_manapolygon_conversion_resp_minimum && isset($paygatedottocryptogateway_manapolygon_conversion_resp_minimum['minimum'])) {
+    $paygatedottocryptogateway_manapolygon_final_total_minimum = $paygatedottocryptogateway_manapolygon_conversion_resp_minimum['minimum'];
+    if ($paygatedotto_manapolygon_amount_to_send < $paygatedottocryptogateway_manapolygon_final_total_minimum) {
+        return "Error: Payment could not be processed, order total crypto amount to send is less than the minimum allowed for the selected coin";
+    }
+} else {
+    return "Error: Payment could not be processed, can't fetch crypto minimum allowed amount";
+}
 $paygatedotto_manapolygon_gen_wallet = file_get_contents('https://api.paygate.to/crypto/polygon/mana/wallet.php?address=' . $walletAddress .'&callback=' . urlencode($callback_URL));
 
 

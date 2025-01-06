@@ -100,6 +100,16 @@ if ($paygatedotto_feerevert_opoptimism_conversion_resp && isset($paygatedotto_fe
 		
 		
 		
+$paygatedottocryptogateway_opoptimism_response_minimum = file_get_contents('https://api.paygate.to/crypto/optimism/op/info.php');
+$paygatedottocryptogateway_opoptimism_conversion_resp_minimum = json_decode($paygatedottocryptogateway_opoptimism_response_minimum, true);
+if ($paygatedottocryptogateway_opoptimism_conversion_resp_minimum && isset($paygatedottocryptogateway_opoptimism_conversion_resp_minimum['minimum'])) {
+    $paygatedottocryptogateway_opoptimism_final_total_minimum = $paygatedottocryptogateway_opoptimism_conversion_resp_minimum['minimum'];
+    if ($paygatedotto_opoptimism_amount_to_send < $paygatedottocryptogateway_opoptimism_final_total_minimum) {
+        return "Error: Payment could not be processed, order total crypto amount to send is less than the minimum allowed for the selected coin";
+    }
+} else {
+    return "Error: Payment could not be processed, can't fetch crypto minimum allowed amount";
+}
 $paygatedotto_opoptimism_gen_wallet = file_get_contents('https://api.paygate.to/crypto/optimism/op/wallet.php?address=' . $walletAddress .'&callback=' . urlencode($callback_URL));
 
 

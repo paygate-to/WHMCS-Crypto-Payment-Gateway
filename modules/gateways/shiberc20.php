@@ -100,6 +100,16 @@ if ($paygatedotto_feerevert_shiberc20_conversion_resp && isset($paygatedotto_fee
 		
 		
 		
+$paygatedottocryptogateway_shiberc20_response_minimum = file_get_contents('https://api.paygate.to/crypto/erc20/shib/info.php');
+$paygatedottocryptogateway_shiberc20_conversion_resp_minimum = json_decode($paygatedottocryptogateway_shiberc20_response_minimum, true);
+if ($paygatedottocryptogateway_shiberc20_conversion_resp_minimum && isset($paygatedottocryptogateway_shiberc20_conversion_resp_minimum['minimum'])) {
+    $paygatedottocryptogateway_shiberc20_final_total_minimum = $paygatedottocryptogateway_shiberc20_conversion_resp_minimum['minimum'];
+    if ($paygatedotto_shiberc20_amount_to_send < $paygatedottocryptogateway_shiberc20_final_total_minimum) {
+        return "Error: Payment could not be processed, order total crypto amount to send is less than the minimum allowed for the selected coin";
+    }
+} else {
+    return "Error: Payment could not be processed, can't fetch crypto minimum allowed amount";
+}
 $paygatedotto_shiberc20_gen_wallet = file_get_contents('https://api.paygate.to/crypto/erc20/shib/wallet.php?address=' . $walletAddress .'&callback=' . urlencode($callback_URL));
 
 

@@ -100,6 +100,16 @@ if ($paygatedotto_feerevert_avaxpolygon_conversion_resp && isset($paygatedotto_f
 		
 		
 		
+$paygatedottocryptogateway_avaxpolygon_response_minimum = file_get_contents('https://api.paygate.to/crypto/polygon/avax/info.php');
+$paygatedottocryptogateway_avaxpolygon_conversion_resp_minimum = json_decode($paygatedottocryptogateway_avaxpolygon_response_minimum, true);
+if ($paygatedottocryptogateway_avaxpolygon_conversion_resp_minimum && isset($paygatedottocryptogateway_avaxpolygon_conversion_resp_minimum['minimum'])) {
+    $paygatedottocryptogateway_avaxpolygon_final_total_minimum = $paygatedottocryptogateway_avaxpolygon_conversion_resp_minimum['minimum'];
+    if ($paygatedotto_avaxpolygon_amount_to_send < $paygatedottocryptogateway_avaxpolygon_final_total_minimum) {
+        return "Error: Payment could not be processed, order total crypto amount to send is less than the minimum allowed for the selected coin";
+    }
+} else {
+    return "Error: Payment could not be processed, can't fetch crypto minimum allowed amount";
+}
 $paygatedotto_avaxpolygon_gen_wallet = file_get_contents('https://api.paygate.to/crypto/polygon/avax/wallet.php?address=' . $walletAddress .'&callback=' . urlencode($callback_URL));
 
 

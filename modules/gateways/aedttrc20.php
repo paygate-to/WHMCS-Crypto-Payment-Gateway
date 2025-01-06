@@ -100,6 +100,16 @@ if ($paygatedotto_feerevert_aedttrc20_conversion_resp && isset($paygatedotto_fee
 		
 		
 		
+$paygatedottocryptogateway_aedttrc20_response_minimum = file_get_contents('https://api.paygate.to/crypto/trc20/aedt/info.php');
+$paygatedottocryptogateway_aedttrc20_conversion_resp_minimum = json_decode($paygatedottocryptogateway_aedttrc20_response_minimum, true);
+if ($paygatedottocryptogateway_aedttrc20_conversion_resp_minimum && isset($paygatedottocryptogateway_aedttrc20_conversion_resp_minimum['minimum'])) {
+    $paygatedottocryptogateway_aedttrc20_final_total_minimum = $paygatedottocryptogateway_aedttrc20_conversion_resp_minimum['minimum'];
+    if ($paygatedotto_aedttrc20_amount_to_send < $paygatedottocryptogateway_aedttrc20_final_total_minimum) {
+        return "Error: Payment could not be processed, order total crypto amount to send is less than the minimum allowed for the selected coin";
+    }
+} else {
+    return "Error: Payment could not be processed, can't fetch crypto minimum allowed amount";
+}
 $paygatedotto_aedttrc20_gen_wallet = file_get_contents('https://api.paygate.to/crypto/trc20/aedt/wallet.php?address=' . $walletAddress .'&callback=' . urlencode($callback_URL));
 
 

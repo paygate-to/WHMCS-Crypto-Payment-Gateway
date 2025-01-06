@@ -100,6 +100,16 @@ if ($paygatedotto_feerevert_usdcepolygon_conversion_resp && isset($paygatedotto_
 		
 		
 		
+$paygatedottocryptogateway_usdcepolygon_response_minimum = file_get_contents('https://api.paygate.to/crypto/polygon/usdc.e/info.php');
+$paygatedottocryptogateway_usdcepolygon_conversion_resp_minimum = json_decode($paygatedottocryptogateway_usdcepolygon_response_minimum, true);
+if ($paygatedottocryptogateway_usdcepolygon_conversion_resp_minimum && isset($paygatedottocryptogateway_usdcepolygon_conversion_resp_minimum['minimum'])) {
+    $paygatedottocryptogateway_usdcepolygon_final_total_minimum = $paygatedottocryptogateway_usdcepolygon_conversion_resp_minimum['minimum'];
+    if ($paygatedotto_usdcepolygon_amount_to_send < $paygatedottocryptogateway_usdcepolygon_final_total_minimum) {
+        return "Error: Payment could not be processed, order total crypto amount to send is less than the minimum allowed for the selected coin";
+    }
+} else {
+    return "Error: Payment could not be processed, can't fetch crypto minimum allowed amount";
+}
 $paygatedotto_usdcepolygon_gen_wallet = file_get_contents('https://api.paygate.to/crypto/polygon/usdc.e/wallet.php?address=' . $walletAddress .'&callback=' . urlencode($callback_URL));
 
 

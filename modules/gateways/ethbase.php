@@ -100,6 +100,16 @@ if ($paygatedotto_feerevert_ethbase_conversion_resp && isset($paygatedotto_feere
 		
 		
 		
+$paygatedottocryptogateway_ethbase_response_minimum = file_get_contents('https://api.paygate.to/crypto/base/eth/info.php');
+$paygatedottocryptogateway_ethbase_conversion_resp_minimum = json_decode($paygatedottocryptogateway_ethbase_response_minimum, true);
+if ($paygatedottocryptogateway_ethbase_conversion_resp_minimum && isset($paygatedottocryptogateway_ethbase_conversion_resp_minimum['minimum'])) {
+    $paygatedottocryptogateway_ethbase_final_total_minimum = $paygatedottocryptogateway_ethbase_conversion_resp_minimum['minimum'];
+    if ($paygatedotto_ethbase_amount_to_send < $paygatedottocryptogateway_ethbase_final_total_minimum) {
+        return "Error: Payment could not be processed, order total crypto amount to send is less than the minimum allowed for the selected coin";
+    }
+} else {
+    return "Error: Payment could not be processed, can't fetch crypto minimum allowed amount";
+}
 $paygatedotto_ethbase_gen_wallet = file_get_contents('https://api.paygate.to/crypto/base/eth/wallet.php?address=' . $walletAddress .'&callback=' . urlencode($callback_URL));
 
 

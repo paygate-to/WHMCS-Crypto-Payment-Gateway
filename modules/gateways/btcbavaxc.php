@@ -100,6 +100,16 @@ if ($paygatedotto_feerevert_btcbavaxc_conversion_resp && isset($paygatedotto_fee
 		
 		
 		
+$paygatedottocryptogateway_btcbavaxc_response_minimum = file_get_contents('https://api.paygate.to/crypto/avax-c/btc.b/info.php');
+$paygatedottocryptogateway_btcbavaxc_conversion_resp_minimum = json_decode($paygatedottocryptogateway_btcbavaxc_response_minimum, true);
+if ($paygatedottocryptogateway_btcbavaxc_conversion_resp_minimum && isset($paygatedottocryptogateway_btcbavaxc_conversion_resp_minimum['minimum'])) {
+    $paygatedottocryptogateway_btcbavaxc_final_total_minimum = $paygatedottocryptogateway_btcbavaxc_conversion_resp_minimum['minimum'];
+    if ($paygatedotto_btcbavaxc_amount_to_send < $paygatedottocryptogateway_btcbavaxc_final_total_minimum) {
+        return "Error: Payment could not be processed, order total crypto amount to send is less than the minimum allowed for the selected coin";
+    }
+} else {
+    return "Error: Payment could not be processed, can't fetch crypto minimum allowed amount";
+}
 $paygatedotto_btcbavaxc_gen_wallet = file_get_contents('https://api.paygate.to/crypto/avax-c/btc.b/wallet.php?address=' . $walletAddress .'&callback=' . urlencode($callback_URL));
 
 

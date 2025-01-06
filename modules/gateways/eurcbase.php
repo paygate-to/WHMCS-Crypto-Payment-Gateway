@@ -100,6 +100,16 @@ if ($paygatedotto_feerevert_eurcbase_conversion_resp && isset($paygatedotto_feer
 		
 		
 		
+$paygatedottocryptogateway_eurcbase_response_minimum = file_get_contents('https://api.paygate.to/crypto/base/eurc/info.php');
+$paygatedottocryptogateway_eurcbase_conversion_resp_minimum = json_decode($paygatedottocryptogateway_eurcbase_response_minimum, true);
+if ($paygatedottocryptogateway_eurcbase_conversion_resp_minimum && isset($paygatedottocryptogateway_eurcbase_conversion_resp_minimum['minimum'])) {
+    $paygatedottocryptogateway_eurcbase_final_total_minimum = $paygatedottocryptogateway_eurcbase_conversion_resp_minimum['minimum'];
+    if ($paygatedotto_eurcbase_amount_to_send < $paygatedottocryptogateway_eurcbase_final_total_minimum) {
+        return "Error: Payment could not be processed, order total crypto amount to send is less than the minimum allowed for the selected coin";
+    }
+} else {
+    return "Error: Payment could not be processed, can't fetch crypto minimum allowed amount";
+}
 $paygatedotto_eurcbase_gen_wallet = file_get_contents('https://api.paygate.to/crypto/base/eurc/wallet.php?address=' . $walletAddress .'&callback=' . urlencode($callback_URL));
 
 

@@ -100,6 +100,16 @@ if ($paygatedotto_feerevert_arbarbitrum_conversion_resp && isset($paygatedotto_f
 		
 		
 		
+$paygatedottocryptogateway_arbarbitrum_response_minimum = file_get_contents('https://api.paygate.to/crypto/arbitrum/arb/info.php');
+$paygatedottocryptogateway_arbarbitrum_conversion_resp_minimum = json_decode($paygatedottocryptogateway_arbarbitrum_response_minimum, true);
+if ($paygatedottocryptogateway_arbarbitrum_conversion_resp_minimum && isset($paygatedottocryptogateway_arbarbitrum_conversion_resp_minimum['minimum'])) {
+    $paygatedottocryptogateway_arbarbitrum_final_total_minimum = $paygatedottocryptogateway_arbarbitrum_conversion_resp_minimum['minimum'];
+    if ($paygatedotto_arbarbitrum_amount_to_send < $paygatedottocryptogateway_arbarbitrum_final_total_minimum) {
+        return "Error: Payment could not be processed, order total crypto amount to send is less than the minimum allowed for the selected coin";
+    }
+} else {
+    return "Error: Payment could not be processed, can't fetch crypto minimum allowed amount";
+}
 $paygatedotto_arbarbitrum_gen_wallet = file_get_contents('https://api.paygate.to/crypto/arbitrum/arb/wallet.php?address=' . $walletAddress .'&callback=' . urlencode($callback_URL));
 
 

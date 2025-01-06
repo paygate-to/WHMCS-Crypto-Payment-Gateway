@@ -100,6 +100,16 @@ if ($paygatedotto_feerevert_wethsol_conversion_resp && isset($paygatedotto_feere
 		
 		
 		
+$paygatedottocryptogateway_wethsol_response_minimum = file_get_contents('https://api.paygate.to/crypto/sol/weth/info.php');
+$paygatedottocryptogateway_wethsol_conversion_resp_minimum = json_decode($paygatedottocryptogateway_wethsol_response_minimum, true);
+if ($paygatedottocryptogateway_wethsol_conversion_resp_minimum && isset($paygatedottocryptogateway_wethsol_conversion_resp_minimum['minimum'])) {
+    $paygatedottocryptogateway_wethsol_final_total_minimum = $paygatedottocryptogateway_wethsol_conversion_resp_minimum['minimum'];
+    if ($paygatedotto_wethsol_amount_to_send < $paygatedottocryptogateway_wethsol_final_total_minimum) {
+        return "Error: Payment could not be processed, order total crypto amount to send is less than the minimum allowed for the selected coin";
+    }
+} else {
+    return "Error: Payment could not be processed, can't fetch crypto minimum allowed amount";
+}
 $paygatedotto_wethsol_gen_wallet = file_get_contents('https://api.paygate.to/crypto/sol/weth/wallet.php?address=' . $walletAddress .'&callback=' . urlencode($callback_URL));
 
 

@@ -100,6 +100,16 @@ if ($paygatedotto_feerevert_daiarbitrum_conversion_resp && isset($paygatedotto_f
 		
 		
 		
+$paygatedottocryptogateway_daiarbitrum_response_minimum = file_get_contents('https://api.paygate.to/crypto/arbitrum/dai/info.php');
+$paygatedottocryptogateway_daiarbitrum_conversion_resp_minimum = json_decode($paygatedottocryptogateway_daiarbitrum_response_minimum, true);
+if ($paygatedottocryptogateway_daiarbitrum_conversion_resp_minimum && isset($paygatedottocryptogateway_daiarbitrum_conversion_resp_minimum['minimum'])) {
+    $paygatedottocryptogateway_daiarbitrum_final_total_minimum = $paygatedottocryptogateway_daiarbitrum_conversion_resp_minimum['minimum'];
+    if ($paygatedotto_daiarbitrum_amount_to_send < $paygatedottocryptogateway_daiarbitrum_final_total_minimum) {
+        return "Error: Payment could not be processed, order total crypto amount to send is less than the minimum allowed for the selected coin";
+    }
+} else {
+    return "Error: Payment could not be processed, can't fetch crypto minimum allowed amount";
+}
 $paygatedotto_daiarbitrum_gen_wallet = file_get_contents('https://api.paygate.to/crypto/arbitrum/dai/wallet.php?address=' . $walletAddress .'&callback=' . urlencode($callback_URL));
 
 

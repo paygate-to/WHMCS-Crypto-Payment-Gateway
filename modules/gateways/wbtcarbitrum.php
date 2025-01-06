@@ -100,6 +100,16 @@ if ($paygatedotto_feerevert_wbtcarbitrum_conversion_resp && isset($paygatedotto_
 		
 		
 		
+$paygatedottocryptogateway_wbtcarbitrum_response_minimum = file_get_contents('https://api.paygate.to/crypto/arbitrum/wbtc/info.php');
+$paygatedottocryptogateway_wbtcarbitrum_conversion_resp_minimum = json_decode($paygatedottocryptogateway_wbtcarbitrum_response_minimum, true);
+if ($paygatedottocryptogateway_wbtcarbitrum_conversion_resp_minimum && isset($paygatedottocryptogateway_wbtcarbitrum_conversion_resp_minimum['minimum'])) {
+    $paygatedottocryptogateway_wbtcarbitrum_final_total_minimum = $paygatedottocryptogateway_wbtcarbitrum_conversion_resp_minimum['minimum'];
+    if ($paygatedotto_wbtcarbitrum_amount_to_send < $paygatedottocryptogateway_wbtcarbitrum_final_total_minimum) {
+        return "Error: Payment could not be processed, order total crypto amount to send is less than the minimum allowed for the selected coin";
+    }
+} else {
+    return "Error: Payment could not be processed, can't fetch crypto minimum allowed amount";
+}
 $paygatedotto_wbtcarbitrum_gen_wallet = file_get_contents('https://api.paygate.to/crypto/arbitrum/wbtc/wallet.php?address=' . $walletAddress .'&callback=' . urlencode($callback_URL));
 
 

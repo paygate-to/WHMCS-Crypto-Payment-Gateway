@@ -100,6 +100,16 @@ if ($paygatedotto_feerevert_tusderc20_conversion_resp && isset($paygatedotto_fee
 		
 		
 		
+$paygatedottocryptogateway_tusderc20_response_minimum = file_get_contents('https://api.paygate.to/crypto/erc20/tusd/info.php');
+$paygatedottocryptogateway_tusderc20_conversion_resp_minimum = json_decode($paygatedottocryptogateway_tusderc20_response_minimum, true);
+if ($paygatedottocryptogateway_tusderc20_conversion_resp_minimum && isset($paygatedottocryptogateway_tusderc20_conversion_resp_minimum['minimum'])) {
+    $paygatedottocryptogateway_tusderc20_final_total_minimum = $paygatedottocryptogateway_tusderc20_conversion_resp_minimum['minimum'];
+    if ($paygatedotto_tusderc20_amount_to_send < $paygatedottocryptogateway_tusderc20_final_total_minimum) {
+        return "Error: Payment could not be processed, order total crypto amount to send is less than the minimum allowed for the selected coin";
+    }
+} else {
+    return "Error: Payment could not be processed, can't fetch crypto minimum allowed amount";
+}
 $paygatedotto_tusderc20_gen_wallet = file_get_contents('https://api.paygate.to/crypto/erc20/tusd/wallet.php?address=' . $walletAddress .'&callback=' . urlencode($callback_URL));
 
 

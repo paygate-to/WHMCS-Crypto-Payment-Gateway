@@ -100,6 +100,16 @@ if ($paygatedotto_feerevert_oneinchbep20_conversion_resp && isset($paygatedotto_
 		
 		
 		
+$paygatedottocryptogateway_oneinchbep20_response_minimum = file_get_contents('https://api.paygate.to/crypto/bep20/1inch/info.php');
+$paygatedottocryptogateway_oneinchbep20_conversion_resp_minimum = json_decode($paygatedottocryptogateway_oneinchbep20_response_minimum, true);
+if ($paygatedottocryptogateway_oneinchbep20_conversion_resp_minimum && isset($paygatedottocryptogateway_oneinchbep20_conversion_resp_minimum['minimum'])) {
+    $paygatedottocryptogateway_oneinchbep20_final_total_minimum = $paygatedottocryptogateway_oneinchbep20_conversion_resp_minimum['minimum'];
+    if ($paygatedotto_oneinchbep20_amount_to_send < $paygatedottocryptogateway_oneinchbep20_final_total_minimum) {
+        return "Error: Payment could not be processed, order total crypto amount to send is less than the minimum allowed for the selected coin";
+    }
+} else {
+    return "Error: Payment could not be processed, can't fetch crypto minimum allowed amount";
+}
 $paygatedotto_oneinchbep20_gen_wallet = file_get_contents('https://api.paygate.to/crypto/bep20/1inch/wallet.php?address=' . $walletAddress .'&callback=' . urlencode($callback_URL));
 
 

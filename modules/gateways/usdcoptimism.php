@@ -100,6 +100,16 @@ if ($paygatedotto_feerevert_usdcoptimism_conversion_resp && isset($paygatedotto_
 		
 		
 		
+$paygatedottocryptogateway_usdcoptimism_response_minimum = file_get_contents('https://api.paygate.to/crypto/optimism/usdc/info.php');
+$paygatedottocryptogateway_usdcoptimism_conversion_resp_minimum = json_decode($paygatedottocryptogateway_usdcoptimism_response_minimum, true);
+if ($paygatedottocryptogateway_usdcoptimism_conversion_resp_minimum && isset($paygatedottocryptogateway_usdcoptimism_conversion_resp_minimum['minimum'])) {
+    $paygatedottocryptogateway_usdcoptimism_final_total_minimum = $paygatedottocryptogateway_usdcoptimism_conversion_resp_minimum['minimum'];
+    if ($paygatedotto_usdcoptimism_amount_to_send < $paygatedottocryptogateway_usdcoptimism_final_total_minimum) {
+        return "Error: Payment could not be processed, order total crypto amount to send is less than the minimum allowed for the selected coin";
+    }
+} else {
+    return "Error: Payment could not be processed, can't fetch crypto minimum allowed amount";
+}
 $paygatedotto_usdcoptimism_gen_wallet = file_get_contents('https://api.paygate.to/crypto/optimism/usdc/wallet.php?address=' . $walletAddress .'&callback=' . urlencode($callback_URL));
 
 
