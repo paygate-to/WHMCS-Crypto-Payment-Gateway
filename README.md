@@ -9,6 +9,7 @@ No KYC crypto payment gateway solution for WHMCS. Accept crypto payments self ho
 * Ready made open source and free module for WHMCS.
 * You can control who will handle the blockchain payment fees the customer or you the merchant.
 * If the customer made a mistake sending to the wrong token or sending through the wrong network our system will still forward the crypto to you automatically for all supported tokens across all chains.
-* 2% flat rate fee + blockchain fees. Higher volumes can get better rates as low as 1.25%.
+* 1.5% flat rate fee + blockchain fees.
 * You can accept payments worldwide without restrictions due to the decentralized nature of how cryptocurrencies work.
-* Please check our website for the minimum transaction amount for each cryptocurrency.
+* Multi-currency support.
+* Supported networks: BTC – BCH – LTC – doge – ETH – TRC20 – ERC20 – BEP20 – Arbitrum – Polygon – AVAX-C – Optimism – Base – Solana [check the full list of supported coins and minimum order value per coin](https://paygate.to/crypto-payment-gateway-no-kyc-instant-payouts/#minimumorder).
