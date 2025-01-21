@@ -1,0 +1,31 @@
+{
+  "schema": "1.0",
+  "type": "whmcs-gateways",
+  "name": "trumpsol",
+  "license": "proprietary",
+  "category": "payments",
+  "description": {
+    "name": "trumpsol",
+    "tagline": "TRUMP Solana Crypto Payment Gateway (No KYC)",
+    "long": "Crypto sol-trump Paymnet Gateway with instant payouts to your walllet without KYC ",
+    "features": [
+      "Accept TRUMP Solana directly on your website",
+      "Unique sol/trump receiving address for every order",
+      "Instant payouts settlement to your sol/trump wallet",
+      "ZERO KYC for both the merchant and the customer."
+    ]
+  },
+  "logo": {
+    "filename": "trumpsol.png"
+  },
+  "support": {
+    "homepage": "https:\/\/paygate.to\/",
+    "docs_url": "https:\/\/paygate.to\/"
+  },
+  "authors": [
+    {
+      "name": "PayGate.to",
+      "homepage": "https:\/\/paygate.to\/"
+    }
+  ]
+}
