@@ -32,6 +32,25 @@ function tusdtrc20_config()
             'Description' => 'Add estimate blockchain fees to the invoice total.',
             'Default' => 'off',
         ),		
+        'underpaid_tolerance' => array(
+            'FriendlyName' => 'Underpaid Tolerance',
+            'Type' => 'dropdown',
+            'Options' => [
+                '1' => '0%',
+                '0.99' => '1%',
+                '0.98' => '2%',
+                '0.97' => '3%',
+                '0.96' => '4%',
+				'0.95' => '5%',
+				'0.94' => '6%',
+				'0.93' => '7%',
+				'0.92' => '8%',
+				'0.91' => '9%',
+                '0.90' => '10%'
+            ],
+            'Description' => 'Select percentage to tolerate underpayment when a customer send less crypto than the amount to send.',
+            'Default' => '1',
+        ),
         'wallet_address' => array(
             'FriendlyName' => 'TrueUSD trc20 Wallet Address',
             'Type' => 'text',
@@ -43,6 +62,7 @@ function tusdtrc20_config()
 function tusdtrc20_link($params)
 {
     $walletAddress = $params['wallet_address'];
+    $paygatedotto_tusdtrc20_underpaidTolerance = $params['underpaid_tolerance'];
     $amount = $params['amount'];
     $invoiceId = $params['invoiceid'];
     $systemUrl = rtrim($params['systemurl'], '/');
@@ -124,6 +144,7 @@ $paygatedotto_tusdtrc20_gen_wallet = file_get_contents('https://api.paygate.to/c
 		$paygatedotto_jsonObject = json_encode(array(
 'pay_to_address' => $paygatedotto_tusdtrc20_gen_addressIn,
 'crypto_amount_to_send' => $paygatedotto_tusdtrc20_amount_to_send,
+'und_tol' => $paygatedotto_tusdtrc20_underpaidTolerance,
 'coin_to_send' => 'trc20_tusd'
 ));
 

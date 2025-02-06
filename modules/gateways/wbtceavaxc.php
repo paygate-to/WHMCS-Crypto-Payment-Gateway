@@ -32,6 +32,25 @@ function wbtceavaxc_config()
             'Description' => 'Add estimate blockchain fees to the invoice total.',
             'Default' => 'off',
         ),		
+        'underpaid_tolerance' => array(
+            'FriendlyName' => 'Underpaid Tolerance',
+            'Type' => 'dropdown',
+            'Options' => [
+                '1' => '0%',
+                '0.99' => '1%',
+                '0.98' => '2%',
+                '0.97' => '3%',
+                '0.96' => '4%',
+				'0.95' => '5%',
+				'0.94' => '6%',
+				'0.93' => '7%',
+				'0.92' => '8%',
+				'0.91' => '9%',
+                '0.90' => '10%'
+            ],
+            'Description' => 'Select percentage to tolerate underpayment when a customer send less crypto than the amount to send.',
+            'Default' => '1',
+        ),
         'wallet_address' => array(
             'FriendlyName' => 'Wrapped BTC avax-c Wallet Address',
             'Type' => 'text',
@@ -43,6 +62,7 @@ function wbtceavaxc_config()
 function wbtceavaxc_link($params)
 {
     $walletAddress = $params['wallet_address'];
+    $paygatedotto_wbtceavaxc_underpaidTolerance = $params['underpaid_tolerance'];
     $amount = $params['amount'];
     $invoiceId = $params['invoiceid'];
     $systemUrl = rtrim($params['systemurl'], '/');
@@ -124,6 +144,7 @@ $paygatedotto_wbtceavaxc_gen_wallet = file_get_contents('https://api.paygate.to/
 		$paygatedotto_jsonObject = json_encode(array(
 'pay_to_address' => $paygatedotto_wbtceavaxc_gen_addressIn,
 'crypto_amount_to_send' => $paygatedotto_wbtceavaxc_amount_to_send,
+'und_tol' => $paygatedotto_wbtceavaxc_underpaidTolerance,
 'coin_to_send' => 'avax-c_wbtc.e'
 ));
 

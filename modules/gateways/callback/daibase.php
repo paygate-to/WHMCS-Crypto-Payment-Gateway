@@ -36,7 +36,7 @@ if ($invoice['result'] == 'success' && $invoice['status'] != 'Paid') {
 $stored_invoice_data = json_decode($invoiceNotes, true);
   if ($stored_invoice_data && isset($stored_invoice_data['coin_to_send'])) {
 	  $reference_coin = $stored_invoice_data['coin_to_send'];
-	  $reference_coin_amounnt = $stored_invoice_data['crypto_amount_to_send'];
+	  $reference_coin_amounnt = $stored_invoice_data['und_tol'] * $stored_invoice_data['crypto_amount_to_send'];
   } else {
 die ("Error: Payment could not be processed, invoice has no reference notes data.");	  
   }
