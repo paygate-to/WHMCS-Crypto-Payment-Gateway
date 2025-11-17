@@ -69,7 +69,9 @@ function aedttrc20_link($params)
     $redirectUrl = $systemUrl . '/modules/gateways/callback/aedttrc20.php';
 	$invoiceLink = $systemUrl . '/viewinvoice.php?id=' . $invoiceId;
 	$paygatedotto_aedttrc20_currency = $params['currency'];
-	$callback_URL = $redirectUrl . '?invoice_id=' . $invoiceId;
+	$secret = hash('sha256', 'paygate_salt_' . $walletAddress);
+	$sig = hash_hmac('sha256', $invoiceId, $secret);
+	$callback_URL = $redirectUrl . '?invoice_id=' . $invoiceId . '&sig=' . $sig;
 
 		
 $paygatedotto_aedttrc20_response = file_get_contents('https://api.paygate.to/crypto/trc20/aedt/convert.php?value=' . $amount . '&from=' . strtolower($paygatedotto_aedttrc20_currency));

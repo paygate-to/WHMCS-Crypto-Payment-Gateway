@@ -69,7 +69,9 @@ function wbtcarbitrum_link($params)
     $redirectUrl = $systemUrl . '/modules/gateways/callback/wbtcarbitrum.php';
 	$invoiceLink = $systemUrl . '/viewinvoice.php?id=' . $invoiceId;
 	$paygatedotto_wbtcarbitrum_currency = $params['currency'];
-	$callback_URL = $redirectUrl . '?invoice_id=' . $invoiceId;
+	$secret = hash('sha256', 'paygate_salt_' . $walletAddress);
+	$sig = hash_hmac('sha256', $invoiceId, $secret);
+	$callback_URL = $redirectUrl . '?invoice_id=' . $invoiceId . '&sig=' . $sig;
 
 		
 $paygatedotto_wbtcarbitrum_response = file_get_contents('https://api.paygate.to/crypto/arbitrum/wbtc/convert.php?value=' . $amount . '&from=' . strtolower($paygatedotto_wbtcarbitrum_currency));

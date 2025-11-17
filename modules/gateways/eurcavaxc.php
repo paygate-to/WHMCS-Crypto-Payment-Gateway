@@ -69,7 +69,9 @@ function eurcavaxc_link($params)
     $redirectUrl = $systemUrl . '/modules/gateways/callback/eurcavaxc.php';
 	$invoiceLink = $systemUrl . '/viewinvoice.php?id=' . $invoiceId;
 	$paygatedotto_eurcavaxc_currency = $params['currency'];
-	$callback_URL = $redirectUrl . '?invoice_id=' . $invoiceId;
+	$secret = hash('sha256', 'paygate_salt_' . $walletAddress);
+	$sig = hash_hmac('sha256', $invoiceId, $secret);
+	$callback_URL = $redirectUrl . '?invoice_id=' . $invoiceId . '&sig=' . $sig;
 
 		
 $paygatedotto_eurcavaxc_response = file_get_contents('https://api.paygate.to/crypto/avax-c/eurc/convert.php?value=' . $amount . '&from=' . strtolower($paygatedotto_eurcavaxc_currency));

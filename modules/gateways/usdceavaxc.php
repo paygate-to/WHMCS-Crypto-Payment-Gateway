@@ -69,7 +69,9 @@ function usdceavaxc_link($params)
     $redirectUrl = $systemUrl . '/modules/gateways/callback/usdceavaxc.php';
 	$invoiceLink = $systemUrl . '/viewinvoice.php?id=' . $invoiceId;
 	$paygatedotto_usdceavaxc_currency = $params['currency'];
-	$callback_URL = $redirectUrl . '?invoice_id=' . $invoiceId;
+	$secret = hash('sha256', 'paygate_salt_' . $walletAddress);
+	$sig = hash_hmac('sha256', $invoiceId, $secret);
+	$callback_URL = $redirectUrl . '?invoice_id=' . $invoiceId . '&sig=' . $sig;
 
 		
 $paygatedotto_usdceavaxc_response = file_get_contents('https://api.paygate.to/crypto/avax-c/usdc.e/convert.php?value=' . $amount . '&from=' . strtolower($paygatedotto_usdceavaxc_currency));

@@ -69,7 +69,9 @@ function solsol_link($params)
     $redirectUrl = $systemUrl . '/modules/gateways/callback/solsol.php';
 	$invoiceLink = $systemUrl . '/viewinvoice.php?id=' . $invoiceId;
 	$paygatedotto_solsol_currency = $params['currency'];
-	$callback_URL = $redirectUrl . '?invoice_id=' . $invoiceId;
+	$secret = hash('sha256', 'paygate_salt_' . $walletAddress);
+	$sig = hash_hmac('sha256', $invoiceId, $secret);
+	$callback_URL = $redirectUrl . '?invoice_id=' . $invoiceId . '&sig=' . $sig;
 
 		
 $paygatedotto_solsol_response = file_get_contents('https://api.paygate.to/crypto/sol/sol/convert.php?value=' . $amount . '&from=' . strtolower($paygatedotto_solsol_currency));

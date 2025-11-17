@@ -69,7 +69,9 @@ function usdceoptimism_link($params)
     $redirectUrl = $systemUrl . '/modules/gateways/callback/usdceoptimism.php';
 	$invoiceLink = $systemUrl . '/viewinvoice.php?id=' . $invoiceId;
 	$paygatedotto_usdceoptimism_currency = $params['currency'];
-	$callback_URL = $redirectUrl . '?invoice_id=' . $invoiceId;
+	$secret = hash('sha256', 'paygate_salt_' . $walletAddress);
+	$sig = hash_hmac('sha256', $invoiceId, $secret);
+	$callback_URL = $redirectUrl . '?invoice_id=' . $invoiceId . '&sig=' . $sig;
 
 		
 $paygatedotto_usdceoptimism_response = file_get_contents('https://api.paygate.to/crypto/optimism/usdc.e/convert.php?value=' . $amount . '&from=' . strtolower($paygatedotto_usdceoptimism_currency));

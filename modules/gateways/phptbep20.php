@@ -69,7 +69,9 @@ function phptbep20_link($params)
     $redirectUrl = $systemUrl . '/modules/gateways/callback/phptbep20.php';
 	$invoiceLink = $systemUrl . '/viewinvoice.php?id=' . $invoiceId;
 	$paygatedotto_phptbep20_currency = $params['currency'];
-	$callback_URL = $redirectUrl . '?invoice_id=' . $invoiceId;
+	$secret = hash('sha256', 'paygate_salt_' . $walletAddress);
+	$sig = hash_hmac('sha256', $invoiceId, $secret);
+	$callback_URL = $redirectUrl . '?invoice_id=' . $invoiceId . '&sig=' . $sig;
 
 		
 $paygatedotto_phptbep20_response = file_get_contents('https://api.paygate.to/crypto/bep20/phpt/convert.php?value=' . $amount . '&from=' . strtolower($paygatedotto_phptbep20_currency));

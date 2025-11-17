@@ -69,7 +69,9 @@ function eurcsol_link($params)
     $redirectUrl = $systemUrl . '/modules/gateways/callback/eurcsol.php';
 	$invoiceLink = $systemUrl . '/viewinvoice.php?id=' . $invoiceId;
 	$paygatedotto_eurcsol_currency = $params['currency'];
-	$callback_URL = $redirectUrl . '?invoice_id=' . $invoiceId;
+	$secret = hash('sha256', 'paygate_salt_' . $walletAddress);
+	$sig = hash_hmac('sha256', $invoiceId, $secret);
+	$callback_URL = $redirectUrl . '?invoice_id=' . $invoiceId . '&sig=' . $sig;
 
 		
 $paygatedotto_eurcsol_response = file_get_contents('https://api.paygate.to/crypto/sol/eurc/convert.php?value=' . $amount . '&from=' . strtolower($paygatedotto_eurcsol_currency));

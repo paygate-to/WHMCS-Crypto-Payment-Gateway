@@ -69,7 +69,9 @@ function daioptimism_link($params)
     $redirectUrl = $systemUrl . '/modules/gateways/callback/daioptimism.php';
 	$invoiceLink = $systemUrl . '/viewinvoice.php?id=' . $invoiceId;
 	$paygatedotto_daioptimism_currency = $params['currency'];
-	$callback_URL = $redirectUrl . '?invoice_id=' . $invoiceId;
+	$secret = hash('sha256', 'paygate_salt_' . $walletAddress);
+	$sig = hash_hmac('sha256', $invoiceId, $secret);
+	$callback_URL = $redirectUrl . '?invoice_id=' . $invoiceId . '&sig=' . $sig;
 
 		
 $paygatedotto_daioptimism_response = file_get_contents('https://api.paygate.to/crypto/optimism/dai/convert.php?value=' . $amount . '&from=' . strtolower($paygatedotto_daioptimism_currency));

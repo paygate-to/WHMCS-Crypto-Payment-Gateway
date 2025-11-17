@@ -69,7 +69,9 @@ function nexoerc20_link($params)
     $redirectUrl = $systemUrl . '/modules/gateways/callback/nexoerc20.php';
 	$invoiceLink = $systemUrl . '/viewinvoice.php?id=' . $invoiceId;
 	$paygatedotto_nexoerc20_currency = $params['currency'];
-	$callback_URL = $redirectUrl . '?invoice_id=' . $invoiceId;
+	$secret = hash('sha256', 'paygate_salt_' . $walletAddress);
+	$sig = hash_hmac('sha256', $invoiceId, $secret);
+	$callback_URL = $redirectUrl . '?invoice_id=' . $invoiceId . '&sig=' . $sig;
 
 		
 $paygatedotto_nexoerc20_response = file_get_contents('https://api.paygate.to/crypto/erc20/nexo/convert.php?value=' . $amount . '&from=' . strtolower($paygatedotto_nexoerc20_currency));
