@@ -1,0 +1,31 @@
+{
+  "schema": "1.0",
+  "type": "whmcs-gateways",
+  "name": "pyusdarbitrum",
+  "license": "proprietary",
+  "category": "payments",
+  "description": {
+    "name": "pyusdarbitrum",
+    "tagline": "PYUSD arbitrum Crypto Payment Gateway (No KYC)",
+    "long": "Crypto arbitrum-pyusd Paymnet Gateway with instant payouts to your walllet without KYC ",
+    "features": [
+      "Accept PYUSD arbitrum directly on your website",
+      "Unique arbitrum/pyusd receiving address for every order",
+      "Instant payouts settlement to your arbitrum/pyusd wallet",
+      "ZERO KYC for both the merchant and the customer."
+    ]
+  },
+  "logo": {
+    "filename": "pyusdarbitrum.png"
+  },
+  "support": {
+    "homepage": "https:\/\/paygate.to\/",
+    "docs_url": "https:\/\/paygate.to\/"
+  },
+  "authors": [
+    {
+      "name": "PayGate.to",
+      "homepage": "https:\/\/paygate.to\/"
+    }
+  ]
+}

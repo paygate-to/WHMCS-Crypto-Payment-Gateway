@@ -1,0 +1,31 @@
+{
+  "schema": "1.0",
+  "type": "whmcs-gateways",
+  "name": "usdt0optimism",
+  "license": "proprietary",
+  "category": "payments",
+  "description": {
+    "name": "usdt0optimism",
+    "tagline": "USDT0 optimism Crypto Payment Gateway (No KYC)",
+    "long": "Crypto optimism-usdt0 Paymnet Gateway with instant payouts to your walllet without KYC ",
+    "features": [
+      "Accept USDT0 optimism directly on your website",
+      "Unique optimism/usdt0 receiving address for every order",
+      "Instant payouts settlement to your optimism/usdt0 wallet",
+      "ZERO KYC for both the merchant and the customer."
+    ]
+  },
+  "logo": {
+    "filename": "usdt0optimism.png"
+  },
+  "support": {
+    "homepage": "https:\/\/paygate.to\/",
+    "docs_url": "https:\/\/paygate.to\/"
+  },
+  "authors": [
+    {
+      "name": "PayGate.to",
+      "homepage": "https:\/\/paygate.to\/"
+    }
+  ]
+}

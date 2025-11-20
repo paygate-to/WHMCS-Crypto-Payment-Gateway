@@ -1,0 +1,31 @@
+{
+  "schema": "1.0",
+  "type": "whmcs-gateways",
+  "name": "cbbtcerc20",
+  "license": "proprietary",
+  "category": "payments",
+  "description": {
+    "name": "cbbtcerc20",
+    "tagline": "CBBTC erc20 Crypto Payment Gateway (No KYC)",
+    "long": "Crypto erc20-cbbtc Paymnet Gateway with instant payouts to your walllet without KYC ",
+    "features": [
+      "Accept CBBTC erc20 directly on your website",
+      "Unique erc20/cbbtc receiving address for every order",
+      "Instant payouts settlement to your erc20/cbbtc wallet",
+      "ZERO KYC for both the merchant and the customer."
+    ]
+  },
+  "logo": {
+    "filename": "cbbtcerc20.png"
+  },
+  "support": {
+    "homepage": "https:\/\/paygate.to\/",
+    "docs_url": "https:\/\/paygate.to\/"
+  },
+  "authors": [
+    {
+      "name": "PayGate.to",
+      "homepage": "https:\/\/paygate.to\/"
+    }
+  ]
+}

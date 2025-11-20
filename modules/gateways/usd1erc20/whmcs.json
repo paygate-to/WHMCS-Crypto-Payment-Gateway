@@ -1,0 +1,31 @@
+{
+  "schema": "1.0",
+  "type": "whmcs-gateways",
+  "name": "usd1erc20",
+  "license": "proprietary",
+  "category": "payments",
+  "description": {
+    "name": "usd1erc20",
+    "tagline": "USD1 erc20 Crypto Payment Gateway (No KYC)",
+    "long": "Crypto erc20-usd1 Paymnet Gateway with instant payouts to your walllet without KYC ",
+    "features": [
+      "Accept USD1 erc20 directly on your website",
+      "Unique erc20/usd1 receiving address for every order",
+      "Instant payouts settlement to your erc20/usd1 wallet",
+      "ZERO KYC for both the merchant and the customer."
+    ]
+  },
+  "logo": {
+    "filename": "usd1erc20.png"
+  },
+  "support": {
+    "homepage": "https:\/\/paygate.to\/",
+    "docs_url": "https:\/\/paygate.to\/"
+  },
+  "authors": [
+    {
+      "name": "PayGate.to",
+      "homepage": "https:\/\/paygate.to\/"
+    }
+  ]
+}

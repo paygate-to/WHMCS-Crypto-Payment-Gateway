@@ -16,14 +16,14 @@ function pepearbitrum_config()
     return array(
         'FriendlyName' => array(
             'Type' => 'System',
-            'Value' => 'PEPE Token arbitrum',
+            'Value' => 'PEPE arbitrum',
         ),
         'description' => array(
             'FriendlyName' => 'Description',
             'Type' => 'textarea',
             'Rows' => '3',
             'Cols' => '25',
-            'Default' => 'Pay using crypto PEPE Token arbitrum.',
+            'Default' => 'Pay using crypto PEPE arbitrum.',
             'Description' => 'This controls the description which the user sees during checkout.',
         ),
         'blockchain_fees' => array(
@@ -52,7 +52,7 @@ function pepearbitrum_config()
             'Default' => '1',
         ),
         'wallet_address' => array(
-            'FriendlyName' => 'PEPE Token arbitrum Wallet Address',
+            'FriendlyName' => 'PEPE arbitrum Wallet Address',
             'Type' => 'text',
             'Description' => 'Insert your arbitrum-pepe Wallet address.',
         ),

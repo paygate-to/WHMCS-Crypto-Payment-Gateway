@@ -1,0 +1,31 @@
+{
+  "schema": "1.0",
+  "type": "whmcs-gateways",
+  "name": "usdt0arbitrum",
+  "license": "proprietary",
+  "category": "payments",
+  "description": {
+    "name": "usdt0arbitrum",
+    "tagline": "USDT0 arbitrum Crypto Payment Gateway (No KYC)",
+    "long": "Crypto arbitrum-usdt0 Paymnet Gateway with instant payouts to your walllet without KYC ",
+    "features": [
+      "Accept USDT0 arbitrum directly on your website",
+      "Unique arbitrum/usdt0 receiving address for every order",
+      "Instant payouts settlement to your arbitrum/usdt0 wallet",
+      "ZERO KYC for both the merchant and the customer."
+    ]
+  },
+  "logo": {
+    "filename": "usdt0arbitrum.png"
+  },
+  "support": {
+    "homepage": "https:\/\/paygate.to\/",
+    "docs_url": "https:\/\/paygate.to\/"
+  },
+  "authors": [
+    {
+      "name": "PayGate.to",
+      "homepage": "https:\/\/paygate.to\/"
+    }
+  ]
+}

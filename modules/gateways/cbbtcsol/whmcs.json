@@ -1,0 +1,31 @@
+{
+  "schema": "1.0",
+  "type": "whmcs-gateways",
+  "name": "cbbtcsol",
+  "license": "proprietary",
+  "category": "payments",
+  "description": {
+    "name": "cbbtcsol",
+    "tagline": "CBBTC Solana Crypto Payment Gateway (No KYC)",
+    "long": "Crypto sol-cbbtc Paymnet Gateway with instant payouts to your walllet without KYC ",
+    "features": [
+      "Accept CBBTC Solana directly on your website",
+      "Unique sol/cbbtc receiving address for every order",
+      "Instant payouts settlement to your sol/cbbtc wallet",
+      "ZERO KYC for both the merchant and the customer."
+    ]
+  },
+  "logo": {
+    "filename": "cbbtcsol.png"
+  },
+  "support": {
+    "homepage": "https:\/\/paygate.to\/",
+    "docs_url": "https:\/\/paygate.to\/"
+  },
+  "authors": [
+    {
+      "name": "PayGate.to",
+      "homepage": "https:\/\/paygate.to\/"
+    }
+  ]
+}

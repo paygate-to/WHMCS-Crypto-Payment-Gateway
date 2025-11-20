@@ -1,0 +1,31 @@
+{
+  "schema": "1.0",
+  "type": "whmcs-gateways",
+  "name": "cbbtcbase",
+  "license": "proprietary",
+  "category": "payments",
+  "description": {
+    "name": "cbbtcbase",
+    "tagline": "CBBTC base Crypto Payment Gateway (No KYC)",
+    "long": "Crypto base-cbbtc Paymnet Gateway with instant payouts to your walllet without KYC ",
+    "features": [
+      "Accept CBBTC base directly on your website",
+      "Unique base/cbbtc receiving address for every order",
+      "Instant payouts settlement to your base/cbbtc wallet",
+      "ZERO KYC for both the merchant and the customer."
+    ]
+  },
+  "logo": {
+    "filename": "cbbtcbase.png"
+  },
+  "support": {
+    "homepage": "https:\/\/paygate.to\/",
+    "docs_url": "https:\/\/paygate.to\/"
+  },
+  "authors": [
+    {
+      "name": "PayGate.to",
+      "homepage": "https:\/\/paygate.to\/"
+    }
+  ]
+}

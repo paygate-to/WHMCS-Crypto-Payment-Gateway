@@ -1,0 +1,31 @@
+{
+  "schema": "1.0",
+  "type": "whmcs-gateways",
+  "name": "pyusdsol",
+  "license": "proprietary",
+  "category": "payments",
+  "description": {
+    "name": "pyusdsol",
+    "tagline": "PYUSD Solana Crypto Payment Gateway (No KYC)",
+    "long": "Crypto sol-pyusd Paymnet Gateway with instant payouts to your walllet without KYC ",
+    "features": [
+      "Accept PYUSD Solana directly on your website",
+      "Unique sol/pyusd receiving address for every order",
+      "Instant payouts settlement to your sol/pyusd wallet",
+      "ZERO KYC for both the merchant and the customer."
+    ]
+  },
+  "logo": {
+    "filename": "pyusdsol.png"
+  },
+  "support": {
+    "homepage": "https:\/\/paygate.to\/",
+    "docs_url": "https:\/\/paygate.to\/"
+  },
+  "authors": [
+    {
+      "name": "PayGate.to",
+      "homepage": "https:\/\/paygate.to\/"
+    }
+  ]
+}

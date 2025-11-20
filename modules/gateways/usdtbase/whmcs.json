@@ -1,0 +1,31 @@
+{
+  "schema": "1.0",
+  "type": "whmcs-gateways",
+  "name": "usdtbase",
+  "license": "proprietary",
+  "category": "payments",
+  "description": {
+    "name": "usdtbase",
+    "tagline": "USDT base Crypto Payment Gateway (No KYC)",
+    "long": "Crypto base-usdt Paymnet Gateway with instant payouts to your walllet without KYC ",
+    "features": [
+      "Accept USDT base directly on your website",
+      "Unique base/usdt receiving address for every order",
+      "Instant payouts settlement to your base/usdt wallet",
+      "ZERO KYC for both the merchant and the customer."
+    ]
+  },
+  "logo": {
+    "filename": "usdtbase.png"
+  },
+  "support": {
+    "homepage": "https:\/\/paygate.to\/",
+    "docs_url": "https:\/\/paygate.to\/"
+  },
+  "authors": [
+    {
+      "name": "PayGate.to",
+      "homepage": "https:\/\/paygate.to\/"
+    }
+  ]
+}
