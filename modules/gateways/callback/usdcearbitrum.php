@@ -59,9 +59,9 @@ die ("Error: Payment could not be processed, invoice has no reference notes data
     $result = localAPI('AddInvoicePayment', $paymentSuccess);
 
     if ($result['result'] == 'success') {
-        // Redirect to the invoice page
-        $invoiceLink = $CONFIG['SystemURL'] . '/viewinvoice.php?id=' . $invoiceId;
-        header("Location: $invoiceLink");
+        header("HTTP/1.1 200 OK");
+        header("Content-Type: text/plain");
+        echo "*ok*";
         exit;
     } else {
         // Redirect to the invoice page with an error
