@@ -1,0 +1,31 @@
+{
+  "schema": "1.0",
+  "type": "whmcs-gateways",
+  "name": "usdcmonad",
+  "license": "proprietary",
+  "category": "payments",
+  "description": {
+    "name": "usdcmonad",
+    "tagline": "USDC Monad Crypto Payment Gateway (No KYC)",
+    "long": "Crypto monad-usdc Paymnet Gateway with instant payouts to your walllet without KYC ",
+    "features": [
+      "Accept USDC Monad directly on your website",
+      "Unique monad/usdc receiving address for every order",
+      "Instant payouts settlement to your monad/usdc wallet",
+      "ZERO KYC for both the merchant and the customer."
+    ]
+  },
+  "logo": {
+    "filename": "usdcmonad.png"
+  },
+  "support": {
+    "homepage": "https:\/\/paygate.to\/",
+    "docs_url": "https:\/\/paygate.to\/"
+  },
+  "authors": [
+    {
+      "name": "PayGate.to",
+      "homepage": "https:\/\/paygate.to\/"
+    }
+  ]
+}

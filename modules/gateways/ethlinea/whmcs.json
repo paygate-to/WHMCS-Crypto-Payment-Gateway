@@ -1,0 +1,31 @@
+{
+  "schema": "1.0",
+  "type": "whmcs-gateways",
+  "name": "ethlinea",
+  "license": "proprietary",
+  "category": "payments",
+  "description": {
+    "name": "ethlinea",
+    "tagline": "ETH Linea Crypto Payment Gateway (No KYC)",
+    "long": "Crypto linea-eth Paymnet Gateway with instant payouts to your walllet without KYC ",
+    "features": [
+      "Accept ETH Linea directly on your website",
+      "Unique linea/eth receiving address for every order",
+      "Instant payouts settlement to your linea/eth wallet",
+      "ZERO KYC for both the merchant and the customer."
+    ]
+  },
+  "logo": {
+    "filename": "ethlinea.png"
+  },
+  "support": {
+    "homepage": "https:\/\/paygate.to\/",
+    "docs_url": "https:\/\/paygate.to\/"
+  },
+  "authors": [
+    {
+      "name": "PayGate.to",
+      "homepage": "https:\/\/paygate.to\/"
+    }
+  ]
+}

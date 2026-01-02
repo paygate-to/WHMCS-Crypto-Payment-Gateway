@@ -1,0 +1,31 @@
+{
+  "schema": "1.0",
+  "type": "whmcs-gateways",
+  "name": "usdclinea",
+  "license": "proprietary",
+  "category": "payments",
+  "description": {
+    "name": "usdclinea",
+    "tagline": "USDC Linea Crypto Payment Gateway (No KYC)",
+    "long": "Crypto linea-usdc Paymnet Gateway with instant payouts to your walllet without KYC ",
+    "features": [
+      "Accept USDC Linea directly on your website",
+      "Unique linea/usdc receiving address for every order",
+      "Instant payouts settlement to your linea/usdc wallet",
+      "ZERO KYC for both the merchant and the customer."
+    ]
+  },
+  "logo": {
+    "filename": "usdclinea.png"
+  },
+  "support": {
+    "homepage": "https:\/\/paygate.to\/",
+    "docs_url": "https:\/\/paygate.to\/"
+  },
+  "authors": [
+    {
+      "name": "PayGate.to",
+      "homepage": "https:\/\/paygate.to\/"
+    }
+  ]
+}
