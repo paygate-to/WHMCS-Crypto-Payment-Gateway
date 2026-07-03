@@ -1,0 +1,21 @@
+{
+  "schema": "1.0",
+  "type": "whmcs-gateways",
+  "name": "paygatecryptomulti",
+  "license": "proprietary",
+  "category": "payments",
+  "description": {
+    "name": "Crypto Payment Gateway (Multicoin / Multi Mode)",
+    "tagline": "Accept any supported coin via hosted checkout — No KYC, instant payouts",
+    "long": "A single payment method that accepts any supported cryptocurrency through PayGate's hosted checkout, with optional custom domain and branding. Set one payout wallet per chain family.",
+    "features": [
+      "One method accepts every supported coin",
+      "Hosted checkout with custom domain and branding",
+      "Per-family payout wallets (EVM/BTC/BCH/LTC/DOGE/SOL/TRC20/XMR/ZEC)",
+      "ZERO KYC for both merchant and customer"
+    ]
+  },
+  "logo": { "filename": "logo.png" },
+  "support": { "homepage": "https://paygate.to/", "docs_url": "https://paygate.to/" },
+  "authors": [ { "name": "PayGate.to", "homepage": "https://paygate.to/" } ]
+}

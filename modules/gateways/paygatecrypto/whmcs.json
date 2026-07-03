@@ -1,0 +1,21 @@
+{
+  "schema": "1.0",
+  "type": "whmcs-gateways",
+  "name": "paygatecrypto",
+  "license": "proprietary",
+  "category": "payments",
+  "description": {
+    "name": "Crypto Payment Gateway (Individual Coins)",
+    "tagline": "No-KYC crypto payments with instant payouts — coins loaded dynamically",
+    "long": "Accept individual cryptocurrencies on your WHMCS site with instant payouts to your own wallets and without KYC. The accepted coins and their icons are fetched live from PayGate, so there is a single module instead of one file per coin.",
+    "features": [
+      "Coins and icons loaded dynamically from PayGate (no per-coin files)",
+      "Per-coin payout wallet, unique receiving address per invoice",
+      "On-site QR code and payment address",
+      "ZERO KYC for both merchant and customer"
+    ]
+  },
+  "logo": { "filename": "logo.png" },
+  "support": { "homepage": "https://paygate.to/", "docs_url": "https://paygate.to/" },
+  "authors": [ { "name": "PayGate.to", "homepage": "https://paygate.to/" } ]
+}
