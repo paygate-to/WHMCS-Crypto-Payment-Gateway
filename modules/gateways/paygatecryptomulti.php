@@ -83,6 +83,10 @@ function paygatecryptomulti_config()
             'FriendlyName' => 'Zcash Wallet Address (ZEC)',
             'Type'         => 'text', 'Size' => '60',
         ),
+        'wallet_ton' => array(
+            'FriendlyName' => 'TON Wallet Address (Toncoin/USDT)',
+            'Type'         => 'text', 'Size' => '60',
+        ),
         'underpaid_tolerance' => array(
             'FriendlyName' => 'Underpaid Tolerance',
             'Type'         => 'dropdown',
@@ -168,6 +172,7 @@ function paygatecryptomulti_link($params)
             'trc20'       => 'wallet_trc20',
             'xmr'         => 'wallet_xmr',
             'zec'         => 'wallet_zec',
+            'ton'         => 'wallet_ton',
         ) as $family => $field) {
             if (!empty($params[$field])) {
                 $payloadOut[$family] = trim($params[$field]);
