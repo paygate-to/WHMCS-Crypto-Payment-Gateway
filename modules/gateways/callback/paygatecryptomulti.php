@@ -23,6 +23,7 @@ require_once __DIR__ . '/../paygatecrypto/lib.php';
 
 $gatewayModuleName = basename(__FILE__, '.php'); // paygatecryptomulti
 $gatewayParams     = getGatewayVariables($gatewayModuleName);
+$apiBase           = pgc_api_base(isset($gatewayParams['api_domain']) ? $gatewayParams['api_domain'] : '');
 
 if (!$gatewayParams['type']) {
     die('Module not activated');
@@ -51,7 +52,7 @@ if ($invoice['status'] === 'Paid') {
 $currency = isset($payload['currency']) ? $payload['currency'] : '';
 
 // Value the received coin in the invoice currency.
-$info = pgc_get_json(PGC_API_BASE . pgc_coin_path($paidCoin) . '/info.php');
+$info = pgc_get_json($apiBase . pgc_coin_path($paidCoin) . '/info.php');
 if (!$info || !isset($info['prices'][$currency])) {
     die('Error: failed to fetch coin pricing for verification.');
 }
@@ -63,7 +64,7 @@ $tolerance    = (float) $payload['tolerance'];
 $minRequired  = $expectedFiat * $tolerance;
 
 if (isset($payload['fees']) && $payload['fees'] === '1') {
-    $fees = pgc_get_json(PGC_API_BASE . pgc_coin_path($paidCoin) . '/fees.php');
+    $fees = pgc_get_json($apiBase . pgc_coin_path($paidCoin) . '/fees.php');
     if (!$fees || !isset($fees['estimated_cost_currency'][$currency])) {
         die('Error: failed to fetch coin fee data for verification.');
     }

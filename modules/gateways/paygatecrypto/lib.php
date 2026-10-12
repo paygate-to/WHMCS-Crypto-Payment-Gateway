@@ -24,6 +24,19 @@ if (!defined('PGC_COINMAP_TTL')) {
     define('PGC_COINMAP_TTL', 3600); // seconds
 }
 
+/**
+ * API base for a gateway's "API Domain" setting: your dedicated PayGate API
+ * endpoint (e.g. api-yourshop-....paygate.to), or PGC_API_BASE when it is empty.
+ */
+function pgc_api_base($apiDomain = '')
+{
+    $host = rtrim(str_replace(array('https://', 'http://'), '', trim((string) $apiDomain)), '/');
+    if ($host === '' || !preg_match('/^[A-Za-z0-9.-]+$/', $host)) {
+        return PGC_API_BASE;
+    }
+    return 'https://' . $host . '/crypto/';
+}
+
 /* -------------------------------------------------------------------------
  * HTTP helpers (curl with file_get_contents fallback)
  * ---------------------------------------------------------------------- */
@@ -135,10 +148,11 @@ function pgc_coinmap_cache_file()
  * cache is returned so the storefront keeps working. Pass $force = true to
  * bypass the cache (used right after the admin saves settings).
  *
- * @param bool $force
+ * @param bool   $force
+ * @param string $apiBase Optional API base from pgc_api_base(); default PGC_COIN_INFO_URL.
  * @return array
  */
-function pgc_coin_map($force = false)
+function pgc_coin_map($force = false, $apiBase = '')
 {
     $cacheFile = pgc_coinmap_cache_file();
 
@@ -152,7 +166,7 @@ function pgc_coin_map($force = false)
         }
     }
 
-    $data = pgc_get_json(PGC_COIN_INFO_URL, 15);
+    $data = pgc_get_json(($apiBase !== '' && $apiBase !== PGC_API_BASE) ? $apiBase . 'info.php' : PGC_COIN_INFO_URL, 15);
 
     if (!is_array($data)) {
         // Fall back to any stale cache so checkout keeps working.

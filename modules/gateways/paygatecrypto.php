@@ -69,6 +69,13 @@ function paygatecrypto_config()
             'Description'  => 'Tolerate underpayment when a customer sends slightly less than required (crypto rates are volatile; 1%+ recommended).',
             'Default'      => '0.99',
         ),
+        'api_domain' => array(
+            'FriendlyName' => 'API Domain',
+            'Type'         => 'text',
+            'Size'         => '60',
+            'Default'      => '',
+            'Description'  => 'Your dedicated API endpoint from <a href="https://paygate.to/white-label-api-custom-domain-guide/#dedicated-endpoint" target="_blank" rel="noopener">paygate.to</a>, e.g. api-yourshop-1a2b&hellip;.paygate.to. Leave empty to use the shared api.paygate.to.',
+        ),
     );
 
     // Dynamic per-coin payout wallet fields.
@@ -139,12 +146,12 @@ function paygatecrypto_enabled_coins($params, $map = null)
  * single coin. Returns an array with keys: address, display_total, qr — or an
  * array with an 'error' key on failure.
  */
-function paygatecrypto_generate($coin, $amount, $currency, $feesOn, $callbackUrl)
+function paygatecrypto_generate($coin, $amount, $currency, $feesOn, $callbackUrl, $apiBase = PGC_API_BASE)
 {
     $path = $coin['path'];
 
     // 1) Convert the fiat invoice total into the selected coin.
-    $conv = pgc_get_json(PGC_API_BASE . $path . '/convert.php?value=' . $amount . '&from=' . strtolower($currency));
+    $conv = pgc_get_json($apiBase . $path . '/convert.php?value=' . $amount . '&from=' . strtolower($currency));
     if (!$conv || !isset($conv['value_coin'])) {
         return array('error' => 'Payment could not be processed, please try again (unsupported store currency).');
     }
@@ -152,11 +159,11 @@ function paygatecrypto_generate($coin, $amount, $currency, $feesOn, $callbackUrl
 
     // 2) Optionally add estimated blockchain fees.
     if ($feesOn) {
-        $fees = pgc_get_json(PGC_API_BASE . $path . '/fees.php');
+        $fees = pgc_get_json($apiBase . $path . '/fees.php');
         if (!$fees || !isset($fees['estimated_cost_currency']['USD'])) {
             return array('error' => 'Failed to get estimated blockchain fees, please try again.');
         }
-        $revert = pgc_get_json(PGC_API_BASE . $path . '/convert.php?value=' . $fees['estimated_cost_currency']['USD'] . '&from=usd');
+        $revert = pgc_get_json($apiBase . $path . '/convert.php?value=' . $fees['estimated_cost_currency']['USD'] . '&from=usd');
         if (!$revert || !isset($revert['value_coin'])) {
             return array('error' => 'Payment could not be processed, please try again (fee conversion failed).');
         }
@@ -164,7 +171,7 @@ function paygatecrypto_generate($coin, $amount, $currency, $feesOn, $callbackUrl
     }
 
     // 3) Enforce the coin minimum.
-    $info = pgc_get_json(PGC_API_BASE . $path . '/info.php');
+    $info = pgc_get_json($apiBase . $path . '/info.php');
     if (!$info || !isset($info['minimum'])) {
         return array('error' => 'Payment could not be processed (failed to fetch minimum coin amount).');
     }
@@ -173,14 +180,14 @@ function paygatecrypto_generate($coin, $amount, $currency, $feesOn, $callbackUrl
     }
 
     // 4) Generate the unique pay-in address.
-    $wallet = pgc_get_json(PGC_API_BASE . $path . '/wallet.php?address=' . rawurlencode($coin['wallet']) . '&callback=' . urlencode($callbackUrl));
+    $wallet = pgc_get_json($apiBase . $path . '/wallet.php?address=' . rawurlencode($coin['wallet']) . '&callback=' . urlencode($callbackUrl));
     if (!$wallet || !isset($wallet['address_in'])) {
         return array('error' => 'Payment could not be processed due to an invalid payout wallet, please contact the website admin.');
     }
     $addressIn = $wallet['address_in'];
 
     // 5) Generate the QR code.
-    $qr = pgc_get_json(PGC_API_BASE . $path . '/qrcode.php?address=' . urlencode($addressIn));
+    $qr = pgc_get_json($apiBase . $path . '/qrcode.php?address=' . urlencode($addressIn));
     if (!$qr || !isset($qr['qr_code'])) {
         return array('error' => 'Unable to generate the payment QR code, please try again.');
     }
@@ -257,9 +264,9 @@ function paygatecrypto_render_selector($description, $coins, $invoiceLink)
  * Render the QR / address block for the coin already stored on the invoice.
  * Re-fetches the QR (cheap) rather than storing a large base64 blob.
  */
-function paygatecrypto_render_stored($payload, $invoiceLink)
+function paygatecrypto_render_stored($payload, $invoiceLink, $apiBase = PGC_API_BASE)
 {
-    $qr    = pgc_get_json(PGC_API_BASE . pgc_coin_path($payload['coin']) . '/qrcode.php?address=' . urlencode($payload['pay_to_address']));
+    $qr    = pgc_get_json($apiBase . pgc_coin_path($payload['coin']) . '/qrcode.php?address=' . urlencode($payload['pay_to_address']));
     $qrB64 = ($qr && isset($qr['qr_code'])) ? $qr['qr_code'] : '';
     return paygatecrypto_render_payment(
         isset($payload['coin_label']) ? $payload['coin_label'] : $payload['coin'],
@@ -284,8 +291,9 @@ function paygatecrypto_link($params)
     $feesOn      = (isset($params['blockchain_fees']) && $params['blockchain_fees'] === 'on');
     $tolerance   = $params['underpaid_tolerance'];
     $description = isset($params['description']) ? $params['description'] : '';
+    $apiBase     = pgc_api_base(isset($params['api_domain']) ? $params['api_domain'] : '');
 
-    $map     = pgc_coin_map();
+    $map     = pgc_coin_map(false, $apiBase);
     $enabled = paygatecrypto_enabled_coins($params, $map);
 
     if (empty($enabled)) {
@@ -309,7 +317,7 @@ function paygatecrypto_link($params)
     if ($chosen !== '' && isset($enabled[$chosen])) {
         // Same coin already generated -> reuse the stored address (no new address).
         if ($haveStored && strtolower($payload['coin']) === strtolower($chosen)) {
-            return paygatecrypto_render_stored($payload, $invoiceLink);
+            return paygatecrypto_render_stored($payload, $invoiceLink, $apiBase);
         }
 
         // New or switched coin -> generate a fresh pay-in address.
@@ -318,7 +326,7 @@ function paygatecrypto_link($params)
         $sig   = pgc_sign($invoiceId, $nonce);
         $callbackUrl = $systemUrl . '/modules/gateways/callback/paygatecrypto.php?invoice_id=' . urlencode($invoiceId) . '&sig=' . $sig;
 
-        $result = paygatecrypto_generate($coin, $amount, $currency, $feesOn, $callbackUrl);
+        $result = paygatecrypto_generate($coin, $amount, $currency, $feesOn, $callbackUrl, $apiBase);
         if (isset($result['error'])) {
             return 'Error: ' . htmlspecialchars($result['error'], ENT_QUOTES)
                 . '<p><a href="' . htmlspecialchars($resetUrl, ENT_QUOTES) . '">Try a different coin</a></p>';
@@ -350,7 +358,7 @@ function paygatecrypto_link($params)
 
     // No explicit choice, but an address already exists -> show it.
     if ($haveStored) {
-        return paygatecrypto_render_stored($payload, $invoiceLink);
+        return paygatecrypto_render_stored($payload, $invoiceLink, $apiBase);
     }
 
     // Otherwise show the coin selector.

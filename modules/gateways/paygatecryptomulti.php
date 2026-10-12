@@ -46,6 +46,13 @@ function paygatecryptomulti_config()
             'Default'      => 'checkout.paygate.sbs',
             'Description'  => 'Hosted checkout domain. Follow the PayGate custom domain guide to use your own domain.',
         ),
+        'api_domain' => array(
+            'FriendlyName' => 'API Domain',
+            'Type'         => 'text',
+            'Size'         => '60',
+            'Default'      => '',
+            'Description'  => 'Your dedicated API endpoint from <a href="https://paygate.to/white-label-api-custom-domain-guide/#dedicated-endpoint" target="_blank" rel="noopener">paygate.to</a>, e.g. api-yourshop-1a2b&hellip;.paygate.to. Leave empty to use the shared api.paygate.to.',
+        ),
         'wallet_evm' => array(
             'FriendlyName' => 'EVM Wallet Address',
             'Type'         => 'text', 'Size' => '60',
@@ -179,7 +186,8 @@ function paygatecryptomulti_link($params)
             }
         }
 
-        $resp = pgc_http_post_json(PGC_MULTI_WALLET_URL, json_encode($payloadOut));
+        $apiBase = pgc_api_base(isset($params['api_domain']) ? $params['api_domain'] : '');
+        $resp    = pgc_http_post_json($apiBase === PGC_API_BASE ? PGC_MULTI_WALLET_URL : $apiBase . 'multi-hosted-wallet.php', json_encode($payloadOut));
         $dec  = $resp ? json_decode($resp, true) : null;
 
         if (!is_array($dec) || !isset($dec['payment_token'])) {
