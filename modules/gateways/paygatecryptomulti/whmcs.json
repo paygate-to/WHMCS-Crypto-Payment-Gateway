@@ -2,7 +2,7 @@
   "schema": "1.1",
   "type": "whmcs-gateways",
   "name": "paygatecryptomulti",
-  "license": "proprietary",
+  "license": "GPL-3.0",
   "category": "payments",
   "description": {
     "name": "Crypto Payment Gateway (Multicoin / Multi Mode)",

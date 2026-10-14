@@ -280,28 +280,157 @@ function pgc_make_nonce()
 }
 
 /* -------------------------------------------------------------------------
- * Invoice "notes" payload (we store the per-invoice payment state as JSON in
- * the invoice notes field, exactly like the original module did).
+ * Per-invoice payment state
+ *
+ * Stored server-side in the mod_paygatecrypto table. Older versions kept it as
+ * JSON in the invoice "notes" field, which WHMCS shows to the client on the
+ * invoice, so the callback nonce was visible. That legacy JSON is still read
+ * (and moved into the table, then removed from the notes) so invoices already in
+ * progress keep working; every callback must also carry PayGate's signature.
  * ---------------------------------------------------------------------- */
+
+function pgc_store_table()
+{
+    static $ready = false;
+    if (!$ready) {
+        try {
+            if (!\WHMCS\Database\Capsule::schema()->hasTable('mod_paygatecrypto')) {
+                \WHMCS\Database\Capsule::schema()->create('mod_paygatecrypto', function ($table) {
+                    $table->integer('invoice_id')->unsigned()->primary();
+                    $table->mediumText('payload');
+                });
+            }
+        } catch (\Exception $e) {
+            // Another request may have created the table at the same moment.
+        }
+        $ready = true;
+    }
+    return \WHMCS\Database\Capsule::table('mod_paygatecrypto');
+}
 
 function pgc_read_invoice_payload($invoiceId)
 {
-    $invoice = localAPI('GetInvoice', array('invoiceid' => $invoiceId));
-    if (!isset($invoice['result']) || $invoice['result'] !== 'success') {
+    $invoiceId = (int) $invoiceId;
+    if ($invoiceId <= 0) {
         return null;
     }
-    $notes = isset($invoice['notes']) ? html_entity_decode($invoice['notes']) : '';
-    $data  = json_decode($notes, true);
-    return is_array($data) ? $data : null;
+
+    $row = pgc_store_table()->where('invoice_id', $invoiceId)->value('payload');
+    if (is_string($row) && $row !== '') {
+        $data = json_decode($row, true);
+        return is_array($data) ? $data : null;
+    }
+
+    // Legacy: state saved in the invoice notes by an older version.
+    $notes = \WHMCS\Database\Capsule::table('tblinvoices')->where('id', $invoiceId)->value('notes');
+    if (!is_string($notes) || $notes === '') {
+        return null;
+    }
+    $data = json_decode(html_entity_decode($notes), true);
+    if (!is_array($data) || !isset($data['v'])) {
+        return null;
+    }
+    pgc_write_invoice_payload($invoiceId, $data);
+    \WHMCS\Database\Capsule::table('tblinvoices')->where('id', $invoiceId)->where('notes', $notes)->update(array('notes' => ''));
+    return $data;
 }
 
 function pgc_write_invoice_payload($invoiceId, array $payload)
 {
-    $invoice = localAPI('GetInvoice', array('invoiceid' => $invoiceId));
-    if (!isset($invoice['result']) || $invoice['result'] !== 'success') {
+    $invoiceId = (int) $invoiceId;
+    if ($invoiceId <= 0) {
         return false;
     }
-    $invoice['notes'] = json_encode($payload);
-    localAPI('UpdateInvoice', $invoice);
+    $json  = json_encode($payload);
+    $table = pgc_store_table();
+    if ($table->where('invoice_id', $invoiceId)->exists()) {
+        pgc_store_table()->where('invoice_id', $invoiceId)->update(array('payload' => $json));
+    } else {
+        pgc_store_table()->insert(array('invoice_id' => $invoiceId, 'payload' => $json));
+    }
     return true;
+}
+
+/* -------------------------------------------------------------------------
+ * PayGate callback signature (RSA, SHA-256, PKCS#1 v1.5 over the exact URL)
+ * https://paygate.to/docs/crypto-payment-api/#callback-event
+ * ---------------------------------------------------------------------- */
+
+if (!defined('PGC_KEYS_DIR')) {
+    define('PGC_KEYS_DIR', __DIR__ . '/keys');
+}
+
+/**
+ * Verify X-PayGate-Signature on the current request. $registeredBase is the
+ * scheme, host and path of the callback URL the module registered (no query);
+ * the signed string is that base plus the raw query string exactly as received.
+ *
+ * @return array verified (bool), reason (string)
+ */
+function pgc_verify_paygate_signature($registeredBase)
+{
+    $b64 = isset($_SERVER['HTTP_X_PAYGATE_SIGNATURE']) ? trim((string) $_SERVER['HTTP_X_PAYGATE_SIGNATURE']) : '';
+    if ($b64 === '') {
+        return array('verified' => false, 'reason' => 'signature_absent');
+    }
+    if (!function_exists('openssl_verify')) {
+        return array('verified' => false, 'reason' => 'openssl_unavailable');
+    }
+
+    $keyId = isset($_SERVER['HTTP_X_PAYGATE_KEY_ID']) ? trim((string) $_SERVER['HTTP_X_PAYGATE_KEY_ID']) : '';
+    if ($keyId === '') {
+        $keyId = 'v1';
+    }
+    if (!preg_match('/^[A-Za-z0-9_-]{1,32}$/', $keyId)) {
+        return array('verified' => false, 'reason' => 'unknown_key_id');
+    }
+    $pemFile = PGC_KEYS_DIR . '/paygate_callback_public_' . $keyId . '.pem';
+    $pem = is_readable($pemFile) ? file_get_contents($pemFile) : false;
+    if (!is_string($pem) || $pem === '') {
+        return array('verified' => false, 'reason' => 'unknown_key_id');
+    }
+    $publicKey = openssl_pkey_get_public($pem);
+    if ($publicKey === false) {
+        return array('verified' => false, 'reason' => 'bad_public_key');
+    }
+
+    $raw = base64_decode($b64, true);
+    if ($raw === false || $raw === '') {
+        return array('verified' => false, 'reason' => 'signature_not_base64');
+    }
+
+    $query  = isset($_SERVER['QUERY_STRING']) ? (string) $_SERVER['QUERY_STRING'] : '';
+    $signed = ($query === '') ? $registeredBase : $registeredBase . '?' . $query;
+
+    $result = openssl_verify($signed, $raw, $publicKey, OPENSSL_ALGO_SHA256);
+    if ($result === 1) {
+        return array('verified' => true, 'reason' => '');
+    }
+    return array('verified' => false, 'reason' => ($result === -1) ? 'openssl_error' : 'signature_mismatch');
+}
+
+/**
+ * Registered callback base URL for a gateway's callback file.
+ */
+function pgc_callback_base($gatewayModuleName)
+{
+    $systemUrl = '';
+    if (isset($GLOBALS['CONFIG']['SystemURL'])) {
+        $systemUrl = $GLOBALS['CONFIG']['SystemURL'];
+    } elseif (class_exists('WHMCS\\Config\\Setting')) {
+        $systemUrl = \WHMCS\Config\Setting::getValue('SystemURL');
+    }
+    return rtrim((string) $systemUrl, '/') . '/modules/gateways/callback/' . $gatewayModuleName . '.php';
+}
+
+/**
+ * Stop the callback with an HTTP status and a short plain-text reason.
+ */
+function pgc_fail($status, $message)
+{
+    $texts = array(400 => 'Bad Request', 403 => 'Forbidden', 404 => 'Not Found', 409 => 'Conflict', 502 => 'Bad Gateway');
+    header('HTTP/1.1 ' . (int) $status . ' ' . (isset($texts[$status]) ? $texts[$status] : 'Error'));
+    header('Content-Type: text/plain');
+    echo $message;
+    exit;
 }

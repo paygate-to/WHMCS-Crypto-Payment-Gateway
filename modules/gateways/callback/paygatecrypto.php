@@ -10,13 +10,13 @@
  * blockchain fees).
  */
 
-$invoiceId = isset($_GET['invoice_id']) ? $_GET['invoice_id'] : '';
+$invoiceId = isset($_GET['invoice_id']) ? (int) $_GET['invoice_id'] : 0;
 $valueCoin = isset($_GET['value_coin']) ? $_GET['value_coin'] : '';
 $paidCoin  = isset($_GET['coin']) ? $_GET['coin'] : '';
 $txidIn    = isset($_GET['txid_in']) ? $_GET['txid_in'] : '';
 $sig       = isset($_GET['sig']) ? $_GET['sig'] : '';
 
-if (empty($invoiceId)) {
+if ($invoiceId <= 0) {
     die('Invalid invoice ID');
 }
 
@@ -41,7 +41,24 @@ if (!$payload || !isset($payload['v']) || $payload['v'] !== 'individual') {
 
 // Verify the signature (wallet-agnostic, based on the stored per-invoice nonce).
 if (!pgc_verify_sig($invoiceId, isset($payload['nonce']) ? $payload['nonce'] : '', $sig)) {
-    die('Invalid callback signature');
+    logTransaction($gatewayParams['name'], $_GET, 'Rejected: invalid callback signature');
+    pgc_fail(403, 'Invalid callback signature');
+}
+
+// PayGate's RSA signature over the exact URL it requested: proves the callback
+// came from PayGate and that value_coin / coin were not changed. Required.
+$paygateSignature = pgc_verify_paygate_signature(pgc_callback_base($gatewayModuleName));
+if (!$paygateSignature['verified']) {
+    logTransaction($gatewayParams['name'], $_GET, 'Rejected: PayGate signature ' . $paygateSignature['reason']);
+    pgc_fail(403, 'Invalid PayGate signature (' . $paygateSignature['reason'] . ')');
+}
+
+// Unconfirmed (pending=1) notifications never change the invoice; the confirmed callback follows.
+if (isset($_GET['pending']) && $_GET['pending'] === '1') {
+    header('HTTP/1.1 200 OK');
+    header('Content-Type: text/plain');
+    echo '*ok*';
+    exit;
 }
 
 $invoice = localAPI('GetInvoice', array('invoiceid' => $invoiceId));
