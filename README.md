@@ -14,7 +14,7 @@ No KYC crypto payment gateway solution for WHMCS. Accept crypto payments self ho
 - Choose who pays the blockchain fee: you or the customer.
 - If a customer sends the wrong token or uses the wrong network, supported tokens are still forwarded to you automatically. In Individual Coins mode the invoice is then not marked paid automatically: check it and mark it paid yourself.
 - Works with your own checkout domain and a free dedicated API endpoint ([custom domain guide](https://paygate.to/white-label-api-custom-domain-guide/)).
-- Fees: **1.5% flat rate + blockchain fees**.
+- Fees: **1% flat rate + blockchain fees**.
 
 📘 **Step-by-step guide:** [https://paygate.to/crypto-payment-gateway-no-kyc-instant-payouts/whmcs/](https://paygate.to/crypto-payment-gateway-no-kyc-instant-payouts/whmcs/)
 
