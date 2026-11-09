@@ -10,6 +10,10 @@
  * blockchain fees).
  */
 
+// WHMCS's init.php HTML-escapes $_SERVER['QUERY_STRING'] (every & becomes &amp;),
+// so keep the raw query string exactly as received for the PayGate signature check.
+$paygateRawQuery = isset($_SERVER['QUERY_STRING']) ? (string) $_SERVER['QUERY_STRING'] : '';
+
 $invoiceId = isset($_GET['invoice_id']) ? (int) $_GET['invoice_id'] : 0;
 $valueCoin = isset($_GET['value_coin']) ? $_GET['value_coin'] : '';
 $paidCoin  = isset($_GET['coin']) ? $_GET['coin'] : '';
@@ -47,7 +51,7 @@ if (!pgc_verify_sig($invoiceId, isset($payload['nonce']) ? $payload['nonce'] : '
 
 // PayGate's RSA signature over the exact URL it requested: proves the callback
 // came from PayGate and that value_coin / coin were not changed. Required.
-$paygateSignature = pgc_verify_paygate_signature(pgc_callback_base($gatewayModuleName));
+$paygateSignature = pgc_verify_paygate_signature(pgc_callback_base($gatewayModuleName), $paygateRawQuery);
 if (!$paygateSignature['verified']) {
     logTransaction($gatewayParams['name'], $_GET, 'Rejected: PayGate signature ' . $paygateSignature['reason']);
     pgc_fail(403, 'Invalid PayGate signature (' . $paygateSignature['reason'] . ')');

@@ -364,10 +364,12 @@ if (!defined('PGC_KEYS_DIR')) {
  * Verify X-PayGate-Signature on the current request. $registeredBase is the
  * scheme, host and path of the callback URL the module registered (no query);
  * the signed string is that base plus the raw query string exactly as received.
+ * Pass $rawQuery as read before init.php: WHMCS HTML-escapes
+ * $_SERVER['QUERY_STRING'] during start-up.
  *
  * @return array verified (bool), reason (string)
  */
-function pgc_verify_paygate_signature($registeredBase)
+function pgc_verify_paygate_signature($registeredBase, $rawQuery = null)
 {
     $b64 = isset($_SERVER['HTTP_X_PAYGATE_SIGNATURE']) ? trim((string) $_SERVER['HTTP_X_PAYGATE_SIGNATURE']) : '';
     if ($b64 === '') {
@@ -399,7 +401,7 @@ function pgc_verify_paygate_signature($registeredBase)
         return array('verified' => false, 'reason' => 'signature_not_base64');
     }
 
-    $query  = isset($_SERVER['QUERY_STRING']) ? (string) $_SERVER['QUERY_STRING'] : '';
+    $query  = ($rawQuery !== null) ? (string) $rawQuery : (isset($_SERVER['QUERY_STRING']) ? (string) $_SERVER['QUERY_STRING'] : '');
     $signed = ($query === '') ? $registeredBase : $registeredBase . '?' . $query;
 
     $result = openssl_verify($signed, $raw, $publicKey, OPENSSL_ALGO_SHA256);
