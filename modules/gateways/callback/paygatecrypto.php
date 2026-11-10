@@ -87,7 +87,7 @@ if (strtolower($paidCoin) !== $expectedCoin) {
 // Value the received coin in the invoice currency.
 $info = pgc_get_json($apiBase . pgc_coin_path($paidCoin) . '/info.php');
 if (!$info || !isset($info['prices'][$currency])) {
-    die('Error: failed to fetch coin pricing for verification.');
+    pgc_fail(503, 'Error: failed to fetch coin pricing for verification.'); // temporary: PayGate.to calls again
 }
 $coinPrice    = (float) $info['prices'][$currency];
 $receivedFiat = (float) $valueCoin * $coinPrice;
@@ -100,7 +100,7 @@ $minRequired  = $expectedFiat * $tolerance;
 if (isset($payload['fees']) && $payload['fees'] === '1') {
     $fees = pgc_get_json($apiBase . pgc_coin_path($paidCoin) . '/fees.php');
     if (!$fees || !isset($fees['estimated_cost_currency'][$currency])) {
-        die('Error: failed to fetch coin fee data for verification.');
+        pgc_fail(503, 'Error: failed to fetch coin fee data for verification.'); // temporary: PayGate.to calls again
     }
     $minRequired += (float) $fees['estimated_cost_currency'][$currency];
 }

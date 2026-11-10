@@ -72,10 +72,16 @@ if ($invoice['status'] === 'Paid') {
 
 $currency = isset($payload['currency']) ? $payload['currency'] : '';
 
+// Without a coin and amount there is nothing to value: refuse it (a retry would never succeed).
+if ($paidCoin === '' || !is_numeric($valueCoin)) {
+    logTransaction($gatewayParams['name'], $_GET, 'Rejected: no payout');
+    pgc_fail(400, 'Error: missing coin or value_coin.');
+}
+
 // Value the received coin in the invoice currency.
 $info = pgc_get_json($apiBase . pgc_coin_path($paidCoin) . '/info.php');
 if (!$info || !isset($info['prices'][$currency])) {
-    die('Error: failed to fetch coin pricing for verification.');
+    pgc_fail(503, 'Error: failed to fetch coin pricing for verification.'); // temporary: PayGate.to calls again
 }
 $coinPrice    = (float) $info['prices'][$currency];
 $receivedFiat = (float) $valueCoin * $coinPrice;
@@ -87,7 +93,7 @@ $minRequired  = $expectedFiat * $tolerance;
 if (isset($payload['fees']) && $payload['fees'] === '1') {
     $fees = pgc_get_json($apiBase . pgc_coin_path($paidCoin) . '/fees.php');
     if (!$fees || !isset($fees['estimated_cost_currency'][$currency])) {
-        die('Error: failed to fetch coin fee data for verification.');
+        pgc_fail(503, 'Error: failed to fetch coin fee data for verification.'); // temporary: PayGate.to calls again
     }
     $minRequired += (float) $fees['estimated_cost_currency'][$currency];
 }
