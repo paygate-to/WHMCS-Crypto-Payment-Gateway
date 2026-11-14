@@ -94,6 +94,11 @@ function paygatecryptomulti_config()
             'FriendlyName' => 'TON Wallet Address (Toncoin/USDT)',
             'Type'         => 'text', 'Size' => '60',
         ),
+        'wallet_xrp' => array(
+            'FriendlyName' => 'XRP Wallet Address (XRP Ledger)',
+            'Type'         => 'text', 'Size' => '60',
+            'Description'  => 'r..., r...?dt=TAG with a destination tag, or an X-address',
+        ),
         'underpaid_tolerance' => array(
             'FriendlyName' => 'Underpaid Tolerance',
             'Type'         => 'dropdown',
@@ -180,6 +185,7 @@ function paygatecryptomulti_link($params)
             'xmr'         => 'wallet_xmr',
             'zec'         => 'wallet_zec',
             'ton'         => 'wallet_ton',
+            'xrp'         => 'wallet_xrp',
         ) as $family => $field) {
             if (!empty($params[$field])) {
                 $payloadOut[$family] = trim($params[$field]);

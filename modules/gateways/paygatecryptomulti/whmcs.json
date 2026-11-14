@@ -11,7 +11,7 @@
     "features": [
       "One method accepts every supported coin",
       "Hosted checkout with custom domain and branding",
-      "Per-family payout wallets (EVM/BTC/BCH/LTC/DOGE/SOL/TRC20/XMR/ZEC)",
+      "Per-family payout wallets (EVM/BTC/BCH/LTC/DOGE/SOL/TRC20/XMR/ZEC/TON/XRP)",
       "ZERO KYC for both merchant and customer"
     ]
   },

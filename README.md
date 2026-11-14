@@ -6,7 +6,7 @@ No KYC crypto payment gateway solution for WHMCS. Accept crypto payments self ho
 
 ## Features
 
-- Accept **Bitcoin, Solana, Monero, Zcash, ETH, USDT, USDC** and hundreds of other coins and tokens on BTC, BCH, LTC, DOGE, ETH, ERC20, BEP20, Polygon, Arbitrum, Base, Optimism, Avalanche-C, Solana, Tron (TRC20), TON and more ([full list and minimums](https://paygate.to/crypto-payment-gateway-no-kyc-instant-payouts/#minimumorder)).
+- Accept **Bitcoin, Solana, Monero, Zcash, ETH, USDT, USDC** and hundreds of other coins and tokens on BTC, BCH, LTC, DOGE, ETH, ERC20, BEP20, Polygon, Arbitrum, Base, Optimism, Avalanche-C, Solana, Tron (TRC20), TON, the XRP Ledger and more ([full list and minimums](https://paygate.to/crypto-payment-gateway-no-kyc-instant-payouts/#minimumorder)).
 - **Instant payouts**: crypto is forwarded to your wallet the moment the payment is confirmed, with no delay or holds.
 - **No KYC and no registration**: you and your customers stay anonymous.
 - **QR code on your own site** with a unique address for every order, or one **Multicoin** option where the customer picks any coin on the hosted page.
@@ -55,6 +55,7 @@ No KYC crypto payment gateway solution for WHMCS. Accept crypto payments self ho
    | Monero Wallet Address (XMR) | Monero |
    | Zcash Wallet Address (ZEC) | Zcash |
    | BCH, LTC, DOGE, TRC20 (Tron/USDT), TON | One field each |
+   | XRP Wallet Address (XRP Ledger) | XRP: `r…`, `r…?dt=TAG` with a destination tag, or an X-address |
 
    Optional: **Custom Domain** (default `checkout.paygate.sbs`), **Custom Logo URL** and colours for the hosted page.
 7. **Test** with an invoice. Individual Coins: the client picks a coin and sees the QR code, amount and address on the invoice. Multicoin: the client clicks **Pay with cryptocurrency**. When the payment is confirmed the crypto is forwarded to your wallet and the invoice is marked **Paid** (see also **Billing › Gateway Log**).
