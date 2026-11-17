@@ -127,7 +127,8 @@ function pgc_get_json($url, $timeout = 30)
  */
 function pgc_coinmap_cache_file()
 {
-    return rtrim(sys_get_temp_dir(), '/\\') . DIRECTORY_SEPARATOR . 'pgc_coinmap_cache.json';
+    // One file per WHMCS install: on shared hosting another site may own a file with a common name.
+    return rtrim(sys_get_temp_dir(), '/\\') . DIRECTORY_SEPARATOR . 'pgc_coinmap_cache_' . md5(__DIR__) . '.json';
 }
 
 /**
@@ -435,4 +436,41 @@ function pgc_fail($status, $message)
     header('Content-Type: text/plain');
     echo $message;
     exit;
+}
+
+/**
+ * The payment button as a small GET form instead of a link, so the page WHMCS shows after
+ * checkout ("Please wait while you are redirected...") sends the client straight to the
+ * payment page. The query values are passed through exactly as they are in $url.
+ */
+function pgc_pay_button($url, $label, $style = '')
+{
+    $parts = explode('?', $url, 2);
+    $html = '<form method="get" action="' . htmlspecialchars($parts[0], ENT_QUOTES) . '" rel="noreferrer" style="display:inline;">';
+    if (isset($parts[1]) && $parts[1] !== '') {
+        foreach (explode('&', $parts[1]) as $pair) {
+            $kv = explode('=', $pair, 2);
+            $html .= '<input type="hidden" name="' . htmlspecialchars(rawurldecode($kv[0]), ENT_QUOTES) . '" value="' . htmlspecialchars(isset($kv[1]) ? rawurldecode($kv[1]) : '', ENT_QUOTES) . '">';
+        }
+    }
+    return $html . '<button type="submit" class="btn btn-primary"' . ($style !== '' ? ' style="' . htmlspecialchars($style, ENT_QUOTES) . '"' : '') . '>' . htmlspecialchars($label, ENT_QUOTES) . '</button></form>';
+}
+
+/**
+ * One of this gateway's own settings. In _link() WHMCS puts the invoice description
+ * ("Company - Invoice #123") in $params['description'], over the gateway's Description
+ * setting, so that setting is read here instead.
+ */
+function pgc_gateway_setting($gatewayModuleName, $setting)
+{
+    try {
+        if (class_exists('\WHMCS\Module\GatewaySetting')) {
+            $all = \WHMCS\Module\GatewaySetting::getForGateway($gatewayModuleName);
+            return isset($all[$setting]) ? (string) $all[$setting] : '';
+        }
+        $value = \WHMCS\Database\Capsule::table('tblpaymentgateways')->where('gateway', $gatewayModuleName)->where('setting', $setting)->value('value');
+        return $value === null ? '' : (string) $value;
+    } catch (\Exception $e) {
+        return '';
+    }
 }

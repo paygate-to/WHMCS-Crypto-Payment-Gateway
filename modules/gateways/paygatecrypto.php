@@ -26,7 +26,7 @@ require_once __DIR__ . '/paygatecrypto/lib.php';
 function paygatecrypto_MetaData()
 {
     return array(
-        'DisplayName'                 => 'Crypto Payment Gateway (Individual Coins)',
+        'DisplayName'                 => 'PayGate.to Crypto Coins',
         'APIVersion'                  => '1.1',
         'DisableLocalCreditCardInput' => true,
     );
@@ -42,7 +42,7 @@ function paygatecrypto_config()
     $fields = array(
         'FriendlyName' => array(
             'Type'  => 'System',
-            'Value' => 'Crypto Payment Gateway — Individual Coins (No KYC, instant payouts)',
+            'Value' => 'Cryptocurrency',
         ),
         'description' => array(
             'FriendlyName' => 'Description',
@@ -56,7 +56,6 @@ function paygatecrypto_config()
             'FriendlyName' => 'Customer pays blockchain fees',
             'Type'         => 'yesno',
             'Description'  => 'Add estimated blockchain fees to the amount the customer must send.',
-            'Default'      => 'off',
         ),
         'underpaid_tolerance' => array(
             'FriendlyName' => 'Underpaid Tolerance',
@@ -109,11 +108,6 @@ function paygatecrypto_config()
 function paygatecrypto_activate()
 {
     return array('status' => 'success', 'description' => 'Crypto (individual coins) gateway activated.');
-}
-
-function paygatecrypto_deactivate()
-{
-    return array('status' => 'success', 'description' => 'Crypto (individual coins) gateway deactivated.');
 }
 
 /* -------------------------------------------------------------------------
@@ -290,7 +284,7 @@ function paygatecrypto_link($params)
     $invoiceLink = $systemUrl . '/viewinvoice.php?id=' . $invoiceId;
     $feesOn      = (isset($params['blockchain_fees']) && $params['blockchain_fees'] === 'on');
     $tolerance   = $params['underpaid_tolerance'];
-    $description = isset($params['description']) ? $params['description'] : '';
+    $description = pgc_gateway_setting('paygatecrypto', 'description');
     $apiBase     = pgc_api_base(isset($params['api_domain']) ? $params['api_domain'] : '');
 
     $map     = pgc_coin_map(false, $apiBase);

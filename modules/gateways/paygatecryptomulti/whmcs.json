@@ -5,7 +5,7 @@
   "license": "GPL-3.0",
   "category": "payments",
   "description": {
-    "name": "Crypto Payment Gateway (Multicoin / Multi Mode)",
+    "name": "PayGate.to Multicoin",
     "tagline": "Accept any supported coin via hosted checkout — No KYC, instant payouts",
     "long": "A single payment method that accepts any supported cryptocurrency through PayGate's hosted checkout, with optional custom domain and branding. Set one payout wallet per chain family.",
     "features": [
@@ -16,6 +16,6 @@
     ]
   },
   "logo": { "filename": "logo.png" },
-  "support": { "homepage": "https://paygate.to/", "docs_url": "https://paygate.to/" },
+  "support": { "homepage": "https://paygate.to/", "docs_url": "https://paygate.to/crypto-payment-gateway-no-kyc-instant-payouts/whmcs/" },
   "authors": [ { "name": "PayGate.to", "homepage": "https://paygate.to/" } ]
 }

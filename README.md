@@ -18,9 +18,11 @@ No KYC crypto payment gateway solution for WHMCS. Accept crypto payments self ho
 
 📘 **Step-by-step guide:** [https://paygate.to/crypto-payment-gateway-no-kyc-instant-payouts/whmcs/](https://paygate.to/crypto-payment-gateway-no-kyc-instant-payouts/whmcs/)
 
+![Individual Coins settings in WHMCS](screenshots/settings.png)
+
 ## Requirements
 
-- WHMCS with admin access, and FTP/SFTP or your hosting File Manager
+- WHMCS with admin access, and FTP/SFTP or your hosting File Manager. Tested on WHMCS 9.1.
 - PHP with cURL and OpenSSL, and outbound HTTPS from your server (the coin list is loaded live)
 - Your WHMCS **System URL** set to your public https address
 - A wallet address for each coin you want to accept
@@ -43,8 +45,8 @@ No KYC crypto payment gateway solution for WHMCS. Accept crypto payments self ho
                                                     └── paygatecryptomulti.php
    ```
 
-4. **Activate**: **Configuration › System Settings › Payment Gateways › All Payment Gateways** (WHMCS 7: **Setup › Payments › Payment Gateways**). Click **Crypto Payment Gateway (Individual Coins)** and/or **Crypto Payment Gateway (Multicoin / Multi Mode)**.
-5. **Individual Coins**: the settings show one wallet field per coin, loaded live from PayGate.to. Fill in a wallet for every coin you want (Bitcoin, Solana, Monero, Zcash, USDT…) and leave the others blank. Also set **Underpaid Tolerance** (1% default) and **Customer pays blockchain fees**. Save.
+4. **Activate**: open **Configuration › System Settings › Payment Gateways** and click **Visit Apps & Integrations**. Search for `paygate`, click **PayGate.to Crypto Coins** (Individual Coins) and/or **PayGate.to Multicoin**, then **Activate**. In older WHMCS versions use the **All Payment Gateways** tab on the same page (WHMCS 7: **Setup › Payments › Payment Gateways**), where older module versions are listed as **Crypto Payment Gateway (Individual Coins)** and **Crypto Payment Gateway (Multicoin / Multi Mode)**.
+5. **Individual Coins**: the settings show one wallet field per coin, loaded live from PayGate.to. Fill in a wallet for every coin you want (Bitcoin, Solana, Monero, Zcash, USDT…) and leave the others blank. Also set **Underpaid Tolerance** (1% default) and **Customer pays blockchain fees** (off by default). **Display Name** ("Cryptocurrency" on new installs) is what clients see, and **Description** is shown on the invoice above the coin list. Save.
 6. **Multicoin (optional)**: fill in one wallet per network:
 
    | Field | Accepts |
@@ -57,15 +59,22 @@ No KYC crypto payment gateway solution for WHMCS. Accept crypto payments self ho
    | BCH, LTC, DOGE, TRC20 (Tron/USDT), TON | One field each |
    | XRP Wallet Address (XRP Ledger) | XRP: `r…`, `r…?dt=TAG` with a destination tag, or an X-address |
 
-   Optional: **Custom Domain** (default `checkout.paygate.sbs`), **Custom Logo URL** and colours for the hosted page.
-7. **Test** with an invoice. Individual Coins: the client picks a coin and sees the QR code, amount and address on the invoice. Multicoin: the client clicks **Pay with cryptocurrency**. When the payment is confirmed the crypto is forwarded to your wallet and the invoice is marked **Paid** (see also **Billing › Gateway Log**).
+   Optional: **Custom Domain** (default `checkout.paygate.sbs`), **Custom Logo URL** and colours for the hosted page. New installs show this gateway to clients as "Cryptocurrency (all coins)".
+7. **Test** with an invoice. Individual Coins: the client picks a coin and sees the QR code, amount and address on the invoice. Multicoin: the client clicks **Pay with cryptocurrency** (after placing an order, clients are sent straight to the hosted page). When the payment is confirmed the crypto is forwarded to your wallet and the invoice is marked **Paid**, with a Ledger reference starting with `pgc_` (Individual Coins) or `pgcmulti_` (Multicoin). See also **Billing › Gateway Log**.
 
-The module keeps its payment data for each invoice in the invoice Notes: do not edit them while a crypto payment is pending. If you used our older per-coin modules, deactivate those gateways.
+   ![A WHMCS invoice with the QR code for USDC on Polygon](screenshots/invoice.png)
+
+The module keeps the payment details of each invoice in its own table in the WHMCS database, not in the invoice notes. If you used our older per-coin modules, deactivate those gateways.
+
+**Updating:** upload the `modules` folder again, overwriting the old files. Settings are kept and invoices already waiting for payment still settle. Older versions showed **Customer pays blockchain fees** ticked on a new install: check it after updating.
+
+![A paid WHMCS invoice](screenshots/paid.png)
 
 ## Troubleshooting
 
 - **"Coin list" error in the settings**: allow outbound HTTPS from your server to `api.paygate.to`.
 - **"No cryptocurrencies are currently available"**: fill in at least one coin wallet.
+- **Deactivate does nothing (WHMCS 9)**: versions before November 2026 could not be deactivated. Upload the latest `modules` folder and try again.
 - **Invoice stays Unpaid**: check the System URL and that `/modules/gateways/callback/` is reachable; look for "Underpaid" in the Gateway Log. See [WHMCS troubleshooting](https://paygate.to/whmcs-payment-gateway-troubleshooting/).
 
 Full product page: [https://paygate.to/crypto-payment-gateway-no-kyc-instant-payouts/](https://paygate.to/crypto-payment-gateway-no-kyc-instant-payouts/) · Support: [Telegram](https://t.me/PayGate_to)

@@ -19,7 +19,7 @@ require_once __DIR__ . '/paygatecrypto/lib.php';
 function paygatecryptomulti_MetaData()
 {
     return array(
-        'DisplayName'                 => 'Crypto Payment Gateway (Multicoin / Multi Mode)',
+        'DisplayName'                 => 'PayGate.to Multicoin',
         'APIVersion'                  => '1.1',
         'DisableLocalCreditCardInput' => true,
     );
@@ -30,7 +30,7 @@ function paygatecryptomulti_config()
     return array(
         'FriendlyName' => array(
             'Type'  => 'System',
-            'Value' => 'Crypto Payment Gateway — Multicoin (No KYC, instant payouts)',
+            'Value' => 'Cryptocurrency (all coins)',
         ),
         'description' => array(
             'FriendlyName' => 'Description',
@@ -113,7 +113,6 @@ function paygatecryptomulti_config()
         'blockchain_fees' => array(
             'FriendlyName' => 'Customer pays blockchain fees',
             'Type'         => 'yesno',
-            'Default'      => 'off',
             'Description'  => 'Add estimated blockchain fees to the order total.',
         ),
         'logo_url' => array(
@@ -142,11 +141,6 @@ function paygatecryptomulti_config()
 function paygatecryptomulti_activate()
 {
     return array('status' => 'success', 'description' => 'Crypto (multicoin) gateway activated.');
-}
-
-function paygatecryptomulti_deactivate()
-{
-    return array('status' => 'success', 'description' => 'Crypto (multicoin) gateway deactivated.');
 }
 
 function paygatecryptomulti_link($params)
@@ -231,11 +225,11 @@ function paygatecryptomulti_link($params)
         $url .= '&button=' . urlencode($params['button_color']);
     }
 
-    $desc = isset($params['description']) ? $params['description'] : '';
+    $desc = pgc_gateway_setting('paygatecryptomulti', 'description');
     $html = '';
     if ($desc !== '') {
         $html .= '<p>' . htmlspecialchars($desc, ENT_QUOTES) . '</p>';
     }
-    $html .= '<a href="' . htmlspecialchars($url, ENT_QUOTES) . '" class="btn btn-primary" style="display:inline-block;padding:10px 22px;">Pay with cryptocurrency</a>';
+    $html .= pgc_pay_button($url, 'Pay with cryptocurrency', 'display:inline-block;padding:10px 22px;');
     return $html;
 }
